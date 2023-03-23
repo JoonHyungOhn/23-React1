@@ -5,14 +5,17 @@
 
 #### 수업내용
 
-jsx 소개 :  JavaScript를 확장한 문법으로 문자열도, HTML도 아니다. 
-jsx는 내부적으로 XML/HTML 코드를 자바스크립트로 변환한다.
+* jsx 소개 : 으로 문자열도, HTML도 아니다. 앞으로 볼 코드를 보면 알 수 있듯 jsx는 가독성을 높여주는 역할을 한다. 
 
-JSX는 React "엘리먼트(element)"를 생성하고 react에서 jsx를 사용한다는 것은 컴포넌트를 만든다는 의미가 된다.
+1. jsx는 내부적으로 XML/HTML 코드를 자바스크립트로 변환한다.
 
-jsx는 태그가 비어있다면 XML처럼 /> 를 이용해 바로 닫아주어야 한다.
+2. 코드를 가독성이 좋고 간결하게 만들어준다.
 
-jsx의 표현식
+3. jsx는 React "엘리먼트(element)"를 생성하고 react에서 jsx를 사용한다는 것은 컴포넌트를 만든다는 의미가 된다.
+
+4. jsx는 태그가 비어있다면 XML처럼 /> 를 이용해 바로 닫아주어야 한다.
+
+* jsx의 표현식
 ```
 function getGreeting(user) {
   if (user) {
@@ -22,7 +25,12 @@ function getGreeting(user) {
 }
 ```
 
-요약 : 
+요약 : JavaScript를 확장한 문법, jsx는 createElement()함수를 사용하는 코드로 변환해야 함.
+
+코드를 간결하고, 가독성 있게 만들어준다. 
+
+---
+### 코드 내용
 
 ###### chapter_03
 
