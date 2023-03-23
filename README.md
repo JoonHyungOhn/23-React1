@@ -3,7 +3,28 @@
 
 ## 4주차 2023-03-23
 
+#### 수업내용
+
+jsx 소개 :  JavaScript를 확장한 문법으로 문자열도, HTML도 아니다.   jsx는 내부적으로 XML/HTML 코드를 자바스크립트로 변환한다.
+
+JSX는 React "엘리먼트(element)"를 생성하고 react에서 jsx를 사용한다는 것은 컴포넌트를 만든다는 의미가 된다.
+
+jsx는 태그가 비어있다면 XML처럼 /> 를 이용해 바로 닫아주어야 한다.
+
+jsx의 표현식
+```
+function getGreeting(user) {
+  if (user) {
+    return <h1>Hello, {formatName(user)}!</h1>;
+  }
+  return <h1>Hello, Stranger.</h1>;
+}
+```
+
+요약 : 
+
 ###### chapter_03
+
 Book.jsx
 ```
 import React from "react";
