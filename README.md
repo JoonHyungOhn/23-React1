@@ -19,6 +19,8 @@ function Book(props) {
 
 export default Book;
 ```
+
+Library
 ```
 import React from "react";
 import Book from "./Book";
@@ -35,6 +37,8 @@ function Library(props) {
 
 export default Library;
 ```
+
+index.js
 ```
 import React from 'react';
 import ReactDOM from 'react-dom/client';
