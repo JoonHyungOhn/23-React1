@@ -32,7 +32,7 @@ function getGreeting(user) {
 ---
 ### 코드 내용
 
-### chapter_03
+#### chapter_03
 
 Book.jsx
 ```
