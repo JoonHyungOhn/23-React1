@@ -30,9 +30,9 @@ function getGreeting(user) {
 코드를 간결하고, 가독성 있게 만들어준다. 
 
 ---
-### * 코드 내용
+### 코드 내용
 
-##### chapter_03
+### chapter_03
 
 Book.jsx
 ```
