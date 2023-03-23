@@ -50,6 +50,41 @@ index.html코드
 </html>
 
 ---
+
+# 온준형
+## 2주차 2023-03-09
+###### 코드 내용
+
+---
+1. asffdsfds
+2. safdsfsdrgyhfh
+
+
+* dfsdfdsdsgdssssss
+* dfdfgdgdshgjkj
+
+```
+
+```
+```html
+<html>
+    <div id="aaa">
+    </div>
+</html>
+```
+<html>
+    <div id="aaa">
+    </div>
+</html>
+
+요약: H1은 두꺼운 글씨체, H2는 H1보다 덜 두꺼운 글씨체로 H1~H6까지 있다.
+
+--- 이렇게 줄표시를 해주면 저절로 수평선, 구분선이 생기는 것을 결과창을 통해 확인 할 수 있다.
+
+억음부호(backtick) 3번을 누르고  Enter 억음 부호 3번을 누르면 결과창을 봤을 때 검은 박스창이 나오는 걸 알 수 있다.
+
+```html ~ </html>을 하면 검은 박스창 안에 Html코드를 입력한 것을 볼 수 있다.
+
 # h1
 ## star
 ###### h6
