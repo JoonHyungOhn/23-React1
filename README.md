@@ -4,7 +4,7 @@
 ## 4주차 2023-03-23
 
 ###### chapter_03
-Book
+Book.jsx
 ```
 import React from "react";
 
@@ -20,7 +20,7 @@ function Book(props) {
 export default Book;
 ```
 
-Library
+Library.jsx
 ```
 import React from "react";
 import Book from "./Book";
