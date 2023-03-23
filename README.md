@@ -4,7 +4,7 @@
 ## 4주차 2023-03-23
 
 
-import React from "react";
+```import React from "react";
 
 function Book(props) {
     return (
@@ -16,7 +16,7 @@ function Book(props) {
 }
 
 export default Book;
-
+```
 
 
 ## 3주차 2023-03-16
