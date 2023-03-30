@@ -1,15 +1,15 @@
 # 23-React1
 # 온준형
 
-1. 엘리먼트의 정의
+### 1. 엘리먼트의 정의
 * 엘리먼트는 리액트 앱을 구서하는 요소를 의미한다.
 * 공식페이지에서는 "엘리먼트는 리엑트 앱의 가장 작은 빌딩 블록들"이라고 설명한다.
-* 웹사이트의 경우는 DOM 엘리먼트이며 HTML요소를 의미한다.
+* 웹사이트의 경우는 DOM 엘리먼트이며 HTML 요소를 의미한다.
 
 * 리액트 엘리먼트와 DOM 엘리먼트의 차이
 
 
-2. 엘리먼트의 생김새
+### 2. 엘리먼트의 생김새
 
 * 리액트 엘리먼트는 자바스크립트 객체이 형태로 존재한다.
 * 컴포넌트, 속성 등 내부의 모든 children(자식)을 포함하는 일반 JS객체이다.
@@ -47,7 +47,7 @@
 
 ```
 
-3. 엘리먼트의 특징
+### 3. 엘리먼트의 특징
 
 리엑트 엘리먼트의 가장 큰 특징은 불변성이다.  
 즉, 한번 생성된 엘리먼트의 children이나 속성(attributes)을 바꿀 수 없다.
@@ -114,6 +114,27 @@ clock.html 코드
     </script>
 </body>
 </html>
+```
+
+* index 코드를 바꾸었다.
+```
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+
+setInterval(() => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <Clock />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
 ```
 
 ---
