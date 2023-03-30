@@ -60,7 +60,25 @@
 
 즉 리엑트 렌더링 과정은 버츄얼 DOM에서 실제 DOM으로 이동하는 과정이라고 할 수 있다.  
   
-  
+4.3 렌더링된 엘리먼트 업데이트
+* 이 코드는 tick()함수를 정의하고 있다.  
+
+```
+function tick() {
+
+    const element = (
+        <div>
+            <h1>안녕, 리엑트!</h1>
+            <H2>현재 시간: {new Date().toLocalTimeString()}</H2>
+        </div>
+        
+        );
+
+    ReactDOM.render(element, document.getElementById('root'));
+}
+
+setInterval(tick, 1000);  
+```  
   
 ---
 
