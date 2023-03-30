@@ -128,7 +128,8 @@ import Library from './chapter_03/Library';
 import Clock from './chapter04/clock';
 
 setInterval(() => {
-  ReactDOM.render(
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
     <React.StrictMode>
       <Clock />
     </React.StrictMode>,
