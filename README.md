@@ -115,6 +115,7 @@ function ConfirmDialog(props) {
   
 #### 4.3 렌더링된 엘리먼트 업데이트
 * 이 코드는 tick()함수를 정의하고 있다.  
+* 이 함수는 현재 시간을 포함한 element를 생성해서 root div에 렌더링해 줍니다.
 
 ```
 function tick() {
@@ -122,7 +123,7 @@ function tick() {
     const element = (
         <div>
             <h1>안녕, 리엑트!</h1>
-            <H2>현재 시간: {new Date().toLocalTimeString()}</H2>
+            <h2>현재 시간: {new Date().toLocaleTimeString()}</h2>
         </div>
         
         );
@@ -167,6 +168,7 @@ setInterval(tick, 1000);
 ```
 
 * index 코드를 바꾸었다.
+* 1초에 한번씩 Clock 컴포넌트를 root div에 렌더링하도록 설정을 바꾸었다.
 ```
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -205,14 +207,14 @@ Pure함수와 Impure함수
 * Pure함수는 인수로 받은 정보가 함수 내부에서도 변하지 않는 함수이다.  
 * Impure함수는 인수로 받은 정보가 함수 내부에서 변하는 함수이다.  
 
-### 3. props 사용성
+### 3. props 사용법
 
 * JSX에서는 key-value쌍으로 props를 구성한다.  
 
-JSX에서는 중괄호를 사용하면~  
+JSX에서는 중괄호를 사용하면 JS코드를 넣을 수 있다.
+* props를 통해서 vvalue를 할당할 수도 있고, 직접 중괄호를 사용하여 할당할 수도 있다.  
 
 * JSX를 사용하지 않는 경우 props의 전달 방법은 createElement()함수를 사용하는 것이다.  
-* props의 전달 방법은 createElement()함수  
 
 #### 5.3 컴포넌트 만들기  
 
