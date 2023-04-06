@@ -1,5 +1,96 @@
 # 23-React1
 # 온준형
+## 6주차 2023-04-06  
+#### 수업내용
+
+### 5.5 컴포넌트 추출  
+* 복잡한 컴포넌트를 쪼개서 여러 개의 컴포넌트로 나눌 수도 있다.  
+* 큰 컴포넌트에서 일부를 추출해서 새로운 컴포넌트를 만든다.
+#### * 실무에서는 처음부터 1개의 컴포넌트에서 하나의 기능만 사용하도록 설계하는 것이 좋다.  
+
+* Comment는 댓글 표시 컴포넌트이다.
+* 내부에서는 이미지, ㅣㅇ름, 댓글과 작성일이 포함되어 있다.
+* 첫 번째로 이미지 부분을 Avatar 컴포넌트로 출력한 코드를 아래에 써 보았다.  
+
+```jsx
+function Avatar(props) {
+  return (
+    <img className="Avatar"
+    src={props.user.avatarUrl}
+    alt={props.user.name}
+    />
+  );
+}
+
+코드 내용에서는 import가 빠져있기 때문에 써주어야 한다. 
+```
+
+* 두번째로 사용자 정보 부분을 추출한다.  
+* 컴포넌트 이름은 UserInfo로 정한다. React컴포넌트 이름은 Camel notion이 된다.  
+
+
+* 추출 후에 다시 결합한 UserInfo를 Comment 컴포넌트를 반영하면 다음과 같은 모습이 된다.  
+* 처음에 비해서 가독성이 높아진 것을 확인할 수 있다.  
+```
+function Comment(props)
+
+작성~
+```
+
+### 5.6 댓글 컴포넌트 만들기  
+* Comment 코드
+```js
+import React from "react";
+
+function Comment(props) {
+    return (
+        <div>
+            <h1>제가 만든 첫 컴포넌트입니다.</h1>
+        </div>
+    );
+}
+export default Comment;
+```
+
+* CommentList 코드 입력
+```jsx
+import React from "react";
+import Comment from "./Comment";
+
+function Comment(props) {
+    return (
+        <div>
+            <Comment />
+        </div>
+    );
+}
+export default CommentList;
+```
+
+* js 인덱스 코드 입력
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/Commentlist';
+
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      <CommentList />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
+```
+
 
 ## 5주차 2023-03-30  
 #### 수업내용
