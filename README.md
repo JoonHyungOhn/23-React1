@@ -184,13 +184,13 @@ export default CommentList;
 ## chapter 6. state와 생명주기  
 
 ### 6.1 state  
-1. state란?  
+### 1. state란?  
 * state는 리엑트 컴포넌트의 상태를 의미한다.  
 * 상태의 의미는 정상인지 비정상인지가 아니라 컴포넌트의 데이터를 의미한다.  
 * 정확히는 컴포넌트의 변경가능한 데이터를 의미한다.  
 * State가 변하면 다시 렌더링이 되기 때문에 렌더링과 관련된 값만 state에 포함시켜야 한다.  
 
-2. state의 특징  
+### 2. state의 특징  
 * 리엑트만의 특별한 형태가 아닌 단지 자바스크립트 객체일 뿐이다.  
 * 예시의 LikeButton은 class 컴포넌트이다.  
 * constructor은 생성자이고 그 안에 있는 this.state가 현재 컴포넌트의 state이다.  
@@ -200,7 +200,7 @@ export default CommentList;
 * state를 변경하고자 할때는 setState()함수를 사용한다.  
 
 
-3.
+### 3.
 
 
 ## 5주차 2023-03-30  
