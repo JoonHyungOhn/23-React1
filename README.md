@@ -9,7 +9,7 @@
 #### * 실무에서는 처음부터 1개의 컴포넌트에서 하나의 기능만 사용하도록 설계하는 것이 좋다.  
 
 * Comment는 댓글 표시 컴포넌트이다.
-* 내부에서는 이미지, ㅣㅇ름, 댓글과 작성일이 포함되어 있다.
+* 내부에서는 이미지, 름, 댓글과 작성일이 포함되어 있다.
 * 첫 번째로 이미지 부분을 Avatar 컴포넌트로 출력한 코드를 아래에 써 보았다.  
 
 ```jsx
@@ -216,8 +216,168 @@ export default CommentList;
 * 마지막으로 컴포넌트가 언마운트 되면 compinentWillUnmount()함수가 호출된다.
 
 
+* Notification.jsx 코드
+```jsx
+import React from "react";
 
+const styles = {
+    wrapper: {
+        margin: 8,
+        padding: 8,
+        display: "flex",
+        flexDirection: "row",
+        border: "1px solid grey",
+        borderRadius: 16,
+    },
+    imageContainer: {},
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+    },
+    contentContainer: {
+        marginLeft: 8,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+    },
+    nameText: {
+        color: "black",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    commentText: {
+        color: "black",
+        fontSize: 16,
+    },
+  };
 
+class Notification extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {}; 
+    }
+    componentDidMount() {
+        console.log(`${this.props.id} componentDidMount() called.`)
+    }
+    componentDidUpdate() {
+        console.log(`${this.props.id} componentDidUpdate() called.`)
+    }
+    componentWillUnmount() {
+        console.log(`${this.props.id} componentWillMount() called.`)
+    }
+
+    render() {
+        return (
+            <div style={styles.wrapper}>
+                <span style={styles.messageText}>{this.props.message}</span>
+            </div>
+        )
+    }
+}
+export default Notification;
+```
+
+* NotificationList.jsx 코드 
+```jsx
+import React from "react";
+import Notification from "./Notification";
+
+const reservedNotifications = [
+    {
+        id: 1,
+        message: "안녕하세요, 오늘 일정을 알려드립니다.",
+    },
+    {
+        id: 2,
+        message: "점심식사 시간입니다.",
+    },
+    {
+        id: 3,
+        message: "이제 곧 미팅이 시작됩니다.",
+    },
+];
+
+var timer;
+
+class NotificationList extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            notifications: [],
+        };
+    }
+
+    componentDidMount() {
+        const { notifications } = this.state;
+        timer = setInterval(() => {
+            if (notifications.length < reservedNotifications.length) {
+                const index = notifications.length;
+                notifications.push(reservedNotifications[index]);
+                this.setState({
+                    notifications: notifications,
+                });
+            } else {
+                this.setState({
+                    notifications: [],
+                });
+                clearInterval(timer);
+            }
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        if (timer) {
+            clearInterval(timer);
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.notifications.map((notification) => {
+                    return (
+                        <Notification
+                            key={notification.id}
+                            id={notification.id}
+                            message={notification.message}
+                        />
+                    );
+                })}
+            </div>
+        );
+    }
+}
+
+export default NotificationList;
+```
+
+* index.js 코드(Noticifation)
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      <Notification />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
+```
 ## 5주차 2023-03-30  
 #### 수업내용
 
