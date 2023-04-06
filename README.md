@@ -222,6 +222,11 @@ export default CommentList;
  - Props의 특징  
   ■ 읽기 전용  
   ■ 리액트 컴포넌트의 props는 바꿀 수 없고, 같은 props가 들어오면 항상 같은 엘리먼트를 리턴해야 한다.  
+  
+ * Props의 사용법  
+  ■ JSX를 사용할 경우 컴포넌트에 키-값 쌍 형태로 넣어 주면 된다.
+  ■
+  ■
 
 ## chapter 6. state와 생명주기  
 
