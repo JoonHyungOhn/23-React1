@@ -13,7 +13,8 @@ setInterval(() => {
   root.render(
     <React.StrictMode>
       {/* <Clock /> */}
-      <CommentList />
+      {/*<CommentList> */}
+      <Notification />
     </React.StrictMode>,
     document.getElementById('root')
   );
