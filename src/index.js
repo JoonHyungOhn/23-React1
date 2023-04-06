@@ -6,12 +6,14 @@ import reportWebVitals from './reportWebVitals';
 
 import Library from './chapter_03/Library';
 import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
 
 setInterval(() => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
-      <Clock />
+      {/* <Clock /> */}
+      <CommentList />
     </React.StrictMode>,
     document.getElementById('root')
   );
