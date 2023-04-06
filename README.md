@@ -91,6 +91,117 @@ setInterval(() => {
 }, 1000);
 ```
 
+* Comment 코드 수정
+```jsx
+import React from "react";
+
+const styles = {
+    wrapper: {
+        margin: 8,
+        padding: 8,
+        display: "flex",
+        flexDirection: "row",
+        border: "1px solid grey",
+        borderRadius: 16,
+    },
+    imageContainer: {},
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+    },
+    contentContainer: {
+        marginLeft: 8,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+    },
+    nameText: {
+        color: "black",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    commentText: {
+        color: "black",
+        fontSize: 16,
+    },
+  };
+
+function Comment(props) {
+    return (
+        <div style={styles.wrapper}>
+            <div style={styles.imageContainer}>
+                <img
+                src="Blizzard.png"
+                alt="프로필 이미지"
+                style={styles.image}
+                />
+            </div>
+            <div style={contentContainer}>
+                <span style={styles.nameText}>{props.name}</span>
+                <span style={styles.nameText}>{props.comment}</span>
+            </div>
+        </div>
+    );
+}
+export default Comment;
+```
+
+* CommentList 코드 수정
+```jsx
+import React from "react";
+import Comment from "./Comment";
+
+const comments = [
+    {
+        name: "온준형",
+        comment: "안녕하세요, 온준형입니다.",
+    },
+    {
+        name: "온준형",
+        comment: "반갑습니다, 온준형입니다.", 
+    },
+    {
+        name: "온준형",
+        comment: "처음 뵙겠습니다, 온준형입니다.",
+    }
+]
+
+function CommentList(props) {
+    return (
+        <div>
+            {comments.map((comment) => {
+                return (
+                    <Comment name={comment.name} comment={comment} />
+                )
+            })}
+        </div>
+    );
+}
+export default CommentList;
+```
+
+## chapter 6. state와 생명주기  
+
+### 6.1 state  
+1. state란?  
+* state는 리엑트 컴포넌트의 상태를 의미한다.  
+* 상태의 의미는 정상인지 비정상인지가 아니라 컴포넌트의 데이터를 의미한다.  
+* 정확히는 컴포넌트의 변경가능한 데이터를 의미한다.  
+* State가 변하면 다시 렌더링이 되기 때문에 렌더링과 관련된 값만 state에 포함시켜야 한다.  
+
+2. state의 특징  
+* 리엑트만의 특별한 형태가 아닌 단지 자바스크립트 객체일 뿐이다.  
+* 예시의 LikeButton은 class 컴포넌트이다.  
+* constructor은 생성자이고 그 안에 있는 this.state가 현재 컴포넌트의 state이다.  
+* 함수형에서는 useState()라는 함수를 사용한다.  
+* state는 변경은 가능하다고 했지만 직접 수정해서는 안된다.  
+* 불가능하다고 생각하는 것이 좋다.  
+* state를 변경하고자 할때는 setState()함수를 사용한다.  
+
+
+3.
+
 
 ## 5주차 2023-03-30  
 #### 수업내용
