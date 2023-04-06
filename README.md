@@ -825,7 +825,7 @@ MDN에서는 "DOM은 HTML, XML document와 상호작용하고 표현하는 API�
 Virtual Dom(가상 DOM)은 수정사항이 여러가지 있더라도, 가상 DOM은 한 번만 렌더링을 일으킨다.
 
 ---
-index.html 코드 입력
+* index.html 코드 입력
 ```html
 <!DOCTYPE html>
 <html>
