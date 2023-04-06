@@ -26,15 +26,41 @@ function Avatar(props) {
 ```
 
 * 두번째로 사용자 정보 부분을 추출한다.  
-* 컴포넌트 이름은 UserInfo로 정한다. React 컴포넌트 이름은 Camel notion이 된다.  
+* 컴포넌트 이름은 UserInfo로 정한다. React 컴포넌트 이름은 Camel notatio을 사용한다.  
+* UserInfo 안에 Avatar 컴포넌트를 넣어서 완성시킨다.
 
+```jsx
+function Avatar(props) {
+  return (
+    <img className="user-info">
+      <Avtar user={props.user} />
+      <div className="user-info-name">
+        {props.user.name}
+      </div>
+    </div>
+  );
+}
+
+```
 
 * 추출 후에 다시 결합한 UserInfo를 Comment 컴포넌트를 반영하면 다음과 같은 모습이 된다.  
 * 밑의 코드를 보면 처음에 비해서 가독성이 높아진 것을 확인할 수 있다.  
-```
-function Comment(props)
+```jsx
+function Comment(props) {
+  return {
+  <div className="comment">
+    <UserInfo user={props.author} />
+    <div className="comment-text">
+      {props.text}
+    </div>
+    <div className="cimment-date">
+      {formatDate(props.date)}
+    </div>
+    </div>
+  };
+}
 
-작성~
+기본적으로 한 컴포넌트에 하나의 기능을 수행하도록 설계하는 것이 바람직하다.
 ```
 
 ### 5.6 댓글 컴포넌트 만들기  
