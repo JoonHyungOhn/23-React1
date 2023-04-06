@@ -67,7 +67,7 @@ function Comment(props) {
 export default CommentList;
 ```
 
-* js 인덱스 코드 입력
+* index.js 코드 입력
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
