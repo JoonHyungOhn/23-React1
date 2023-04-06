@@ -529,7 +529,7 @@ setInterval(() => {
 
 * 실제 createElement() 함수가 동작하는 과정.
 
-```
+```jsx
 function Button(props) {
     return (
         <button className={`bg-${props, color}`}>
@@ -747,8 +747,8 @@ function getGreeting(user) {
 
 #### chapter_03
 
-Book.jsx
-```
+* Book.jsx 
+```jsx
 import React from "react";
 
 function Book(props) {
@@ -763,8 +763,8 @@ function Book(props) {
 export default Book;
 ```
 
-Library.jsx
-```
+* Library.jsx 코드 입력
+```jsx
 import React from "react";
 import Book from "./Book";
 
@@ -781,8 +781,8 @@ function Library(props) {
 export default Library;
 ```
 
-index.js
-```
+* index.js 코드 입력
+```js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -825,8 +825,8 @@ MDN에서는 "DOM은 HTML, XML document와 상호작용하고 표현하는 API�
 Virtual Dom(가상 DOM)은 수정사항이 여러가지 있더라도, 가상 DOM은 한 번만 렌더링을 일으킨다.
 
 ---
-index.html코드
-
+index.html 코드 입력
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -852,6 +852,7 @@ index.html코드
 
   </body>
 </html>
+```
 
 ---
 
