@@ -22,7 +22,7 @@
 * 이 객체는 마음대로 변경할 수 없는 불변성을 갖고 있다.
 
 밑의 코드는 버튼을 나타내기 위한 엘리먼트의 예시이다. type에는 html태그, props에서는 속성을 나타낸다.
-```
+```js
 <button class = 'bg-green'>
   <b>
     Hello, element
