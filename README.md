@@ -118,7 +118,7 @@ function ConfirmDialog(props) {
 * 이 코드는 tick()함수를 정의하고 있다.  
 * 이 함수는 현재 시간을 포함한 element를 생성해서 root div에 렌더링해 줍니다.
 
-```
+```js
 function tick() {
 
     const element = (
@@ -136,7 +136,7 @@ setInterval(tick, 1000);
 ```
 
 * clock.html 코드
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,7 +170,7 @@ setInterval(tick, 1000);
 
 * index 코드를 바꾸었다.
 * 1초에 한번씩 Clock 컴포넌트를 root div에 렌더링하도록 설정을 바꾸었다.
-```
+```js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -264,7 +264,7 @@ function Welcome(props) {
 4. jsx는 태그가 비어있다면 XML처럼 /> 를 이용해 바로 닫아주어야 한다.
 
 * jsx의 표현식
-```
+```jsx
 function getGreeting(user) {
   if (user) {
     return <h1>Hello, {formatName(user)}!</h1>;
