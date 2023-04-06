@@ -224,9 +224,32 @@ export default CommentList;
   ■ 리액트 컴포넌트의 props는 바꿀 수 없고, 같은 props가 들어오면 항상 같은 엘리먼트를 리턴해야 한다.  
   
  * Props의 사용법  
-  ■ JSX를 사용할 경우 컴포넌트에 키-값 쌍 형태로 넣어 주면 된다.
-  ■
-  ■
+  ■ JSX를 사용할 경우 컴포넌트에 키-값 쌍 형태로 넣어 주면 된다.  
+  ■ 문자열 이외에 정수, 변수, 그리고 다른 컴포넌트 등이 들어갈 경우에는 중괄호를 사용해서 감싸주어야 한다.  
+  ■ JSX를 사용하지 않는 경우 createEletent() 함수의 두 번째 파라미터로 자바스크립트 객체를 넣어주면 된다.  
+  
+### ※ 컴포넌트 만들기  
+
+ * 컴포넌트의 종류 
+  ■ 클래스 컴포넌트와 함수 컴포넌트로 바뉜다.  
+ * 함수 컴포넌트    
+  ■ 함수 형태로 된 컴포넌트
+ * 클래스 컴포넌트    
+  ■ ES6의 클래스를 사용하여 만들어진 컴포넌트  
+ * 컴포넌트 이름 짓기    
+  ■ 컴포넌트의 이름은 항상 대문자로 시작해야 한다.  
+  ■ 소문자로 시작할 경우 컴포넌트를 DOM 태크로 인식하기 때문이다.
+ * 컴포넌트 랜더링   
+  ■ 컴포넌트로부터 엘리먼트를 생성하여 이를 리액트 DOM에 전달한다.
+  
+### ※ 컴포넌트 합성  
+
+ * 여러 개의 컴포넌트를 합쳐서 하나의 컴포넌트를 만드는 것
+  
+### ※ 컴포넌트 추출 
+
+ * 큰 컴포넌트에서 일부를 추출해서 새로운 컴포넌트를 만드는 것
+ * 기능 단위로 구분하는 것이 좋고, 나중에 곧바로 재사용이 가능한 행태로 추출하는 것이 좋다.  
 
 ## chapter 6. state와 생명주기  
 
@@ -249,9 +272,17 @@ export default CommentList;
 ### * 아래 코드를 읽어보자!!
 ```
 //state를 직접 수정 (잘못된 사용법)
+this.state = { 
+  name: 'Inje';
+};  
 
-작성~
+/setState 함수를 통한 수정 (정상적인 사용법)
+this.setState({
+  name: 'Inje'
+});  
 ```
+### * 3가지의 의미에 대해 알아보자!  
+### element(재료), component(빵 틀), instance(재료를 빵 틀에 넣고 만든 빵)이라고 생각하면 쉽다.
 
 ### 6.2 생명주기에 대해 알아보기  
 * 생명주기는 컴포넌트의 생성 시점, 사용 시점, 종료 시점을 나타내는 것이다.  
@@ -398,7 +429,14 @@ class NotificationList extends React.Component {
     }
 }
 
-export default NotificationList;
+export default NotificationList;  
+  
+Notification 컴포넌트를 목록 형태로 보여주기 위한 컴포넌트이다.   
+  
+constructor 내부에 notification이라는 이름의 빈 배열이 있다.  
+앞으로 사용할 state를 초기화 한 것이다.  
+JS의 setInterval()함수를 사용해서 1초마다 작업을 수행하고 있다.  
+Line4에서 설정해 놓은 배열 reservedNotifications로부터 데이터를 하나씩 가져와 state에 있는 notification 배열에 넣고 업데이트한다.  
 ```
 
 * index.js 코드(Noticifation)
