@@ -5,11 +5,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <Clock />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
+
+/*const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Library />
+    <Clock />
   </React.StrictMode>
 );
 
@@ -17,3 +28,4 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+*/
