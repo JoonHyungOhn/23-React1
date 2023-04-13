@@ -182,7 +182,9 @@ import React, { useState, useEffect } from "react";
 훅 함수도 export default를 사용해줘야 한다.
 ```  
 
-* 한 가지 주의할 점은
+* 한 가지 주의할 점은 일반 컴포넌트와 마찬가지로 다른 훅을 호출하는 것은 무조건 커스텀 훅의 최상위 레벨에서만 해야 한다.  
+* 커스텀 훅은 일반 함수와 같다고 생각해도 된다.  
+* 다만 이름은 use로 시작하도록 한다는 것만 다르다. 
 
 3. 커스텀 훅 사용하기  
 
@@ -257,12 +259,11 @@ function Accommodate(props) {
 }
 
 export default Accommodate;
+
+삼항 연산자에서 &&의 의미  
+보통 삼항 연산자는 "A ? B : C;"이 나오는데 값이 true일 경우 앞의 B값이 실행, false일 경우 뒤의 C값이 실행되는데, 
+&&를 쓰면 true의 값인 B만 실행된다.
 ```
-
-
-
-
-
 
 
 ## 6주차 2023-04-06  
