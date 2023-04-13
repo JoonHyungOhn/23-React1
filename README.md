@@ -92,7 +92,7 @@ function UserStatusWithCounter(props) {
 ```  
 
 ### 7.4 useMemo  
-* useMemo()혹은 Memoizde value를 리턴하는 훅이다.
+* useMemo()훅은 Memoizde value를 리턴하는 훅이다.
 
 ### 7.5 useCallback  
 
