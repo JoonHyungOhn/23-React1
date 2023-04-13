@@ -199,7 +199,7 @@ const memoizedValue = useMemo(
 * 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때마다 매번 함수가 실행된다.
 * 따라서 의존성 배열을 넣지 않는 것은 의미가 없다.  
 * 만약 빈 배열을 넣게 되면 컴포넌트 마운트 시에만 함수가 실행된다.
-```
+```jsx
 const memoizedValue = useMemo(
     () => computeExpensiveValue(a, b)
 );
@@ -276,51 +276,96 @@ function Userstatus(props) {
 
 ```  
 
-* 다음 예제는 연락처 목록을 제공하면서 사용자의 이름은 초록색으로 표시하는 UserListItem 컴포넌트이다.
-```
+* 다음 예제는 연락처 목록을 제공하면서 사용자의 이름은 초록색으로 표시하는 UserListItem 컴포넌트이다.  
+```jsx
 import React, { useState, useEffect } from "react";
 
-    function UserStatus(props) {
+    function UserListItem(props) {
+        const [isOnline, setIsOnline] = useState(null);
+
+        useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline);
+        }
+
+        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+        };
+    });
+
+    return (
+        
+    )...
+    
+앞의 코드와 useState()와 useEffect() 훅을 사용하는 부분이 동일하다.  
+이렇게 state와 관련된 로직이 중복되는 경우에는 render props 또는 HOC(higher order components)를 사용한다.
 ```  
 
 2. 커스텀 훅 추출하기  
 * 2개의 자바스크립트 함수에서 하나의 로직을 공유하도록 하고 싶을 때 새로운 함수를 하나 만드는 방법을 사용한다.    
 * 리액트 컴포넌트와 훅은 모두 함수이기 때문에 동일한 방법을 사용할 수 있다.  
 * 이름을 use로 시작하고, 내부에서 다른 훅을 호출하는 자바스크립트 함수를 만들면 된다.  
-* 아래 코드는 중복되는 로직을 
+* 아래 코드는 중복되는 로직을 useUserStatus()라는 커스텀 훅으로 추출해낸 것이다.
 
-```
+```jsx
 import React, { useState, useEffect } from "react";
-코드 입력
+
+    function useUserStatus(props) {
+        const [isOnline, setIsOnline] = useState(null);
+
+        useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline);
+        }
+
+        ServerAPI.subscribeUserStatus(user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(user.id, handleStatusChange);
+        };
+    });
+
+    return isOnline;
+    }    
+
 
 
 
 훅 함수도 export default를 사용해줘야 한다.
 ```  
 
-* 한 가지 주의할 점은 일반 컴포넌트와 마찬가지로 다른 훅을 호출하는 것은 무조건 커스텀 훅의 최상위 레벨에서만 해야 한다.  
+* 한 가지 주의할 점은 일반 컴포넌트와 마찬가지로 <b>다른 훅을 호출하는 것은 무조건 커스텀 훅의 최상위 레벨에서만 해야 한다.</b>  
 * 커스텀 훅은 일반 함수와 같다고 생각해도 된다.  
-* 다만 이름은 use로 시작하도록 한다는 것만 다르다. 
+* 다만, 이름은 use로 시작하도록 한다는 것만 다르다. 
 
 3. 커스텀 훅 사용하기  
 
 * 먼저 작성했던 코드를 사용자 훅을 사용해서 수정하면 아래 코드와 같다.
-```
+```jsx
 import React, { useState, useEffect } from "react";
 
 function UserStatus(props) {
-      const isOnline = useUserStatus(props.user.id);
-      
-      if (isOnline === null) {
-        return '대기 중...';
-        }
-        return isOnline ? '온라인' : '오프라인';
+    const isOnline = useUserStatus(props.user.id);
+
+    if (isOnline === null) {
+        return '대기중...';
     }
-function UserStatus(props) {
+    return isOnline ? '온라인' : '오프라인';
+}
 
-~
-```
+function UserListItem(props) {
+    const isOnline = useUserStatus(props.user.id);
 
+    return (
+        <li style = {{ color: isOnline ? 'green' : 'black' }}>
+        {props.user.name}
+        </li>
+    );
+}
+```  
+
+
+#### chapter_07  
 * useCounter 코드 입력
 ```jsx
 import React, { useState } from "react";
