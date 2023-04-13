@@ -90,51 +90,91 @@ function Counter(props) {
 * 예를 들면 서버에서 데이터를 받아오거나 수동으로 DOM을 변경하는 등의 작업을 의미한다.  
 * 이 작업을 이펙트라고 부르는 이유는 이 작업들이 다른 컴포넌트에 영향을 미칠 수 있고, <b>렌더링 중에는 작업이 완료될 수 없기 때문이다.</b>
 * 렌더링이 끝난 이후에 실행되어야 하는 작업들이다.
-* <b>크러래스 컴포넌트의 생명주기 함수와 같은 기능을 하나로 통합한 기능을 제공한다.</b>
+* <b>클래스 컴포넌트의 생명주기 함수와 같은 기능을 하나로 통합한 기능을 제공한다.</b>
 * 저자는 useEffect가 side effect가 아니라 effect에 가깝다고 설명하고 있지만, 이건 부작용의 의미를 잘못 해석해서 생긴 오해이다.
 * <b>오해가 생긴 이유는 부작용의 부를 不로 생각했기 때문이다.</b>
 * side effect는 부작용(副作用)으로 <b>'원래의 용도 혹은 목적의 효과 외에, 부수적으로 다른 효과가 있는 것'을 뜻한다.</b>
 
 * 결국 side effect는 렌더링 외에 실행해야 하는 부수적인 코드를 말한다.  
 * 예를 들면 네트워크 리퀘스트, DOM 수동 조작, 로깅 등은 정리(clean-up)가 필요 없는 경우들이다.  
-* useEffect()함수는 다음과 같이 사용한다.
 
+* useEffect()함수는 다음과 같이 사용한다.
 * 첫번째 파라미터는 이펙트 함수가 들어가고, 두번째 파라미터는 의존성 배열이 들어간다.  
+```
+useEffect(이펙트 함수, 의존성 배열);
+```
 * 의존성 배열은 이펙트가 의존하고 있는 배열로, 배역 안에 있는 변수 중에 하나라도 값이 변경되었을 때 이펙트 함수가 실행된다.  
 * 이펙트 함수는 처음 컴포넌트가 렌더링 된 이후, 그리고 재렌더링 이후에 실행된다.  
 * 만약 이펙트 함수가 마운트와 언마운트 될 때만 한번씩 실행되게 하고 싶으면 빈 배열을 넣으면 된다.  
 * 이 경우엔 props나 state에 있는 어떤 값에도 의존하지 않기 때문에 여러번 실행되지 않는다.  
 
-* 의존성 배열을 생략하는 경우는 업데이트될 때마다 호출된다
+* <b>의존성 배열을 생략하는 경우는 업데이트될 때마다 호출된다.</b>
 ```jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function Counter(props) {
-  const [count, setCount] = useState(0);
-  
-  //componentDidMount, componentDidUpdate와 비슷하게 작동한다.
-~
+    const [count, setCount] = useState(0);
+
+    //componentDidMount, componentDidUpdate와 비슷하게 작동합니다.
+    useEffect(() => {
+        // 브라우저 API를 사용해서 document의 title을 업데이트 합니다.
+        document.title = '총 ${count}번 클릭했습니다.';
+    });
+
+    return (
+        <div>
+            <p>총 {count}번 클릭했습니다.</p>
+            <button onClick={() => setCount + 1}>
+                클릭
+            </button>
+        </div>    
+    );
+}
+
+<b>여기서는 배열 없이 useEffect를 사용했기 때문에 DOM이 변경된 이후에 해당 이펙트 함수를 실행하라는 의미입니다.</b>
 ```  
 
 * componentWillUnmount()와 동일한 기능은 어떻게 구현하는지 알아보자!
-```
+```jsx
+import React, { useState } from "react";
+
 function UserStatusWithCounter(props) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
     document.title = `총 ${count}번 클릭했습니다.`;
-  });  
+    });
+
+    const [isOnline, setIsOnline] = useState(null);
+    useEffect(() => {
+        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+        };
+    });
+
+    function handleStatusChange(status) {
+        setIsOnline(status.isOnline);
+    }
+};  
+
+useEffect()에서 리턴하는 함수는 컴포넌트가 마운트 해제될 때 호출된다.  
 ```  
-* 정리해보면 다음과 같다.  
-```useEffect(() => {
+  
+* 정리해보면 다음과 같다.   
+ 
+```jsx
+useEffect(() => {
   // 컴포넌트가 마운트 된 이후,  
   // 의존성 배열에 있ㄲ는 변수들 중 하나라도 값이 변경되었을 때 실행된다.  
   // 의존성 배열에 빈 배열을 넣으면 마운트와 언마운트시에 단 한 번씩만 실행된다.  
   // 의존성 배열 생략 시 컨포넌트 업데이트 시마다 실행된다.  
+  ...
   
   return() => {
     // 컴포넌트가 마운트 해제되기 전에 실행된다.
+    ...
     }
-  },[의존성 변수1, 의존성 변수2...]  
+  }, [의존성 변수1, 의존성 변수2...]);  
 ```  
 
 ### 7.4 useMemo  
