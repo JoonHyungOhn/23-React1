@@ -103,8 +103,13 @@ function UserStatusWithCounter(props) {
 ### 7.4 useMemo  
 * useMemo()훅은 Memoizde value를 리턴하는 훅이다.  
 * 이전 계산값을 갖고 있기 때문에 연산량이 많은 작업의 반복을 피할 수 있다.  
-* 이 훅은  
-* 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때따지 매번 함수가 실행된다.  
+* 이 훅은 렌더링이 일어나는 동안 실행된다. 
+* 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때까지 매번 함수가 실행된다.  
+* 예를 들면 useEffect에서 실행되어야 할 사이드 이펙트 같은 것이다.  
+```
+constmemoizedValue = useMemo
+```
+
 * 따라서 의존성 배열을 넣지 않는 것은 의미가 없다.  
 * 만약 빈 배열을 넣게 되면 컴포넌트 마운트 시에만 함수가 실행된다.
 ```
@@ -198,9 +203,61 @@ function UserStatus(props) {
 ~
 ```
 
+* useCounter 코드 입력
+```jsx
+import React, { useState } from "react";
+
+function useCounter(initialValue) {
+    const [count, setCount] = useState(initialValue);
+
+    const increaseCount = () => setCount((count) => count + 1);
+    const decreaseCount = () => setCount((count) => Math.max(count - 1, 0));
+
+    return [count, increaseCount, decreaseCount];
+}
+
+export default useCounter;
+```  
 
 
+* Accommodate 코드 입력
+```jsx
+import React, { useState, useEffect} from "react";
+import useCounter from "./useCounter";
 
+const MAX_CAPACITY = 10;
+
+function Accommodate(props) {
+    const [isFull, setIsFull] = useState(false);
+    const [count, increaseCount, decreaseCount] = useCounter(0);
+
+    useEffect(() => {
+        console.log("======================");
+        console.log("useEffect() is called.");
+        console.log(`isFull: ${isFull}`);
+    });
+
+    useEffect(() => {
+        setIsFull(count >= MAX_CAPACITY);
+        console.log(`Current count value: ${count}`);
+    }, [count]);
+
+    return (
+        <div style={{ padding: 16 }}>
+            <p>{`총 ${count}명 수용했습니다.`}</p>
+
+            <button onClick={increaseCount} disabled={isFull}>
+                입장
+            </button>
+            <button onClick={decreaseCount}>퇴장</button>
+
+            {isFull && <p style={{ color: "red" }}>정원이 가득찼습니다.</p>}
+        </div>
+    );
+}
+
+export default Accommodate;
+```
 
 
 
