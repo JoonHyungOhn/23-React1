@@ -298,8 +298,8 @@ import React, { useState, useEffect } from "react";
         
     )...
     
-앞의 코드와 useState()와 useEffect() 훅을 사용하는 부분이 동일하다.  
-이렇게 state와 관련된 로직이 중복되는 경우에는 render props 또는 HOC(higher order components)를 사용한다.
+// 앞의 코드와 useState()와 useEffect() 훅을 사용하는 부분이 동일하다.  
+// 이렇게 state와 관련된 로직이 중복되는 경우에는 render props 또는 HOC(higher order components)를 사용한다.
 ```  
 
 2. 커스텀 훅 추출하기  
