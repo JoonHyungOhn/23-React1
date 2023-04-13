@@ -44,7 +44,7 @@ function Avatar(props) {
 ```
 
 * 추출 후에 다시 결합한 UserInfo를 Comment 컴포넌트를 반영하면 다음과 같은 모습이 된다.  
-* 밑의 코드를 보면 처음에 비해서 가독성이 높아진 것을 확인할 수 있다.  
+* 아래의 코드를 보면 처음에 비해서 가독성이 높아진 것을 확인할 수 있다.  
 ```jsx
 function Comment(props) {
   return {
