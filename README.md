@@ -194,23 +194,36 @@ const memoizedValue = useMemo(
 ```
 
 #### * 메모이제이션(memoization)은 컴퓨터 프로그램이 동일한 계산을 반복해야 할 때, 이전에 계산한 값을 메모리에 저장함으로써 동일한 계산의 반복수행을 제거하여 프로그램 실행 속도를 빠르게 하는 기술이다.    
-#### 동적 계획법의 핵심이 되는 기술이다.
+#### * 동적 계획법의 핵심이 되는 기술이다.
 
+* 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때마다 매번 함수가 실행된다.
 * 따라서 의존성 배열을 넣지 않는 것은 의미가 없다.  
 * 만약 빈 배열을 넣게 되면 컴포넌트 마운트 시에만 함수가 실행된다.
 ```
-const memoizedValue = useMemo
-~
+const memoizedValue = useMemo(
+    () => computeExpensiveValue(a, b)
+);
 ```
 
 ### 7.5 useCallback  
 
 * useCallback()훅은 useMemmo()와 유사한 역할을 한다.  
-* 차이점은 별로 없다.  
+### * 차이점은 값이 아닌 함수로 반환한다는 점이다.  
+* 의존성 배열을 파라미터로 받는 것은 useMemo와 동일하다.  
+* 파라미터로 받은 함수를 콜백(callback)이라고 부른다.  
+* useMemo와 마찬가지로 의존성 배열 중 하나라도 변경되면 콜백함수를 반환한다.  
+```jsx
+const memoizedCallback = useCallback(
+    () => {
+        dosomething(의존성 변수1, 의존성 변수2);
+    },
+    [의존성 변수1, 의존성 변수2]
+);
+```  
 
 ### 7.6 useRef  
 * useRef() 훅은 레퍼런스를 사용하기 위한 훅이다.  
-* 레퍼런스란 특정 컴포넌트에 접근할 수 있는 객체를 의미한다.  
+* 레퍼런스란 <b>특정 컴포넌트에 접근할 수 있는 객체를 의미한다.</b>    
 * useRef()훅은 바로 이 레퍼런스 객체를 반환한다.  
 * 레퍼런스 객체에는 .current라는 속성이 있는데, 이것을 현재 참조하고 있는 엘리먼트를 의미한다.   
 ```
@@ -222,28 +235,45 @@ const refContainer = useRef(초깃값);
   
 
 ### 7.7 훅의 규칙  
-* 첫 번째 규칙은 무조건 최상의 레벨에서만 호출해야 한다는 것이다.  
+* <b>첫 번째 규칙은 무조건 최상의 레벨에서만 호출해야 한다는 것이다.</b>  
 * 여기서 최상위는 컴포넌트의 최상위 레벨을 의미한다.  
 * 따라서 반복문이나 조건문 또는 중첩된 함수들 안에서 훅을 호출하면 안 된다.  
 * 이 규칙에 따라서 훅은 컴포넌트가 렌더링 될 때마다 같은 순서로 호출되어야 한다.  
 
-* 두 번째 규칙은 리액트 함수형 컴포넌트에서만 훅을 호출해야만 한다는 것이다.  
-* 따라서 일반 잡스크립트 함수에서 훅을 호출하면 안 된다.  
-* 훅은 리액트 함수형 컴포넌트 훅은 직접 만든 커스텀 훅에서만 호출할 수 있다.  
+* <b>두 번째 규칙은 리액트 함수형 컴포넌트에서만 훅을 호출해야만 한다는 것이다.</b>  
+* 따라서 일반 자바스크립트 함수에서 훅을 호출하면 안 된다.  
+* 훅은 리액트의 함수형 컴포넌트 아니면 직접 만든 커스텀 훅에서만 훅을 호출할 수 있다.  
 
 
 ### 7.8 나만의 훅 만들기  
 * 필요하다면 직접 훅을 만들어 쓸 수도 있다. 이것을 커스텀 훅이라고 한다.  
 1. 커스텀 훅을 만들어야 하는 상황  
 아래 예제 UserStatus 컴포넌트는 isOnline이라는 state에 따라서 사용자의 상태가 온라인인지 아닌지를 텍스트로 보여주는 컴포넌트이다.  
-```
+```jsx
 import React, { useState, useEffect } from "react";
 
-    function UserStatus(props) {
-        const [isOnline, setIsOnline]
+function Userstatus(props) {
+
+    const [isOnline, setIsOnline] = useState(null);
 
 
-코드 입력~
+    useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline)
+        }
+
+        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+        };
+    });
+
+    if (isOnline === null) {
+        return '대기중...';
+    }
+    return isOnline ? '온라인' : '오프라인';
+}  
+
 ```  
 
 * 다음 예제는 연락처 목록을 제공하면서 사용자의 이름은 초록색으로 표시하는 UserListItem 컴포넌트이다.
