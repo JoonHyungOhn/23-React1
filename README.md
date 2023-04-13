@@ -134,7 +134,72 @@ const refContainer = useRef(초깃값);
 
 
 
-### 7.8 
+### 7.8 나만의 훅 만들기  
+* 필요하다면 직접 훅을 만들어 쓸 수도 있다. 이것을 커스텀 훅이라고 한다.  
+1. 커스텀 훅을 만들어야 하는 상황  
+아래 예제 UserStatus 컴포넌트는 isOnline이라는 state에 따라서 사용자의 상태가 온라인인지 아닌지를 텍스트로 보여주는 컴포넌트이다.  
+```
+import React, { useState, useEffect } from "react";
+
+    function UserStatus(props) {
+        const [isOnline, setIsOnline]
+
+
+코드 입력~
+```  
+
+* 다음 예제는 연락처 목록을 제공하면서 사용자의 이름은 초록색으로 표시하는 UserListItem 컴포넌트이다.
+```
+import React, { useState, useEffect } from "react";
+
+    function UserStatus(props) {
+```  
+
+2. 커스텀 훅 추출하기  
+* 2개의 자바스크립트 함수에서 하나의 로직을 공유하도록 하고 싶을 때 새로운 함수를 하나 만드는 방법을 사용한다.    
+* 리액트 컴포넌트와 훅은 모두 함수이기 때문에 동일한 방법을 사용할 수 있다.  
+* 이름을 use로 시작하고, 내부에서 다른 훅을 호출하는 자바스크립트 함수를 만들면 된다.  
+* 아래 코드는 중복되는 로직을 
+
+```
+import React, { useState, useEffect } from "react";
+코드 입력
+
+
+
+훅 함수도 export default를 사용해줘야 한다.
+```  
+
+* 한 가지 주의할 점은
+
+3. 커스텀 훅 사용하기  
+
+* 먼저 작성했던 코드를 사용자 훅을 사용해서 수정하면 아래 코드와 같다.
+```
+import React, { useState, useEffect } from "react";
+
+function UserStatus(props) {
+      const isOnline = useUserStatus(props.user.id);
+      
+      if (isOnline === null) {
+        return '대기 중...';
+        }
+        return isOnline ? '온라인' : '오프라인';
+    }
+function UserStatus(props) {
+
+~
+```
+
+
+
+
+
+
+
+
+
+
 
 ## 6주차 2023-04-06  
 #### 수업내용
