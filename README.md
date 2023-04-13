@@ -39,7 +39,7 @@
 * 증가를 시킬 수 있지만 증가할 때마다 재 렌더링은 일어나지 않는다.  
 * 이럴 때 state를 사용해야 하지만 함수형에는 없기 때문에 useState()를 사용한다.
 
-```
+```jsx
 import React, { useState } from "react";
 
 function Counter(props) {
@@ -56,13 +56,29 @@ function Counter(props) {
 }
 ```  
 
-useState()함수의 사용법은 다음과 같다.  
-첫번째 항목은 state의 이름(변수명)이고, 두번째 항목은 state의 set함수이다.  
-즉 state를 업데이트 하는 함수이다.  
-함수를 호출할 때 state의 초기값을 설정한다.  
-함수의 리턴 값은 배열의 형태이다.  
+useState()함수의 사용법은 아래와 같다.  
 ```
-배열 형태 함수 입력  
+const [변수명, set변수명] = useState(초깃값);
+```
+* 첫번째 항목은 state의 이름(변수명)이고, 두 번째 항목은 state의 set함수이다.  
+* 즉 state를 업데이트 하는 함수이다.  
+* 함수를 호출할 때 state의 초기값을 설정한다.  
+* 함수의 리턴 값은 배열의 형태이다.  
+```jsx
+import React, { useState } from "react";
+
+function Counter(props) {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>총 {count}번 클릭했습니다.</p>
+            <button onClick={() => setCount + 1}>
+                클릭
+            </button>
+        </div>    
+    );
+}
 ```  
 
 ### 7.3 useEffect
