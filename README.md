@@ -20,7 +20,7 @@
    ■ state를 변경하고자 할 때에는 꼭 setState()함수를 사용해야 한다.  
 * 함수 컴포넌트    
    ■ useState()훅을 사용하여 각각의 state를 정의한다.  
-   ■ 각 state별ㄹ로 주어지는 set함수를 사용하여 state 값을 변경한다.  
+   ■ 각 state별로 주어지는 set함수를 사용하여 state 값을 변경한다.  
 
 ## chapter 7. 훅  
 
