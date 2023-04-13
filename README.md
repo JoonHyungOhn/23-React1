@@ -329,8 +329,6 @@ import React, { useState, useEffect } from "react";
     }    
 
 
-
-
 훅 함수도 export default를 사용해줘야 한다.
 ```  
 
@@ -365,7 +363,7 @@ function UserListItem(props) {
 ```  
 
 
-#### chapter_07  
+
 * useCounter 코드 입력
 ```jsx
 import React, { useState } from "react";
