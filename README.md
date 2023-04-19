@@ -1145,10 +1145,10 @@ setInterval(() => {
 }, 1000);
 ```
 
-## 5장 컴포넌는와 props
+## 5장 컴포넌트와 props  
 
-## 5. props에 대해 알아보자
-### 1. props의 개념 
+### 5. props에 대해 알아보자  
+### 1. props의 개념   
 
 props는 prop(property: 속성, 특성)의 준말이다.  
 이 props가 바로 컴포넌트의 속성이다.  
