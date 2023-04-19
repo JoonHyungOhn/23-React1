@@ -1349,6 +1349,51 @@ Virtual Dom(가상 DOM)은 수정사항이 여러가지 있더라도, 가상 DOM
 
 # 온준형
 ## 2주차 2023-03-09
+#### 수업 내용  
+
+* 자바스크립트  
+
+* 자바스크립트는 웹페이지의 동작을 담당하는 스크립트 언어이다.  
+* C언어, Java, Python과 같은 프로그래밍 언어와 JS같은 스크립트 언어의 결정적인 차이점은 런타임(Runtime)에 코드 해석 여부에 따라 나뉜다.  
+* 프로그래밍 언어는 컴파일(compile)이라는 과정을 시행한 이후에 컴퓨터가 해석하고 실행하지만, 스크립트 언어는 작성과 동시에 인터프리터가 기계어로 번역해서 해석한다.  
+* 컴파일 언어는 운영체제에 따라 다르게 작성해야 하지만, 스크립트 언어는 운영체제에 상관없이 구동 가능 하다.  
+
+#### JS(자바스크립트)의 기초적인 성질  
+```
+* Number Type => 숫자형 변수 선언
+let n1 = 1234;
+let n2 = 5.678;
+
+* String Type => 문자열 변수 선언
+let s1 = "Hello";
+let s2 = "World";
+
+* Boolean Type => 참, 거짓 여부 변수 선언
+let b1 = true;
+let b2 = false;
+
+* Null Type => Null값 선언
+let n = null;
+
+* Undefined Type => 변수를 선언하고 특정한 유형을 대입하지 않으면 Undefined상태 지정. 변수의; 값이 대입되는 순간 Undefined변수의 값 자동 선언
+let u1;
+let u2 = undefined;
+
+* Array Type => 배열 선언
+let arr = [1, 2, 3, 4];
+
+* Object Type => 오브젝트는 JS가 객체를 다루기 위해 사용하는 개념으로, 이름(key || name)과 값(value)으로 이루어진 쌍의 집합을 의미한다. 
+let obj = {a: "apple", b: "banana", c:"cherry"}
+
+---
+//JS의 연산자
+let a = 10;
+let b = 20;
+
+console.log(a); //출력 결과 : 10
+cons2le.log(b); //출력 결과 : 20
+```
+
 ###### 코드 내용
 
 ---
