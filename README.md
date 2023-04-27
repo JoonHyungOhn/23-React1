@@ -101,7 +101,7 @@ function Toggle(props) {
 ```  
 
 ### 8.2 Argunments 전달하기    
-* case를 쓸 때는 카멜 케이스를 많이 쓰기도 하고 스네이크 case는 언더바를 사용하고, 캐밥 case는 -를 사용한다.  
+* case를 쓸 때는 카멜 케이스를 많이 쓰기도 하고 스네이크 case는 언더바를 사용하고, 캐밥 case는 하이픈(-)을 사용한다.  
 
 * 함수를 전달할 때는 파라미터(Parameter) 혹은 매개변수, 함수를 사용할 때는 <b>Argument 혹은 인자</b>라고 부른다.   
 * 이벤트 핸들러에 매개변수를 전달해야 하는 경우도 많다.  
@@ -391,17 +391,24 @@ import reportWebVitals from './reportWebVitals';
 
 import Library from './chapter_03/Library';
 import Clock from './chapter04/clock';
-import CommentList from './chapter_05/Commentlist';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import Toolbar from './chapter_09/Toolbar';
+import LandingPage from './chapter_09/LandingPage';
+
 
 setInterval(() => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>
       {/* <Clock /> */}
-      {* <CommentList /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
       {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
       {/* <Toolbar /> */}
-      <LandingPage />
+      <LandingPage />     // 수정 위치
     </React.StrictMode>,
     document.getElementById('root')
   );
