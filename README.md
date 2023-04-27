@@ -39,11 +39,77 @@
 * 버튼은 클릭하면 이벤트 핸들러 함수인 handleClick()함수를 호출하도록 되어있다.  
 * bind를 사용하지 않으면 this.handleClick은 글로벌 스코프에서 호출되며, usdefined으로 사용할 수 없기 때문이다.  
 * bind를 사용하지 않으려면 화살표 함수를 사용하는 방법도 있다.  
-#### * 하지만 클래스 컴포넌트는 이제 거의 사용하지 않기 때문에 참고만
+* 화살표 함수를 쓸 때는 ~ 
+ 
+#### * 하지만 클래스 컴포넌트는 이제 거의 사용하지 않기 때문에 참고만 하면 된다.
 
+```jsx
+class Toggle extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {isToggleOn: true};
+        // callback에서 'this'를 사용하기 위해서는 바인딩을 필수적으로 해줘야 한다.
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.setState(prevState => ({
+            isToggleOn: !prevState.isToggleOn
+        }));
+    }
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+            {this.state.isToggleOn ? '켜짐' : '꺼짐'} // 삼항 연산자를 사용한다.
+            </button>
+        );
+    }
+}
+
+// import와 export는 생략.
+```  
+
+* 클래스형을 함수형으로 바꾸면 다음 코드아 같다.  
+* 함수형에서 이벤트 핸들러를 정의하는 방법은 두가지인데 두번째 방법을 많이 사용한다.  
+* 함수형에서는 this를 사용하지 않고, onClick에서 바로 HandleClick을 넘기면 된다.  
+```jsx
+import { useState } from "react";
+
+function Toggle(props){
+    const [isToggleOn, setIsToggleOn] = useState(true);
+}
+
+
+// import와 export는 생략.
+```  
+
+### 8.2 Argunments 전달하기    (스네이크 case는 언더바를 사용하는 것, 캐밥 case는 -를 사용한다.)  
+* 함수를 전달할 때는 파라미터(Parameter) 혹은 매개변수, 함수를 사용할 때는 <b>Argument 혹은 인자</b>라고 부른다.   
+* 이벤트 핸들러에 매개변수를 전달해야 하는 경우도 많다.  
+
+```
+function foobar(x, y) { 괄호 안에 들어가는 것을 매개변수 혹은 파러미터라고 부른다. 
+}
+```  
+
+```jsx
+<button onClick={(Event) => this.deleteItem(id, event)}>삭제하기</button>
+<button onClick={this.deleteItem.bind(this, id)}>삭제하기</button>
+// 이벤트를 나타낼 때는 (event)를 사용하거나 (e)중 아무거나 사용한다.  
+// 하지만 키워드를 사용하면 불편하기도 하고 안 좋기 때문에 지양한다.  
+```
+* 위의 코드는 모두 몽일한 역할을 하지만 첫 번째는 화살표 함수를, 두 번째는 bind를 사용했다.  
+* event라는 매개변수는 리액트의 이벤트 객체를 의미한다.  
+* 두 방법 모두 첫번때 매개변수는 id이고 두번째 매개변수로 event가 전달된다.  
+* 첫번째 코드는 명시적으로 event를 매개변수로 넣어주었고, 두번째 코드는 id 이후 두번째 매개변수로 event가 자동 전달된다.  
+(이 방법은 클래스 형에서 사용하는 방법이다.)  
+* 함수형 컴포넌트에서 이벤트 핸들러에 매개변ㅅ를 전달할 때는 아래 코드와 같이 쓴다.
 ```
 
 ```
+
 
 
 ## 7주차 2023-04-13  
