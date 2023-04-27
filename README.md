@@ -9,7 +9,7 @@
 * 8.1 이벤트 처리하기  
 * 8.2 Arguments 전달하기  
 * 8.3 클릭 이벤트 처리하기  
-* 8.4 마치며  
+* 8.4 마치며(요약)  
 
 ### 8.1 이벤트 처리하기  
 
@@ -116,9 +116,9 @@ function foobar(x, y) { 괄호 안에 들어가는 x, y(것)를 매개변수 혹
 // 이벤트를 나타낼 때는 (event)를 사용하거나 (e)중 아무거나 사용한다.  
 // 하지만 키워드를 사용하면 불편하기도 하고 안 좋기 때문에 지양한다.  
 ```
-* 위의 코드는 모두 몽일한 역할을 하지만 첫 번째는 화살표 함수를, 두 번째는 bind를 사용했다.  
+* 위의 코드는 모두 동일한 역할을 하지만 첫 번째는 화살표 함수를, 두 번째는 bind를 사용했다.  
 * event라는 매개변수는 리액트의 이벤트 객체를 의미한다.  
-* 두 방법 모두 첫번때 매개변수는 id이고 두 번째 매개변수로 event가 전달된다.  
+* 두 방법 모두 첫 번째 매개변수는 id이고 두 번째 매개변수로 event가 전달된다.  
 * 첫 번째 코드는 명시적으로 event를 매개변수로 넣어주었고,  두 번째 코드는 id 이후 두 번째 매개변수로 event가 자동 전달된다.  
 (이 방법은 클래스 형에서 사용하는 방법이다.)  
 
@@ -162,7 +162,7 @@ export default ConfirmButton;
 ```  
   
 #### * ConfirmButton index.js 코드 수정하기
-```
+```js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -267,17 +267,176 @@ false && expression -> false
 * 삼항 연산자를 사용한다.  
 * 문자열이나 엘리먼트를 넣어서 사용할 수도 있다.  
 ```
-조건문 ? 참일 경우 : 거짓일 경우
-```
+조건문 ? 참일 경우 : 거짓일 경우  
+```  
 
+* 아래 코드를 참고
+```jsx
+function UserStatus(props) {
+    returns (
+        <div>
+            이 사용자는 현재 <b>{props.isLoggedIn ? '로그인' : '로그인하지 않은'</b>
+            상태입니다.
+        </div>
+    )
+}
+```  
 
+```jsx
+<div>
+    <Greeting isLoggedIn={isLoggedIn} />
+    {isLoggedIn
+        ? <LogoutButton onClick={handleLogoutClick} />
+        ? <LoginButton onClick={handleLoginClick} />
+    }
+</div>
+```  
 
+### 9.4 컴포넌트 렌더링 막기  
+* 컴포넌트를 렌더링하고 싶지 않을 때에는 null을 리턴한다.  
 
+```jsx
+function WarringBanner(props) {
+    if (!props.warring) {
+        return null;
+    }
 
+    return (
+        <div>경고!</div>
+    )
+}
 
+결과 값을 더 쉽게 보려면 위쪽 return과 아래쪽 return을 바꿔주면 된다.
+```  
 
+### 9.5 로그인 여부를 나타내는 툴바 만들기(실습)  
 
+#### * Toolbar.jsx 코드  
 
+```jsx
+
+import React from "react";
+
+const styles = {
+    wrapper: {
+        padding: 16,
+        display: "flex",
+        flexDirection: "row",
+        borderBottom: "1px solid grey",
+    },
+    greeting: {
+        marginRight: 8,
+    },
+};
+
+function Toolbar(props) {
+    const { isLoggedIn, onClickLogin, onClickLogout } = props;
+
+    return (
+        <div style={styles.wrapper}>
+            {isLoggedIn && <span style={styles.greeting}>환영합니다!</span>}
+
+            {isLoggedIn ? (
+                <button onClick={onClickLogout}>로그아웃</button>
+            ) : (
+                <button onClick={onClickLogin}>로그인</button>
+            )}
+        </div>
+    );
+}
+
+export default Toolbar;
+```  
+
+#### * LandingPage.jsx 코드  
+
+```jsx
+import React, { useState } from "react";
+import Toolbar from "./Toolbar";
+
+function LandingPage(props) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const onClickLogin = () => {
+        setIsLoggedIn(true);
+    };
+
+    const onClickLogout = () => {
+        setIsLoggedIn(false);
+    };
+
+    return (
+        <div>
+            <Toolbar
+                isLoggedIn={isLoggedIn}
+                onClickLogin={onClickLogin}
+                onClickLogout={onClickLogout}
+            />
+            <div style={{ padding: 16 }}>소플과 함께하는 리액트 공부!</div>
+        </div>
+    );
+}
+
+export default LandingPage;
+```   
+
+#### * index.js 코드  
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/Commentlist';
+
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {* <CommentList /> */}
+      {/* <Accommodate /> */}
+      {/* <Toolbar /> */}
+      <LandingPage />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
+```  
+
+### 9.6 마치며(요약)  
+
+#### * 조건부 렌더링    
+* 조건에 따라 렌더링의 결과가 달라지도록 하는 것  
+
+#### * 엘리먼트 변수  
+* 리액트 엘리먼트를 변수처럼 저장해서 사용하는 방법  
+
+#### * 인라인 조건  
+##### 조건문을 코드 안에 집어넣는 것  
+##### 인라인 if  
+    ■ if문을 필요한 곳에 직접 집어넣어서 사용하는 방법  
+    ■ 논리 연산자 &&를 사용(AND 연산)  
+    ■ 앞에 나오는 조건문이 true일 경우에만 뒤에 나오는 엘리먼트를 렌더링    
+
+##### 인라인 if-Else  
+    ■ if-Else문을 필요한 곳에 직접 집어넣어서 사용하는 방법  
+    ■ 삼항 연산자 ?를 사용  
+    ■ 앞에 나오는 조건문이 true면 첫 번째 항목을 리턴(return), false면 두 번째 항목을 리턴(return)  
+    ■ 조건에 따라 각기 다른 엘리먼트를 렌더링하고 싶을 때 사용  
+    
+#### 컴포넌트 렌더링 막기  
+##### 리액트에서는 nill을 리턴하면 렌더링되지 않음  
+##### 특정 컴포넌트를 렌더링하고 싶지 않을 경우 null을 리턴하면 됨  
+
+  
+## 8주차 2023-04-20  
+#### 중간고사  
+  
 
 ## 7주차 2023-04-13  
 #### 수업내용  
@@ -444,7 +603,7 @@ useEffect()에서 리턴하는 함수는 컴포넌트가 마운트 해제될 때
 ```jsx
 useEffect(() => {
   // 컴포넌트가 마운트 된 이후,  
-  // 의존성 배열에 있ㄲ는 변수들 중 하나라도 값이 변경되었을 때 실행된다.  
+  // 의존성 배열에 있는 변수들 중 하나라도 값이 변경되었을 때 실행된다.  
   // 의존성 배열에 빈 배열을 넣으면 마운트와 언마운트시에 단 한 번씩만 실행된다.  
   // 의존성 배열 생략 시 컨포넌트 업데이트 시마다 실행된다.  
   ...
