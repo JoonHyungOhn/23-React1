@@ -8,6 +8,9 @@ import Library from './chapter_03/Library';
 import Clock from './chapter04/clock';
 import CommentList from './chapter_05/CommentList';
 import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import LandingPage from './chapter_09/LandingPage';
+import Toolbar from './chapter_09/Toolbar';
 
 setInterval(() => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,7 +19,9 @@ setInterval(() => {
       {/* <Clock /> */}
       {/*<CommentList> */}
       {/* <Notification /> */}
-      <Accommodate />
+      {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
+      <Toolbar />
     </React.StrictMode>,
     document.getElementById('root')
   );
