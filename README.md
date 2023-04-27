@@ -140,10 +140,29 @@ function MyButton(props) {
 2. 2. 클래스 필드 문법 상ㅇ하기.  
 3. 함수 컴포넌트로 변경하기.  
 
+* ConfirmButton 컴포넌트 만들기.  
 ```jsx
+import React, { useState } from "react";
+
+function ConfirmButton(props) {
+    const [isConfirmed, setIsConfirmed] = useState(false);
+
+    const handleConfirm = () => {
+        setIsConfirmed((prevIsConfirmed) => !prevIsConfirmed);
+    };
+
+    return (
+        <button onClick={handleConfirm} disabled={isConfirmed}>
+            {isConfirmed ? "확인됨" : "확인하기"}  //삼항 연산자를 사용함
+        </button>
+    );
+}
+
+export default ConfirmButton;
+```  
 
 
-```
+
 
 ## 7주차 2023-04-13  
 #### 수업내용  
