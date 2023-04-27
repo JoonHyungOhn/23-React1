@@ -3,7 +3,7 @@
 ## 9주차 2023-04-27  
 #### 수업내용  
 
-chapter 8. 이벤트 핸들링  
+## chapter 8. 이벤트 핸들링  
 
 ### * 목차
 * 8.1 이벤트 처리하기  
@@ -14,20 +14,20 @@ chapter 8. 이벤트 핸들링
 ### 8.1 이벤트 처리하기  
 
 * DOM에서 클릭 이벤트를 처리하는 예제 코드.
-```
+```jsx
 <button onClick=activate()>
     Activate
 </button>  
 ```  
 
-* React에서 클릭 이벤트 처리하는 예저 코드.
-```
+* React에서 클릭 이벤트 처리하는 예제 코드.
+```jsx
 <button onClick={activate}>
     Activate
 </button>    
 ```  
 
-* 둘의 차이점은  
+### * 둘의 차이점은  
 1) 이벤트 이름이 onclick에서 onClick으로 변경.(Camel case)
 2) 전달하려는 함수는 문자열에서 함수 그대로 전달.  
 
