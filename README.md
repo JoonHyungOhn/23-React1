@@ -1,204 +1,768 @@
 # 23-React1
 # 온준형
+## 9주차 2023-04-27  
+#### 수업내용  
+
+## chapter 8. 이벤트 핸들링  
+
+### * 목차
+* 8.1 이벤트 처리하기  
+* 8.2 Arguments 전달하기  
+* 8.3 클릭 이벤트 처리하기  
+* 8.4 마치며  
+
+### 8.1 이벤트 처리하기  
+
+* DOM에서 클릭 이벤트를 처리하는 예제 코드.
+```jsx
+<button onClick="activate()">
+    Activate
+</button>  
+```  
+
+* React에서 클릭 이벤트 처리하는 예제 코드.
+```jsx
+<button onClick={activate}>
+    Activate
+</button>    
+```  
+
+### * 둘의 차이점은  
+#### 1) 이벤트 이름이 onclick에서 onClick으로 변경.(Camel case)
+#### 2) 전달하려는 함수는 문자열에서 함수 그대로 전달.  
+
+* 이벤트가 발생했을 때 해당 이벤트를 처리하는 함수를 "이벤트 핸들러(Event Handler)"라고 한다.  
+* 또는 이벤트가 발생하는 것을 계속 듣고 있다는 의미로 "이벤트 리스너(Event Listener)"라고 부르기도 한다.  
+
+* 이벤트 핸들러 추가하는 방법은?  
+  
+* 버튼은 클릭하면 이벤트 핸들러 함수인 handleClick()함수를 호출하도록 되어있다.  
+* bind를 사용하지 않으면 this.handleClick은 글로벌 스코프에서 호출되며, undefined으로 사용할 수 없기 때문이다.  
+* bind를 사용하지 않으려면 화살표 함수를 사용하는 방법도 있다.  
+* 화살표 함수를 쓸 때는 몇 가지 제한점이 있고 모든 상황에 사용할 수는 없다.
+ 
+#### * 하지만 클래스 컴포넌트는 이제 거의 사용하지 않기 때문에 참고만 하면 된다.
+
+```jsx
+class Toggle extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {isToggleOn: true};
+        // callback에서 'this'를 사용하기 위해서는 바인딩을 필수적으로 해줘야 한다.
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.setState(prevState => ({
+            isToggleOn: !prevState.isToggleOn
+        }));
+    }
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+            {this.state.isToggleOn ? '켜짐' : '꺼짐'} // 삼항 연산자를 사용한다.
+            </button>
+        );
+    }
+}
+
+// import와 export는 생략.
+```  
+
+* 클래스형을 함수형으로 바꾸면 다음 코드와 같다.  
+* 함수형에서 이벤트 핸들러를 정의하는 방법은 두 가지인데 두 번째 방법을 많이 사용한다.  
+* 함수형에서는 this를 사용하지 않고, onClick에서 바로 HandleClick을 넘기면 된다.  
+```jsx
+import { useState } from "react";
+
+function Toggle(props) {
+    const [isToggleOn, setIsToggleOn] = useState(true);
+
+    // 방법 1. 함수 안에 함수로 정의
+    function handleClick() {
+        setIsToggleOn((isToggleOn) => !isToggleOn);
+    }
+
+    // 방법 2. arrow function을 사용하여 정의
+    const handleClick = () => { //const handleClick은 객체를 저장하는 곳
+        setIsToggleOn((isToggleOn) => !isToggleOn);
+    }
+
+    return (
+        <button onClick={handleClick}>
+            {isToggleOn ? '켜짐' : '꺼짐'} // 삼항 연산자를 사용한다.
+        </button>
+    );        
+}
+
+// import와 export는 생략.
+```  
+
+### 8.2 Argunments 전달하기    
+* case를 쓸 때는 카멜 케이스를 많이 쓰기도 하고 스네이크 case는 언더바를 사용하고, 캐밥 case는 -를 사용한다.  
+
+* 함수를 전달할 때는 파라미터(Parameter) 혹은 매개변수, 함수를 사용할 때는 <b>Argument 혹은 인자</b>라고 부른다.   
+* 이벤트 핸들러에 매개변수를 전달해야 하는 경우도 많다.  
+
+```
+function foobar(x, y) { 괄호 안에 들어가는 x, y(것)를 매개변수 혹은 파라미터라고 부른다. }
+```  
+
+```jsx
+<button onClick={(Event) => this.deleteItem(id, event)}>삭제하기</button>
+<button onClick={this.deleteItem.bind(this, id)}>삭제하기</button>
+// 이벤트를 나타낼 때는 (event)를 사용하거나 (e)중 아무거나 사용한다.  
+// 하지만 키워드를 사용하면 불편하기도 하고 안 좋기 때문에 지양한다.  
+```
+* 위의 코드는 모두 몽일한 역할을 하지만 첫 번째는 화살표 함수를, 두 번째는 bind를 사용했다.  
+* event라는 매개변수는 리액트의 이벤트 객체를 의미한다.  
+* 두 방법 모두 첫번때 매개변수는 id이고 두 번째 매개변수로 event가 전달된다.  
+* 첫 번째 코드는 명시적으로 event를 매개변수로 넣어주었고,  두 번째 코드는 id 이후 두 번째 매개변수로 event가 자동 전달된다.  
+(이 방법은 클래스 형에서 사용하는 방법이다.)  
+
+* 함수형 컴포넌트에서 이벤트 핸들러에 매개변수를 전달할 때는 아래 코드와 같이 쓴다.
+``` jsx
+function MyButton(props) {
+    const handleDelete = (id, event) => {
+        console.log(id, event.target);
+    };
+
+    return (
+        <button onClick={(event) => handleDelete(1, event)}>삭제하기</button>
+    );
+}
+```
+
+### 8.3 클릭 이벤트 처리하기 (실습)
+1. ConfirmButton 컴포넌트 만들기.  
+2. 클래스 필드 문법 하기.  
+3. 함수 컴포넌트로 변경하기.  
+
+#### * ConfirmButton 컴포넌트 만들기.  
+```jsx
+import React, { useState } from "react";
+
+function ConfirmButton(props) {
+    const [isConfirmed, setIsConfirmed] = useState(false);
+
+    const handleConfirm = () => {
+        setIsConfirmed((prevIsConfirmed) => !prevIsConfirmed);
+    };
+
+    return (
+        <button onClick={handleConfirm} disabled={isConfirmed}>
+            {isConfirmed ? "확인됨" : "확인하기"}  //삼항 연산자를 사용함
+        </button>
+    );
+}
+
+export default ConfirmButton;
+```  
+  
+#### * ConfirmButton index.js 코드 수정하기
+```
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      <ConfirmButton />            // 수정 위치
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
+```
+
+### 8.4 요약  
+
+#### * 이벤트란?  
+* 사용자가 버튼을 클릭하는 등의 사건을 의미  
+
+#### * 이벤트 처리하기  
+##### * DOM의 이벤트  
+* 이벤트의 이름을 모두 소문자로 표기  
+* 이벤트를 처리할 함수를 문자열로 전달   
+##### * 리액트의 이벤트  
+* 이벤트의 이름을 모두 카멜 표기법로 표기  
+* 이벤트를 처리할 함수를 문자열로 전달  
+##### * 이벤트 핸들러  
+* 이벤트가 발생했을 때 해당 이벤트를 처리하는 함수  
+* 이벤트 리스너라고 부르기도 함  
+* 클래스 컴포넌트  
+    ■ 클래스의 함수로 정의하고 생성자에서 바인딩해서 사용  
+    ■ 클래스 필드 문법도 사용 가능  
+* 함수 컴포넌트  
+    ■ 함수 안에 함수로 정의하거나 arrow function을 사용하여 정의  
+
+chapter.9 조건부 렌더링
+
+### 9.1 조건부 렌더링이란?  
+* 여기서 조건이란 우리가 알고 있는 조건문의 조건인다.
+```jsx
+function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return <UserGreeting />
+    }
+    return <GuestGreeting />
+}
+
+// import와 export는 생략.
+```  
+* props로 전달 받은 isLoggedIn이 true이면 <UserGreeting />을, false면 <GuestGreeting />을 return한다.  
+* 이와 같은 렌더링을 조건부 렌더링이라고 한다.  
+
+### 9.2 엘리먼트 변수  
+* 렌더링해야 할 컴포넌트를 변수처럼 사용하는 방법이 엘리먼트 변수이다.  
+* state에 따라 button 변수에 컴포넌트의 객체를 저장하여 return문에서 사용하고 있다.  
+```jsx
+let button;
+if (isLoggedIn) {
+    button = <LogoutButton onClick={handleLogoutClick} />;
+} else {
+    button = <LoginButton onClick={handleLoginClick} />;
+}
+
+return (
+    <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+    </div>
+    )    
+```  
+
+### 9.3 인라인 조건  
+* 필요한 곳에 조건문을 직접 넣어 사용하는 방법  
+
+#### 1. 인라인 if  
+* if문을 직접 사용하지 않고, 동일한 효과를 내기 위해 && 논리 연산자를 사용한다.  
+* &&는 and 연산자로 모든 조건이 참일때만 참이 된다.  
+* 첫 번째 조건이 거짓이면 두 번째 조건은 판단할 필요가 없다.
+* 아래 코드를 참고.(단축평가)  
+```jsx
+true && expression -> expression
+false && expression -> false
+```  
+
+* 판단만 하지 않는 것이고 결과 값은 그대로 리턴된다.
+
+#### 2. 
+
+
+
+
+
+
+
+
+
+
+
+
 ## 7주차 2023-04-13  
 #### 수업내용  
 
 ### 6.4 요약
     
-* State란?  
+### ※ State란?  
 
 * 리액트 컴포넌트의 변경 가능한 데이터.   
 * 컴포넌트를 개발하는 개발자가 직접 정의해서 사용한다.  
 * state가 변경될 경우 컴포넌트가 재랜더링 된다.  
-* 랜더링아나 데이터 흐름에 사용되는 값만 state에 다시 사용한다.  
+* 랜더링아나 데이터 흐름에 사용되는 값만 state에 다시 사용한다.   
 
-~~
+### ※ State의 특징  
+* 자바스크립트 객체 형태로 존재한다.  
+* 직접적인 변경이 불가능하다.  
+* 클래스 컴포넌트  
+   ■ 생성자에서 모든 state를 한 번에 정의한다.  
+   ■ state를 변경하고자 할 때에는 꼭 setState()함수를 사용해야 한다.  
+* 함수 컴포넌트    
+   ■ useState()훅을 사용하여 각각의 state를 정의한다.  
+   ■ 각 state별로 주어지는 set함수를 사용하여 state 값을 변경한다.  
 
-* chapter 7. 훅
+## chapter 7. Hook(훅)  
 
 ### 7.1 훅이란 무엇인가?  
 * 클래스형 컴포넌트에서는 생성자에서 state를 정의하고, setState()함수를 통해 state를 업데이트한다.  
-* 예전에 사용하던 함수형 컴포넌트는 별도로 state를 정의하거나, 컴포넌트의 생명주기에 맞춰서 어떤 코드가 실행되도록 할수 없었다.  
-* 함수형 컴포헌트에서도 state나 생명주기 함수의 기능을 사용하게 해주기 위해 추가된 기능이 바로 Hook이다.  
-* 함수형 컴포넌트도 훅을 사용하여 클래스형 컴포넌트의 기능을 모두 동일하게 구현할 수 있게 되었다  
-
+* 예전에 사용하던 함수형 컴포넌트는 별도로 state를 정의하거나, 컴포넌트의 생명주기에 맞춰서 어떤 코드가 실행되도록 할 수 없었다.  
+* 함수형 컴포헌트에서도 state나 생명주기 함수의 기능을 사용하게 해주기 위해 추가된 기능이 바로 Hook(훅)이다.  
+* 함수형 컴포넌트도 훅을 사용하여 클래스형 컴포넌트의 기능을 모두 동일하게 구현할 수 있게 되었다.  
 * Hook이란 'state와 생명주기 기능에 갈고리를 걸어 원하는 시점에 정해진 함수를 실행되도록 만든 함수'를 의미한다.  
-(Use를 반드시 사용하는 것이 좋다)  
+* 훅의 이름은 모두 'use'를 반드시 사용하는 것이 좋다.  
+* 사용자 정의 훅(custom hook)을 만들 수 있으며, 이 경우에 이름은 자유롭게 할 수 있으나 'use'로 시작하는 것을 권장한다. 
 
 ### 7.2 useState  
 * useState는 함수형 컴포넌트에서 state를 사용하기 위한 hook이다.  
-* 다음 예제는 버튼 함수이다.  
-```
-버튼 함수 예제 추가
+* 다음 예제는 버튼을 클릭할 때마다 카운트가 증가하는 함수형 컴포넌트이다.  
+* 증가를 시킬 수 있지만 증가할 때마다 재 렌더링은 일어나지 않는다.  
+* 이럴 때 state를 사용해야 하지만 함수형에는 없기 때문에 useState()를 사용한다.
+
+```jsx
+import React, { useState } from "react";
+
+function Counter(props) {
+    var count = 0;
+
+    return (
+        <div>
+            <p>총 {count}번 클릭했습니다.</p>
+            <button onClick={() => count++}
+                클릭
+            </button>
+        </div>    
+    );
+}
 ```  
 
-useState()함수의 사용법은 다음과 같다.  
-첫번째 항목은 state의 이름(변수명)이고, 두번째 항목은 state의 set함수이다.  
-즉 state를 업데이트 하는 함수이다.  
-함수를 호출할 때 state의 초기값을 설정한다.  
-함수의 리턴 값은 배열의 형태이다.  
+* useState()함수의 사용법은 아래와 같다.  
 ```
-배열 형태 함수 입력  
+const [변수명, set변수명] = useState(초깃값);
+```
+* 첫번째 항목은 state의 이름(변수명)이고, 두 번째 항목은 state의 set함수이다.  
+* 즉 state를 업데이트 하는 함수이다.  
+* 함수를 호출할 때 state의 초기값을 설정한다.  
+* 함수의 리턴 값은 배열의 형태이다.  
+```jsx
+import React, { useState } from "react";
+
+function Counter(props) {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>총 {count}번 클릭했습니다.</p>
+            <button onClick={() => setCount + 1}>
+                클릭
+            </button>
+        </div>    
+    );
+}
 ```  
 
 ### 7.3 useEffect
-* useState와 함께 가장 많이 사용하는 Hook이다  
+* useState와 함께 가장 많이 사용하는 Hook(훅)이다.  
 * 이 함수는 사이드 이펙트를 수행하기 위한 것이다.  
 * 영어로 side effect는 부작용을 의미한다.  
-* 일반적으로 프로그래밍에서 사이드 이펙트는 '개발자가 의도하지 않은 코드가 실행되면서 버그가 발생하는 것'을 말한다.  
+* 일반적으로 프로그래밍에서 사이드 이펙트는 <b>'개발자가 의도하지 않은 코드가 실행되면서 버그가 발생하는 것'</b>을 말한다.  
 * 하지만 리액트에서는 효과 또는 영향을 뜻하는 effect의 의미에 가깝다고 볼 수 있다.  
 * 예를 들면 서버에서 데이터를 받아오거나 수동으로 DOM을 변경하는 등의 작업을 의미한다.  
-* 이 작업을 이펙트라고 부르는 이유는 이 작업들이 다른 컴포넌트에 영향을 미칠 수 있고, 렌더링할 때 ~
+* 이 작업을 이펙트라고 부르는 이유는 이 작업들이 다른 컴포넌트에 영향을 미칠 수 있고, <b>렌더링 중에는 작업이 완료될 수 없기 때문이다.</b>
+* 렌더링이 끝난 이후에 실행되어야 하는 작업들이다.
+* <b>클래스 컴포넌트의 생명주기 함수와 같은 기능을 하나로 통합한 기능을 제공한다.</b>
+* 저자는 useEffect가 side effect가 아니라 effect에 가깝다고 설명하고 있지만, 이건 부작용의 의미를 잘못 해석해서 생긴 오해이다.
+* <b>오해가 생긴 이유는 부작용의 부를 不로 생각했기 때문이다.</b>
+* side effect는 부작용(副作用)으로 <b>'원래의 용도 혹은 목적의 효과 외에, 부수적으로 다른 효과가 있는 것'을 뜻한다.</b>
 
 * 결국 side effect는 렌더링 외에 실행해야 하는 부수적인 코드를 말한다.  
 * 예를 들면 네트워크 리퀘스트, DOM 수동 조작, 로깅 등은 정리(clean-up)가 필요 없는 경우들이다.  
-* useEffect()함수는 다음과 같이 사용한다.
 
+* useEffect()함수는 다음과 같이 사용한다.
 * 첫번째 파라미터는 이펙트 함수가 들어가고, 두번째 파라미터는 의존성 배열이 들어간다.  
+```
+useEffect(이펙트 함수, 의존성 배열);
+```
 * 의존성 배열은 이펙트가 의존하고 있는 배열로, 배역 안에 있는 변수 중에 하나라도 값이 변경되었을 때 이펙트 함수가 실행된다.  
 * 이펙트 함수는 처음 컴포넌트가 렌더링 된 이후, 그리고 재렌더링 이후에 실행된다.  
 * 만약 이펙트 함수가 마운트와 언마운트 될 때만 한번씩 실행되게 하고 싶으면 빈 배열을 넣으면 된다.  
 * 이 경우엔 props나 state에 있는 어떤 값에도 의존하지 않기 때문에 여러번 실행되지 않는다.  
 
-* 의존성 배열을 생략하는 경우는 업데이트될 때마다 호출된다
+* <b>의존성 배열을 생략하는 경우는 업데이트될 때마다 호출된다.</b>
 ```jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function Counter(props) {
-  const [count, setCount] = useState(0);
-  
-  //componentDidMount, componentDidUpdate와 비슷하게 작동한다.
-~
+    const [count, setCount] = useState(0);
+
+    //componentDidMount, componentDidUpdate와 비슷하게 작동합니다.
+    useEffect(() => {
+        // 브라우저 API를 사용해서 document의 title을 업데이트 합니다.
+        document.title = '총 ${count}번 클릭했습니다.';
+    });
+
+    return (
+        <div>
+            <p>총 {count}번 클릭했습니다.</p>
+            <button onClick={() => setCount + 1}>
+                클릭
+            </button>
+        </div>    
+    );
+}
+
+여기서는 배열 없이 useEffect를 사용했기 때문에 DOM이 변경된 이후에 해당 이펙트 함수를 실행하라는 의미입니다.
 ```  
 
 * componentWillUnmount()와 동일한 기능은 어떻게 구현하는지 알아보자!
-```
+```jsx
+import React, { useState } from "react";
+
 function UserStatusWithCounter(props) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
     document.title = `총 ${count}번 클릭했습니다.`;
-  });  
+    });
+
+    const [isOnline, setIsOnline] = useState(null);
+    useEffect(() => {
+        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+        };
+    });
+
+    function handleStatusChange(status) {
+        setIsOnline(status.isOnline);
+    }
+};  
+
+useEffect()에서 리턴하는 함수는 컴포넌트가 마운트 해제될 때 호출된다.  
 ```  
-* 정리해보면 다음과 같다.  
-```useEffect(() => {
+  
+* 정리해보면 다음과 같다.   
+ 
+```jsx
+useEffect(() => {
   // 컴포넌트가 마운트 된 이후,  
   // 의존성 배열에 있ㄲ는 변수들 중 하나라도 값이 변경되었을 때 실행된다.  
   // 의존성 배열에 빈 배열을 넣으면 마운트와 언마운트시에 단 한 번씩만 실행된다.  
   // 의존성 배열 생략 시 컨포넌트 업데이트 시마다 실행된다.  
+  ...
   
   return() => {
     // 컴포넌트가 마운트 해제되기 전에 실행된다.
+    ...
     }
-  },[의존성 변수1, 의존성 변수2...]  
+  }, [의존성 변수1, 의존성 변수2...]);  
 ```  
 
 ### 7.4 useMemo  
 * useMemo()훅은 Memoizde value를 리턴하는 훅이다.  
 * 이전 계산값을 갖고 있기 때문에 연산량이 많은 작업의 반복을 피할 수 있다.  
-* 이 훅은  
-* 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때따지 매번 함수가 실행된다.  
+* 이 훅은 렌더링이 일어나는 동안 실행된다. 
+* 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때까지 매번 함수가 실행된다.  
+* 예를 들면 useEffect에서 실행되어야 할 사이드 이펙트 같은 것이다.  
+```jsx
+const memoizedValue = useMemo(
+    () => {
+        //연산량이 높은 작업을 수행하여 결과를 반환
+        return computeExpensiveValue(의존성 변수1, 의존성 변수2);
+    },
+    [의존성 변수1, 의존성 변수2]
+);
+```
+
+#### * 메모이제이션(memoization)은 컴퓨터 프로그램이 동일한 계산을 반복해야 할 때, 이전에 계산한 값을 메모리에 저장함으로써 동일한 계산의 반복수행을 제거하여 프로그램 실행 속도를 빠르게 하는 기술이다.    
+#### * 동적 계획법의 핵심이 되는 기술이다.
+
+* 다음 코드와 같이 의존성 배열을 넣지 않을 경우, 렌더링이 일어날 때마다 매번 함수가 실행된다.
 * 따라서 의존성 배열을 넣지 않는 것은 의미가 없다.  
 * 만약 빈 배열을 넣게 되면 컴포넌트 마운트 시에만 함수가 실행된다.
-```
-const memoizedValue = useMemo
-~
+```jsx
+const memoizedValue = useMemo(
+    () => computeExpensiveValue(a, b)
+);
 ```
 
 ### 7.5 useCallback  
 
 * useCallback()훅은 useMemmo()와 유사한 역할을 한다.  
-* 차이점은 별로 없다.  
+### * 차이점은 값이 아닌 함수로 반환한다는 점이다.  
+* 의존성 배열을 파라미터로 받는 것은 useMemo와 동일하다.  
+* 파라미터로 받은 함수를 콜백(callback)이라고 부른다.  
+* useMemo와 마찬가지로 의존성 배열 중 하나라도 변경되면 콜백함수를 반환한다.  
+```jsx
+const memoizedCallback = useCallback(
+    () => {
+        dosomething(의존성 변수1, 의존성 변수2);
+    },
+    [의존성 변수1, 의존성 변수2]
+);
+```  
 
 ### 7.6 useRef  
 * useRef() 훅은 레퍼런스를 사용하기 위한 훅이다.  
-* 레퍼런스란 특정 컴포넌트에 접근할 수 있는 객체를 의미한다.  
+* 레퍼런스란 <b>특정 컴포넌트에 접근할 수 있는 객체를 의미한다.</b>    
 * useRef()훅은 바로 이 레퍼런스 객체를 반환한다.  
 * 레퍼런스 객체에는 .current라는 속성이 있는데, 이것을 현재 참조하고 있는 엘리먼트를 의미한다.   
 ```
 const refContainer = useRef(초깃값);
 ```  
-* 이렇게 반환던 레퍼런스 객체는 컴포넌트의 라이프 타임 전체에 걸쳐서 유지된다.
-* 즉, 컴포넌트가 마운트 해제되기 전까지 계속 유지된다는 의미이다.
+* 이렇게 반환던 레퍼런스 객체는 컴포넌트의 라이프 타임 전체에 걸쳐서 유지된다.  
+* 즉, 컴포넌트가 마운트 해제되기 전까지 계속 유지된다는 의미이다.  
+
+  
 
 ### 7.7 훅의 규칙  
-* 첫 번째 규칙은 무조건 최상의 레벨에서만 호출해야 한다는 것이다.  
+* <b>첫 번째 규칙은 무조건 최상의 레벨에서만 호출해야 한다는 것이다.</b>  
 * 여기서 최상위는 컴포넌트의 최상위 레벨을 의미한다.  
 * 따라서 반복문이나 조건문 또는 중첩된 함수들 안에서 훅을 호출하면 안 된다.  
 * 이 규칙에 따라서 훅은 컴포넌트가 렌더링 될 때마다 같은 순서로 호출되어야 한다.  
 
-* 두 번째 규칙은 리액트 함수형 컴포넌트에서만 훅을 호출해야만 한다는 것이다.  
-* 따라서 일반 잡스크립트 함수에서 훅을 호출하면 안 된다.  
-* 훅은 리액트 함수형 컴포넌트 훅은 직접 만든 커스텀 훅에서만 호출할 수 있다.  
-
-
-
+* <b>두 번째 규칙은 리액트 함수형 컴포넌트에서만 훅을 호출해야만 한다는 것이다.</b>  
+* 따라서 일반 자바스크립트 함수에서 훅을 호출하면 안 된다.  
+* 훅은 리액트의 함수형 컴포넌트 아니면 직접 만든 커스텀 훅에서만 훅을 호출할 수 있다.  
 
 
 ### 7.8 나만의 훅 만들기  
 * 필요하다면 직접 훅을 만들어 쓸 수도 있다. 이것을 커스텀 훅이라고 한다.  
 1. 커스텀 훅을 만들어야 하는 상황  
 아래 예제 UserStatus 컴포넌트는 isOnline이라는 state에 따라서 사용자의 상태가 온라인인지 아닌지를 텍스트로 보여주는 컴포넌트이다.  
-```
+```jsx
 import React, { useState, useEffect } from "react";
 
-    function UserStatus(props) {
-        const [isOnline, setIsOnline]
+function Userstatus(props) {
+
+    const [isOnline, setIsOnline] = useState(null);
 
 
-코드 입력~
+    useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline)
+        }
+
+        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+        };
+    });
+
+    if (isOnline === null) {
+        return '대기중...';
+    }
+    return isOnline ? '온라인' : '오프라인';
+}  
+
 ```  
 
-* 다음 예제는 연락처 목록을 제공하면서 사용자의 이름은 초록색으로 표시하는 UserListItem 컴포넌트이다.
-```
+* 다음 예제는 연락처 목록을 제공하면서 사용자의 이름은 초록색으로 표시하는 UserListItem 컴포넌트이다.  
+```jsx
 import React, { useState, useEffect } from "react";
 
-    function UserStatus(props) {
+    function UserListItem(props) {
+        const [isOnline, setIsOnline] = useState(null);
+
+        useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline);
+        }
+
+        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+        };
+    });
+
+    return (
+        
+    )...
+    
+// 앞의 코드와 useState()와 useEffect() 훅을 사용하는 부분이 동일하다.  
+// 이렇게 state와 관련된 로직이 중복되는 경우에는 render props 또는 HOC(higher order components)를 사용한다.
 ```  
 
 2. 커스텀 훅 추출하기  
 * 2개의 자바스크립트 함수에서 하나의 로직을 공유하도록 하고 싶을 때 새로운 함수를 하나 만드는 방법을 사용한다.    
 * 리액트 컴포넌트와 훅은 모두 함수이기 때문에 동일한 방법을 사용할 수 있다.  
 * 이름을 use로 시작하고, 내부에서 다른 훅을 호출하는 자바스크립트 함수를 만들면 된다.  
-* 아래 코드는 중복되는 로직을 
+* 아래 코드는 중복되는 로직을 useUserStatus()라는 커스텀 훅으로 추출해낸 것이다.
 
-```
+```jsx
 import React, { useState, useEffect } from "react";
-코드 입력
 
+    function useUserStatus(props) {
+        const [isOnline, setIsOnline] = useState(null);
+
+        useEffect(() => {
+        function handleStatusChange(status) {
+            setIsOnline(status.isOnline);
+        }
+
+        ServerAPI.subscribeUserStatus(user.id, handleStatusChange);
+        return () => {
+            ServerAPI.unsubscribeUserStatus(user.id, handleStatusChange);
+        };
+    });
+
+    return isOnline;
+    }    
 
 
 훅 함수도 export default를 사용해줘야 한다.
 ```  
 
-* 한 가지 주의할 점은
+* 한 가지 주의할 점은 일반 컴포넌트와 마찬가지로 <b>다른 훅을 호출하는 것은 무조건 커스텀 훅의 최상위 레벨에서만 해야 한다.</b>  
+* 커스텀 훅은 일반 함수와 같다고 생각해도 된다.  
+* 다만, 이름은 use로 시작하도록 한다는 것만 다르다. 
 
 3. 커스텀 훅 사용하기  
 
 * 먼저 작성했던 코드를 사용자 훅을 사용해서 수정하면 아래 코드와 같다.
-```
+```jsx
 import React, { useState, useEffect } from "react";
 
 function UserStatus(props) {
-      const isOnline = useUserStatus(props.user.id);
-      
-      if (isOnline === null) {
-        return '대기 중...';
-        }
-        return isOnline ? '온라인' : '오프라인';
+    const isOnline = useUserStatus(props.user.id);
+
+    if (isOnline === null) {
+        return '대기중...';
     }
-function UserStatus(props) {
+    return isOnline ? '온라인' : '오프라인';
+}
 
-~
-```
+function UserListItem(props) {
+    const isOnline = useUserStatus(props.user.id);
+
+    return (
+        <li style = {{ color: isOnline ? 'green' : 'black' }}>
+        {props.user.name}
+        </li>
+    );
+}
+```  
 
 
 
+* useCounter 코드 입력
+```jsx
+import React, { useState } from "react";
+
+function useCounter(initialValue) {
+    const [count, setCount] = useState(initialValue);
+
+    const increaseCount = () => setCount((count) => count + 1);
+    const decreaseCount = () => setCount((count) => Math.max(count - 1, 0));
+
+    return [count, increaseCount, decreaseCount];
+}
+
+export default useCounter;
+```  
 
 
+* Accommodate 코드 입력
+```jsx
+import React, { useState, useEffect} from "react";
+import useCounter from "./useCounter";
 
+const MAX_CAPACITY = 10;
 
+function Accommodate(props) {
+    const [isFull, setIsFull] = useState(false);
+    const [count, increaseCount, decreaseCount] = useCounter(0);
 
+    useEffect(() => {
+        console.log("======================");
+        console.log("useEffect() is called.");
+        console.log(`isFull: ${isFull}`);
+    });
 
+    useEffect(() => {
+        setIsFull(count >= MAX_CAPACITY);
+        console.log(`Current count value: ${count}`);
+    }, [count]);
+
+    return (
+        <div style={{ padding: 16 }}>
+            <p>{`총 ${count}명 수용했습니다.`}</p>
+
+            <button onClick={increaseCount} disabled={isFull}>
+                입장
+            </button>
+            <button onClick={decreaseCount}>퇴장</button>
+
+            {isFull && <p style={{ color: "red" }}>정원이 가득찼습니다.</p>}
+        </div>
+    );
+}
+
+export default Accommodate;
+
+삼항 연산자에서 &&의 의미  
+보통 삼항 연산자는 "A ? B : C;"이 나오는데 값이 true일 경우 앞의 B값이 실행, false일 경우 뒤의 C값이 실행되는데, 
+&&를 쓰면 true의 값인 B만 실행된다.
+```  
+
+### 7.10 요약 : chapter 7  
+## 훅
+### ※ 훅이란?
+    ■ 리액트의 state와 생명주기 기능에 갈고리를 걸어 원하는 시점에 정해진 함수를 실행되도록 만든 것이다.  
+    
+### ※ useState()    
+    ■ state를 사용하기 위한 훅  
+    ■ 클래스 컴포넌트처럼 state를 사용하고 싶으면 useState()훅을 사용해야 한다.
+    ■ 사용법 : * const[변수명, set변수명] = useState(초깃값); * 변수 각각에 set 함수가 따로 존재한다. 
+    
+### ※ useEffect()  
+    ■ 사이드 이펙트를 수행하기 위한 훅  
+    ■ 사이드 이펙트란 서버에서 클래스 컴포넌트의 생명주기 함수와 동일한 기능을 수행할 수 있다.   
+    ■ useEffect() 훅만으로 클래스 컴포넌트의 생명주기 함수들과 동일한 기능을 수행할 수 있다.  
+    ■ 사용법  
+        * useEffect(이펙트 함수, 의존성 배열);   
+        * 의존성 배열 안에 있는 변수 중에 하나라도 값이 변경되었을 때 이펙트 함수가 실행된다.  
+        * 의존성 배열에 빈 배열([])을 넣으면 마운트와 언마운트시에 단 한 번씩만 실행된다.  
+        * 의존성 배열 생략 시 컴포넌트가 업데이트될 때마다 호출된다.  
+        * 선언된 컴포넌트의 props와 state에 접근할 수 있다.  
+        * useEffect()에서 리턴하는 함수는 컴포넌트 마운트가 해제될 때 호출된다.  
+        
+### ※ useMemo()  
+    ■ Memoized value를 리턴하는 훅  
+    ■ 연산량이 높은 작업이 매법 렌더링될 때마다 반복되는 것을 피하기 위해 사용한다.  
+    ■ 렌더링이 일어나는 동안 실행되므로 렌더링이 일어나는 동안 실행돼서는 안될 작업을 useMemo()에 넣으면 안 된다.  
+    ■ 사용법  
+        * const memoizedValue = useMemo (값 생성 함수, 의존성 배열);  
+        * 의존성 배열에 들어있는 변수가 변했을 때만 새로 값 생성 함수를 호출하여 결과값을 반환한다.  
+        * 그렇지 않은 경우에는 기존 함수의 결괏값을 그대로 반환한다.  
+        * 의존성 배열을 넣지 않은 경우 렌더링이 일어날 때마다 매번 값 생성 함수가 실행되므로 의미는 없다.  
+        
+        
+### ※ useCallback()  
+    ■ useMemo() 훅과 유사하지만 값이 아닌 함수를 반환한다는 점이 다른다.  
+    ■ useCallback(콜백 함수, 의존성 배열);은 useMemo(() => 콜백 함수, 의존성 배열)과 동일하다.  
+    ■ 컴포넌트 내에 함수를 정의하면 매번 렌더링이 일어날 때마다 함수가 새로 정의되므로 useCallback()훅을 사용하여 불필요한 함수 재정의 작업을 없애는 것이다.   
+    ■ 사용법  
+        * const memoizedCallback = useCallback (콜백 함수, 의존성 배열);  
+        * 의존성 배열에 들어있는 변수가 변했을 때만 콜백 함수를 다시 정의해서 리턴한다.  
+      
+### ※ useRef()  
+    ■ 레퍼런스를 사용하기 위한 훅.    
+    ■ 레퍼런스란 특정 컴포넌트에 접근할 수 있는 객체를 의미한다.  
+    ■ 매번 렌더링 될 때마다 항상 같은 레퍼런스 객체를 반환한다.
+    ■ 사용법  
+        * const refContainer = useRef(초깃값);    
+        * .current라는 속성을 통해서 접근한다.  
+        
+        
+## 훅의 규칙          
+### ※ 무조건 최상위 레벨에서만 호출해야 한다.   
+    ■ 반복문이나 조건문 또는 중첩된 함수들 안에서 훅을 호출하면 안 된다.    
+    ■ 컴포넌트가 렌더링될 때마다 매번 같은 순서로 호출되어야 한다.  
+    
+### ※ 리액트 함수 컴포넌트에서만 훅을 호출해야한다  
+    ■ 훅은 리액트 함수 컴포넌트에서 호출하거나 직접 만든 커스텀 훅에서만 호출할 수 있다.  
+    
+## 커스텀 훅  
+#### · 이름이 use로 시작하고 내부에서 다른 훅을 호출하는 단순한 자바스크립트 함수  
+#### · 파라미터로 무엇을 받을지, 어떤 것을 리턴해야 할지를 개발자가 직접 정할 수 있다.  
+#### · 중복되는 로직을 커스텀 훅으로 추출하여 재사용성을 높이기  
+#### · 이름이 use로 시작하지 않으면 특정 함수의 내부에서 훅을 호출하는지를 알 수 없기 때문에 훅의 규칙 위반 여부를 자동으로 확인할 수 없다.
 
 
 ## 6주차 2023-04-06  
@@ -826,14 +1390,16 @@ setInterval(() => {
 }, 1000);
 ```
 
-## 5. props에 대해 알아보자
-### 1. props의 개념 
+## 5장 컴포넌트와 props  
 
-props는 prop(property: 속성, 특성)의 준말이다.  
-이 props가 바로 컴포넌트의 속성이다.  
-컴포넌트에 어떤 속성, props를 넣느냐에 따라서 속성이 다른 엘리먼트가 출력된다.  
-props는 컴포넌트에 전달할 다양한 정보를 담고 있는 자바스크립트이다.  
-* 예시로는 Airbnb가 있다.
+### 5. props에 대해 알아보자  
+### 1. props의 개념   
+
+* props는 prop(property: 속성, 특성)의 준말이다.  
+* 이 props가 바로 컴포넌트의 속성이다.  
+* 컴포넌트에 어떤 속성, props를 넣느냐에 따라서 속성이 다른 엘리먼트가 출력된다.  
+* props는 컴포넌트에 전달할 다양한 정보를 담고 있는 자바스크립트이다.  
+* 예시로는 Airbnb가 있다.  
 
 ### 2. props의 특징
 * 읽기 전용이다. 변경할 수 없다는 의미이다.
@@ -898,7 +1464,7 @@ function Welcome(props) {
 
 3. jsx는 React "엘리먼트(element)"를 생성하고 react에서 jsx를 사용한다는 것은 컴포넌트를 만든다는 의미가 된다.
 
-4. jsx는 태그가 비어있다면 XML처럼 /> 를 이용해 바로 닫아주어야 한다.
+4. jsx는 태그가 비어있다면 XML처럼 '/>' 를 이용해 바로 닫아주어야 한다.
 
 * jsx의 표현식
 ```jsx
@@ -1031,6 +1597,51 @@ Virtual Dom(가상 DOM)은 수정사항이 여러가지 있더라도, 가상 DOM
 
 # 온준형
 ## 2주차 2023-03-09
+#### 수업 내용  
+
+* 자바스크립트  
+
+* 자바스크립트는 웹페이지의 동작을 담당하는 스크립트 언어이다.  
+* C언어, Java, Python과 같은 프로그래밍 언어와 JS같은 스크립트 언어의 결정적인 차이점은 런타임(Runtime)에 코드 해석 여부에 따라 나뉜다.  
+* 프로그래밍 언어는 컴파일(compile)이라는 과정을 시행한 이후에 컴퓨터가 해석하고 실행하지만, 스크립트 언어는 작성과 동시에 인터프리터가 기계어로 번역해서 해석한다.  
+* 컴파일 언어는 운영체제에 따라 다르게 작성해야 하지만, 스크립트 언어는 운영체제에 상관없이 구동 가능 하다.  
+
+#### JS(자바스크립트)의 기초적인 성질  
+```
+* Number Type => 숫자형 변수 선언
+let n1 = 1234;
+let n2 = 5.678;
+
+* String Type => 문자열 변수 선언
+let s1 = "Hello";
+let s2 = "World";
+
+* Boolean Type => 참, 거짓 여부 변수 선언
+let b1 = true;
+let b2 = false;
+
+* Null Type => Null값 선언
+let n = null;
+
+* Undefined Type => 변수를 선언하고 특정한 유형을 대입하지 않으면 Undefined상태 지정. 변수의; 값이 대입되는 순간 Undefined변수의 값 자동 선언
+let u1;
+let u2 = undefined;
+
+* Array Type => 배열 선언
+let arr = [1, 2, 3, 4];
+
+* Object Type => 오브젝트는 JS가 객체를 다루기 위해 사용하는 개념으로, 이름(key || name)과 값(value)으로 이루어진 쌍의 집합을 의미한다. 
+let obj = {a: "apple", b: "banana", c:"cherry"}
+
+---
+//JS의 연산자
+let a = 10;
+let b = 20;
+
+console.log(a); //출력 결과 : 10
+cons2le.log(b); //출력 결과 : 20
+```
+
 ###### 코드 내용
 
 ---
