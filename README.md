@@ -80,12 +80,12 @@ import { useState } from "react";
 function Toggle(props) {
     const [isToggleOn, setIsToggleOn] = useState(true);
 
-    // 방법 1. 함수 안에 함수로 정의
+    // <b>방법 1. 함수 안에 함수로 정의</b>
     function handleClick() {
         setIsToggleOn((isToggleOn) => !isToggleOn);
     }
 
-    // 방법 2. arrow function을 사용하여 정의
+    // <b>방법 2. arrow function을 사용하여 정의</b>
     const handleClick = () => { //const handleClick은 객체를 저장하는 곳
         setIsToggleOn((isToggleOn) => !isToggleOn);
     }
@@ -140,7 +140,7 @@ function MyButton(props) {
 2. 2. 클래스 필드 문법 상ㅇ하기.  
 3. 함수 컴포넌트로 변경하기.  
 
-* ConfirmButton 컴포넌트 만들기.  
+#### * ConfirmButton 컴포넌트 만들기.  
 ```jsx
 import React, { useState } from "react";
 
@@ -160,8 +160,35 @@ function ConfirmButton(props) {
 
 export default ConfirmButton;
 ```  
+  
+#### * ConfirmButton index.js 코드 수정하기
+```
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
 
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      <ConfirmButton />            // 수정 위치
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);
+```
 
 
 ## 7주차 2023-04-13  
