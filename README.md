@@ -15,7 +15,7 @@
 
 * DOM에서 클릭 이벤트를 처리하는 예제 코드.
 ```jsx
-<button onClick=activate()>
+<button onClick="activate()">
     Activate
 </button>  
 ```  
@@ -28,8 +28,8 @@
 ```  
 
 ### * 둘의 차이점은  
-1) 이벤트 이름이 onclick에서 onClick으로 변경.(Camel case)
-2) 전달하려는 함수는 문자열에서 함수 그대로 전달.  
+#### 1) 이벤트 이름이 onclick에서 onClick으로 변경.(Camel case)
+#### 2) 전달하려는 함수는 문자열에서 함수 그대로 전달.  
 
 * 이벤트가 발생했을 때 해당 이벤트를 처리하는 함수를 "이벤트 핸들러(Event Handler)"라고 한다.  
 * 또는 이벤트가 발생하는 것을 계속 듣고 있다는 의미로 "이벤트 리스너(Event Listener)"라고 부르기도 한다.  
@@ -39,7 +39,7 @@
 * 버튼은 클릭하면 이벤트 핸들러 함수인 handleClick()함수를 호출하도록 되어있다.  
 * bind를 사용하지 않으면 this.handleClick은 글로벌 스코프에서 호출되며, usdefined으로 사용할 수 없기 때문이다.  
 * bind를 사용하지 않으려면 화살표 함수를 사용하는 방법도 있다.  
-* 화살표 함수를 쓸 때는 ~ 
+* 화살표 함수를 쓸 때는 몇 가지 제한점이 있고 모든 상황에 사용할 수는 없다.
  
 #### * 하지만 클래스 컴포넌트는 이제 거의 사용하지 않기 때문에 참고만 하면 된다.
 
@@ -71,27 +71,43 @@ class Toggle extends React.Component {
 // import와 export는 생략.
 ```  
 
-* 클래스형을 함수형으로 바꾸면 다음 코드아 같다.  
-* 함수형에서 이벤트 핸들러를 정의하는 방법은 두가지인데 두번째 방법을 많이 사용한다.  
+* 클래스형을 함수형으로 바꾸면 다음 코드와 같다.  
+* 함수형에서 이벤트 핸들러를 정의하는 방법은 두 가지인데 두 번째 방법을 많이 사용한다.  
 * 함수형에서는 this를 사용하지 않고, onClick에서 바로 HandleClick을 넘기면 된다.  
 ```jsx
 import { useState } from "react";
 
-function Toggle(props){
+function Toggle(props) {
     const [isToggleOn, setIsToggleOn] = useState(true);
-}
 
+    // 방법 1. 함수 안에 함수로 정의
+    function handleClick() {
+        setIsToggleOn((isToggleOn) => !isToggleOn);
+    }
+
+    // 방법 2. arrow function을 사용하여 정의
+    const handleClick = () => { //const handleClick은 객체를 저장하는 곳
+        setIsToggleOn((isToggleOn) => !isToggleOn);
+    }
+
+    return (
+        <button onClick={handleClick}>
+            {isToggleOn ? '켜짐' : '꺼짐'} // 삼항 연산자를 사용한다.
+        </button>
+    );        
+}
 
 // import와 export는 생략.
 ```  
 
-### 8.2 Argunments 전달하기    (스네이크 case는 언더바를 사용하는 것, 캐밥 case는 -를 사용한다.)  
+### 8.2 Argunments 전달하기    
+* case를 쓸 때는 카멜 케이스를 많이 쓰기도 하고 스네이크 case는 언더바를 사용하고, 캐밥 case는 -를 사용한다.  
+
 * 함수를 전달할 때는 파라미터(Parameter) 혹은 매개변수, 함수를 사용할 때는 <b>Argument 혹은 인자</b>라고 부른다.   
 * 이벤트 핸들러에 매개변수를 전달해야 하는 경우도 많다.  
 
 ```
-function foobar(x, y) { 괄호 안에 들어가는 것을 매개변수 혹은 파러미터라고 부른다. 
-}
+function foobar(x, y) { 괄호 안에 들어가는 x, y(것)를 매개변수 혹은 파라미터라고 부른다. }
 ```  
 
 ```jsx
@@ -105,12 +121,29 @@ function foobar(x, y) { 괄호 안에 들어가는 것을 매개변수 혹은 �
 * 두 방법 모두 첫번때 매개변수는 id이고 두번째 매개변수로 event가 전달된다.  
 * 첫번째 코드는 명시적으로 event를 매개변수로 넣어주었고, 두번째 코드는 id 이후 두번째 매개변수로 event가 자동 전달된다.  
 (이 방법은 클래스 형에서 사용하는 방법이다.)  
-* 함수형 컴포넌트에서 이벤트 핸들러에 매개변ㅅ를 전달할 때는 아래 코드와 같이 쓴다.
+
+* 함수형 컴포넌트에서 이벤트 핸들러에 매개변수를 전달할 때는 아래 코드와 같이 쓴다.
+``` jsx
+function MyButton(props) {
+    const handleDelete = (id, event) => {
+        console.log(id, event.target);
+    };
+
+    return (
+        <button onClick={(event) => handleDelete(1, event)}>삭제하기</button>
+    );
+}
 ```
 
+### 8.3 클릭 이벤트 처리하기 (실습)
+1. ConfirmButton 컴포넌트 만들기.  
+2. 2. 클래스 필드 문법 상ㅇ하기.  
+3. 함수 컴포넌트로 변경하기.  
+
+```jsx
+
+
 ```
-
-
 
 ## 7주차 2023-04-13  
 #### 수업내용  
