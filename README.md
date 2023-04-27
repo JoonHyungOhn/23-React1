@@ -37,7 +37,7 @@
 * 이벤트 핸들러 추가하는 방법은?  
   
 * 버튼은 클릭하면 이벤트 핸들러 함수인 handleClick()함수를 호출하도록 되어있다.  
-* bind를 사용하지 않으면 this.handleClick은 글로벌 스코프에서 호출되며, usdefined으로 사용할 수 없기 때문이다.  
+* bind를 사용하지 않으면 this.handleClick은 글로벌 스코프에서 호출되며, undefined으로 사용할 수 없기 때문이다.  
 * bind를 사용하지 않으려면 화살표 함수를 사용하는 방법도 있다.  
 * 화살표 함수를 쓸 때는 몇 가지 제한점이 있고 모든 상황에 사용할 수는 없다.
  
@@ -80,12 +80,12 @@ import { useState } from "react";
 function Toggle(props) {
     const [isToggleOn, setIsToggleOn] = useState(true);
 
-    // <b>방법 1. 함수 안에 함수로 정의</b>
+    // 방법 1. 함수 안에 함수로 정의
     function handleClick() {
         setIsToggleOn((isToggleOn) => !isToggleOn);
     }
 
-    // <b>방법 2. arrow function을 사용하여 정의</b>
+    // 방법 2. arrow function을 사용하여 정의
     const handleClick = () => { //const handleClick은 객체를 저장하는 곳
         setIsToggleOn((isToggleOn) => !isToggleOn);
     }
@@ -118,8 +118,8 @@ function foobar(x, y) { 괄호 안에 들어가는 x, y(것)를 매개변수 혹
 ```
 * 위의 코드는 모두 몽일한 역할을 하지만 첫 번째는 화살표 함수를, 두 번째는 bind를 사용했다.  
 * event라는 매개변수는 리액트의 이벤트 객체를 의미한다.  
-* 두 방법 모두 첫번때 매개변수는 id이고 두번째 매개변수로 event가 전달된다.  
-* 첫번째 코드는 명시적으로 event를 매개변수로 넣어주었고, 두번째 코드는 id 이후 두번째 매개변수로 event가 자동 전달된다.  
+* 두 방법 모두 첫번때 매개변수는 id이고 두 번째 매개변수로 event가 전달된다.  
+* 첫 번째 코드는 명시적으로 event를 매개변수로 넣어주었고,  두 번째 코드는 id 이후 두 번째 매개변수로 event가 자동 전달된다.  
 (이 방법은 클래스 형에서 사용하는 방법이다.)  
 
 * 함수형 컴포넌트에서 이벤트 핸들러에 매개변수를 전달할 때는 아래 코드와 같이 쓴다.
@@ -137,7 +137,7 @@ function MyButton(props) {
 
 ### 8.3 클릭 이벤트 처리하기 (실습)
 1. ConfirmButton 컴포넌트 만들기.  
-2. 2. 클래스 필드 문법 상ㅇ하기.  
+2. 클래스 필드 문법 하기.  
 3. 함수 컴포넌트로 변경하기.  
 
 #### * ConfirmButton 컴포넌트 만들기.  
@@ -189,6 +189,79 @@ setInterval(() => {
   );
 }, 1000);
 ```
+
+#### 8.4 요약  
+
+### * 이벤트란?  
+* 사용자가 버튼을 클릭하는 등의 사건을 의미  
+
+### * 이벤트 처리하기  
+#### * 
+
+
+chapter.9 조건부 렌더링
+
+### 9.1 조건부 렌더링이란?  
+* 여기서 조건이란 우리가 알고 있는 조건문의 조건인다.
+```jsx
+function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return <UserGreeting />
+    }
+    return <GuestGreeting />
+}
+
+// import와 export는 생략.
+```  
+* props로 전달 받은 isLoggedIn이 true이면 <UserGreeting />을, false면 <GuestGreeting />을 return한다.  
+* 이와 같은 렌더링을 조건부 렌더링이라고 한다.  
+
+### 9.2 엘리먼트 변수  
+* 렌더링해야 할 컴포넌트를 변수처럼 사용하는 방법이 엘리먼트 변수이다.  
+* state에 따라 button 변수에 컴포넌트의 객체를 저장하여 return문에서 사용하고 있다.  
+```jsx
+let button;
+if (isLoggedIn) {
+    button = <LogoutButton onClick={handleLogoutClick} />;
+} else {
+    button = <LoginButton onClick={handleLoginClick} />;
+}
+
+return (
+    <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+    </div>
+    )    
+```  
+
+### 9.3 인라인 조건  
+* 필요한 곳에 조건문을 직접 넣어 사용하는 방법  
+
+#### 1. 인라인 if  
+* if문을 직접 사용하지 않고, 동일한 효과를 내기 위해 && 논리 연산자를 사용한다.  
+* &&는 and 연산자로 모든 조건이 참일때만 참이 된다.  
+* 첫 번째 조건이 거짓이면 두 번째 조건은 판단할 필요가 없다.
+* 아래 코드를 참고.(단축평가)  
+```jsx
+true && expression -> expression
+false && expression -> false
+```  
+
+* 판단만 하지 않는 것이고 결과 값은 그대로 리턴된다.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 7주차 2023-04-13  
