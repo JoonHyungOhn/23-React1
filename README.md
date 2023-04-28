@@ -408,7 +408,7 @@ setInterval(() => {
       {/* <Accommodate /> */}
       {/* <ConfirmButton /> */}
       {/* <Toolbar /> */}
-      <LandingPage />     // 수정 위치
+      <LandingPage />    // 수정 위치
     </React.StrictMode>,
     document.getElementById('root')
   );
@@ -444,7 +444,8 @@ setInterval(() => {
 ## 8주차 2023-04-20  
 #### 중간고사  
   
-
+  
+  
 ## 7주차 2023-04-13  
 #### 수업내용  
 
