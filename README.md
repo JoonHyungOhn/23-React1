@@ -172,7 +172,82 @@ function Reservation(props) {
     
 // import와 export는 생략.       
 ```     
-    
+#### SignUp.jsx 코드  
+```jsx
+import React, { useState } from "react";
+
+function SignUp(props) {
+    const [name, setName] = useState("");
+    const [gender, setGender] = useState("남자");
+
+    const handleChangeName = (event) => {
+        setName(event.target.value);
+    };
+
+    const handleChangeGender = (event) => {
+        setGender(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        alert(`이름: ${name}, 성별: ${gender}`);
+        event.preventDefault();
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                이름:
+                <input type="text" value={name} onChange={handleChangeName} />
+            </label>
+            <br />
+            <label>
+                성별:
+                <select value={gender} onChange={handleChangeGender}>
+                    <option value="남자">남자</option>
+                    <option value="여자">여자</option>
+                </select>
+            </label>
+            <button type="submit">제출</button>
+        </form>
+    );
+}
+
+export default SignUp;    
+```
+#### index.js 수정  
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import LandingPage from './chapter_09/LandingPage';
+import Toolbar from './chapter_09/Toolbar';
+import AttendanceBook from './chapter_10/AttendanceBook';
+import SignUp from './chapter_11/SignUp';
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
+      {/* <Toolbar /> */}
+      {/* <LandingPage /> */}
+      {/* <AttendanceBook/> */}
+      <SignUp />                    // 수정 위치
+    </React.StrictMode>,
+    // document.getElementById('root')
+  );    
+```    
 ### 11.7 Input Null Vaule  
     
 ### 11.8 사용자 정보 입력받기  
@@ -235,13 +310,79 @@ ReactDOM.render(
 * 키는 같은 리스트에 있는 엘리먼트 사이에서만 고유한 값이면 된다.
 
 
-### 10.5 출석부 출력하기  
+### 10.5 출석부 출력하기(실습)  
 * src/chapter_10 폴더를 만든다.
 * AttendanceBook.jsx라는 이름의 함수형 컴포넌트를 만든다.  
 * 앱을 실행하여 정상 종작을 확인한다.  
 * 오류 메시지를 확인하고나서 앞서 확인핸 key props에 관한 오류이다.  
-* 다음과 같은 각 학생 객체에 고유한 값을 가진 id를 추가해주고, map()함수의 엘리먼트에 key={student.id}를 넣어준다.  
+* 다음과 같은 각 학생 객체에 고유한 값을 가진 id를 추가해주고, map()함수의 엘리먼트에 key={student.id}를 넣어준다.   
 
+#### AttendanceBook.jsx 코드    
+```jsx
+import React from "react";
+
+const students = [
+    {
+        id: 1,
+        name: "Inje",
+    },
+    {
+        id: 2,
+        name: "Steve",
+    },
+    {
+        id: 3,
+        name: "Bill",
+    },
+    {
+        id: 4,
+        name: "Jeff",
+    },
+];
+
+function AttendanceBook(props) {
+    return (
+        <ul>
+            {students.map((student, index) => {
+                return <li key={student.id}>{student.name}</li>;
+            })}
+        </ul>
+    );
+}
+
+export default AttendanceBook;    
+```  
+        
+#### index.js 수정
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+
+setInterval(() => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      {/*<ConfirmButton /> */}
+      <AttendanceBook>    // 수정 위치
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}, 1000);       
+```     
+        
 ###### 10.6 마치며(요약) 
 
 
