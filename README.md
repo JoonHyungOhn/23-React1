@@ -8,10 +8,13 @@
 ### * 목차
 * 11.1 폼이란 무엇인가?  
 * 11.2 제어 컴포넌트  
-* 11.3 클릭 이벤트 처리하기  
-* 11.4 리스트와 키란 무엇인가?    
-* 11.5 출력부 출력하기    
-* 11.11 마치며(요약)  
+* 11.3 textarea 태그  
+* 11.4 select 태그    
+* 11.5 File input 태크    
+* 11.6 여러 개의 입력 다루기  
+* 11.7 Input Null Vaule  
+* 11.8 사용자 정보 입력받기  
+* 11.9 마치며(요약)  
 
 
 ### 11.1 폼이란 무엇인가?  
@@ -26,7 +29,7 @@ function NameForm(props) {
     const [value, setValue] = useState('');
 
     const handleChange = (event) => {
-        setValue.event.target.value;
+        setValue(event.target.value);
     }
 
     const handleSubmit = (event) => {
@@ -40,13 +43,102 @@ function NameForm(props) {
                 이름:
                 <input type="text" value={value} onChange={handleChange} />
             </label>
+            <button type="submit">제출</button>
         </form>
     )
 }
 
 // import와 export는 생략.
-```
+```  
 
+### 11.3 textarea 태그  
+* HTML에서는 <textarea>의 children>으로 텍스트가 들어가는 형태이다.  
+```html
+<textarea>
+    안녕하세요, 여기에 이렇게 텍스트가 들어가게 됩니다.    
+</textarea>   
+```  
+
+* 리액트에서는 state를 통해 태그의 value라는 attribute를 변경하여 텍스트를 표시한다.
+```jsx
+function RequestForm(props) {
+    const [value, setValue] = useState('요청사항을 입력하세요.');
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    }
+
+    const handleSubmit = (event) => {
+        alert('입력한 요청사항: ' + value);
+        event.preventDefault();
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                요청사항:
+                <textarea value ={value} onChange={handleChange} />
+            </label>
+            <button type="submit">제출</button>
+        </form>
+    )
+}
+    
+// import와 export는 생략.    
+```  
+    
+### 11.4 select 태그      
+* select태그도 textarea와 동일하다.
+* 아래 HTML과 jsx의 2개 코드를 참고.    
+```html
+<select>
+    <option value="apple">사과</option>
+    <option value="banana">바나나</option>
+    <option selected value="grape">포도</option>
+    <option value="watermelon">수박</option>
+</select>    
+```
+    
+```jsx
+function FruitSelect(props) {
+    const [value, setValue] = useState('grape');
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    }
+
+    const handleSubmit = (event) => {
+        alert('선택한 과일: ' + value);
+        event.preventDefault();
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                과일을 선택하세요:
+                <select value = {value} onChange={handleChange}>
+                    <option value="apple">사과</option>
+                    <option value="banana">바나나</option>
+                    <option selected value="grape">포도</option>
+                    <option value="watermelon">수박</option>
+                </select>
+            </label>
+            <button type="submit">제출</button>
+        </form>
+    )
+}
+    
+// import와 export는 생략.      
+```
+    
+    
+### 11.5 File input 태그  
+* File input 태그는 그 값이 읽기 전용이기 때문에 리액트에서는 비제어 컴포넌트가 된다.  
+```jsx
+    
+```    
+    
+    
 
 ## chapter 10. 리스트와 키  
 
