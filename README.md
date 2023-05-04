@@ -1,7 +1,52 @@
 # 23-React1
 # 온준형
 ## 10주차 2023-05-04  
-#### 수업내용 
+#### 수업내용  
+
+## chapter 11. 폼  
+
+### * 목차
+* 11.1 폼이란 무엇인가?  
+* 11.2 제어 컴포넌트  
+* 11.3 클릭 이벤트 처리하기  
+* 11.4 리스트와 키란 무엇인가?    
+* 11.5 출력부 출력하기    
+* 11.11 마치며(요약)  
+
+
+### 11.1 폼이란 무엇인가?  
+* 폼은 일만적으로 사용자로부터 ~   
+
+### 11.2 제어 컴포넌트  
+* 제어 컴포넌트는 사용자가 입력한 값에 접극하고 제어할 수 있도록 해주는 컴포넌트이다.  
+* 다음 코드는 사용자의 아름을 입력받는 HTML폼을 리액트 제어 컴포넌트로 만든 것이다.  
+
+```jsx
+function NameForm(props) {
+    const [value, setValue] = useState('');
+
+    const handleChange = (event) => {
+        setValue.event.target.value;
+    }
+
+    const handleSubmit = (event) => {
+        alert('입력한 이름: ' + value);
+        event.preventDefault();
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                이름:
+                <input type="text" value={value} onChange={handleChange} />
+            </label>
+        </form>
+    )
+}
+
+// import와 export는 생략.
+```
+
 
 ## chapter 10. 리스트와 키  
 
@@ -48,6 +93,7 @@ ReactDOM.render(
     document.getElementById('root')
 );    
 
+// import와 export는 생략.
 ```    
 
 * 이 코드를 실행하면 "리스트 아이템에 무조건 키가 있어야 한다"는 경고 문구가 나온다.  
@@ -66,7 +112,7 @@ ReactDOM.render(
 * 오류 메시지를 확인하고나서 앞서 확인핸 key props에 관한 오류이다.  
 * 다음과 같은 각 학생 객체에 고유한 값을 가진 id를 추가해주고, map()함수의 엘리먼트에 key={student.id}를 넣어준다.  
 
-
+###### 10.6 마치며(요약) 
 
 
 
