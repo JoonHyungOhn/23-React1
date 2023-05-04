@@ -134,10 +134,48 @@ function FruitSelect(props) {
     
 ### 11.5 File input 태그  
 * File input 태그는 그 값이 읽기 전용이기 때문에 리액트에서는 비제어 컴포넌트가 된다.  
+    
+### 11.6 여러 개의 입력 다루기    
 ```jsx
+function Reservation(props) {
+    const [handBreakfast, setHaveBreakfast] = useState('true');
+    const [numberOfGuest, setNumberOfGuest] = useState('2');
+
+    const handleSubmit = (event) => {
+        alert('아침식사 여부:  ${haveBreakfast}, 방문객 수:${numberOfGuest}');
+        event.preventDefault();
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                아침식사 여부:
+                <input type="checkbox"
+                checked = {handBreakfast}
+                onChange={(event) => {
+                    setHaveBreakfast(event.target.checked)
+                }} />
+            </label>
+            <br />
+            <label>
+                방문객 수:
+                <input type="number"
+                value = {numberOfGuest}
+                onChange={(event) => {
+                    setNumberOfGuest(event.target.checked)
+                }} />
+            </label>
+            <button type="submit">제출</button>
+        </form>
+    )
+}
     
-```    
+// import와 export는 생략.       
+```     
     
+### 11.7 Input Null Vaule  
+    
+### 11.8 사용자 정보 입력받기  
     
 
 ## chapter 10. 리스트와 키  
