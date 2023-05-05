@@ -99,7 +99,7 @@ function RequestForm(props) {
 ```  
     
 ### 11.4 select 태그      
-* select태그도 textarea와 동일하다.
+* select 태그도 textarea와 동일하다.
 * 아래 HTML과 jsx의 2개 코드를 참고.    
 ```html
 <select>
@@ -182,7 +182,20 @@ function Reservation(props) {
 }
     
 // import와 export는 생략.       
-```     
+```   
+
+### 11.7 Input Null Vaule  
+* 제어 컴포넌트에 value prop을 정해진 값으로 넣으면 코드를 수정하지 않는 한 입력값을 바꿀 수 없다.  
+* 만약 value prop은 넣되 자유롭게 입력할 수 있게 만들고 싶다면 값이 undefined 또는 null을 넣어주면 된다.  
+```jsx
+ReactDOM.render(<input value="hi" />, rootNode);
+
+setTimeout(function() {
+    ReactDOM.render(<input value={null} />, rootNode);
+}, 1000);    
+```
+
+### 11.8 사용자 정보 입력받기  
 #### SignUp.jsx 코드  
 ```jsx
 import React, { useState } from "react";
@@ -259,10 +272,8 @@ import SignUp from './chapter_11/SignUp';
     // document.getElementById('root')
   );    
 ```    
-### 11.7 Input Null Vaule  
-    
-### 11.8 사용자 정보 입력받기  
-    
+### 11.9 마치며(요약)  
+
 
 ## chapter 10. 리스트와 키  
 
