@@ -195,7 +195,7 @@ setTimeout(function() {
 }, 1000);    
 ```
 
-### 11.8 사용자 정보 입력받기  
+### 11.8 사용자 정보 입력받기(실습)  
 #### SignUp.jsx 코드  
 ```jsx
 import React, { useState } from "react";
