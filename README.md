@@ -92,12 +92,219 @@ function Calculator(props) {
 #### 12.2.5 Calculator 컴포넌트 변경하기  
 * 변경된 TemperatureInput 컴포넌트에 맞춰 Calculator 컴포넌트를 변경해야 한다.  
 ```js
-~
+function Calculator(props) {
+    const [temperature, setTemperature] = useState('');
+    const [scale, setScale] = useState('c');
+
+    const handleCelsiusChange = (temperature) => {
+        setTemperature(temperature);
+        setScale('c');
+    }
+
+    const handleFahrenheitChange = (temperature) => {
+        setTemperature(temperature);
+        setScale('f');
+    }
+
+    const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;\
+    
+    return (
+        <div>
+            <TemperatureInput
+                scale="c"
+                temperature={celsius}
+                onTemperatureChange={handleCelsiusChange} />
+            <TemperatureInput
+                scale="f"
+                temperature={fahrenheit}
+                onTemperatureChange={handleFahrenheitChange} />
+            <BoilingVerdict
+                celsius={parseFloat(celsius)} />         
+        </div>
+    )
+}
 ```  
+* 상위 컴포넌트인 Calculator에서 온도 값과 단위를 각각 state로 가지고 있다.
 * 단위가 'c'로 변경되면 => input 창이 2개라서 값을 넣으면 위는 섭씨고 아래는 화씨온도로 입력된다.   
 
-### 12.3 섭씨 온도와 화씨 온도 표시하기
+### 12.3 섭씨 온도와 화씨 온도 표시하기(실습)    
+#### TemperatureInput.jsx 코드 입력
+```jsx
+import React, { useState } from "react";
+import TemperatureInput from "./TemperatureInput";
 
+function BoilingVerdict(props) {
+    if (props.celsius >= 100) {
+        return <p>물이 끓습니다.</p>;
+    }
+    return <p>물이 끓지 않습니다.</p>;
+}
+
+function toCelsius(fahrenheit) {
+    return ((fahrenheit - 32) * 5) / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9) / 5 + 32;
+}
+
+function tryConvert(temperature, convert) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+        return "";
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+}
+
+function Calculator(props) {
+    const [temperature, setTemperature] = useState("");
+    const [scale, setScale] = useState("c");
+
+    const handleCelsiusChange = (temperature) => {
+        setTemperature(temperature);
+        setScale("c");
+    };
+
+    const handleFahrenheitChange = (temperature) => {
+        setTemperature(temperature);
+        setScale("f");
+    };
+
+    const celsius =
+        scale === "f" ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit =
+        scale === "c" ? tryConvert(temperature, toFahrenheit) : temperature;
+
+    return (
+        <div>
+            <TemperatureInput
+                scale="c"
+                temperature={celsius}
+                onTemperatureChange={handleCelsiusChange}
+            />
+            <TemperatureInput
+                scale="f"
+                temperature={fahrenheit}
+                onTemperatureChange={handleFahrenheitChange}
+            />
+            <BoilingVerdict celsius={parseFloat(celsius)} />
+        </div>
+    );
+}
+
+export default Calculator;
+```  
+
+#### Calculator.jsx 코드
+```jsx
+import React, { useState } from "react";
+import TemperatureInput from "./TemperatureInput";
+
+function BoilingVerdict(props) {
+    if (props.celsius >= 100) {
+        return <p>물이 끓습니다.</p>;
+    }
+    return <p>물이 끓지 않습니다.</p>;
+}
+
+function toCelsius(fahrenheit) {
+    return ((fahrenheit - 32) * 5) / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9) / 5 + 32;
+}
+
+function tryConvert(temperature, convert) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+        return "";
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+}
+
+function Calculator(props) {
+    const [temperature, setTemperature] = useState("");
+    const [scale, setScale] = useState("c");
+
+    const handleCelsiusChange = (temperature) => {
+        setTemperature(temperature);
+        setScale("c");
+    };
+
+    const handleFahrenheitChange = (temperature) => {
+        setTemperature(temperature);
+        setScale("f");
+    };
+
+    const celsius =
+        scale === "f" ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit =
+        scale === "c" ? tryConvert(temperature, toFahrenheit) : temperature;
+
+    return (
+        <div>
+            <TemperatureInput
+                scale="c"
+                temperature={celsius}
+                onTemperatureChange={handleCelsiusChange}
+            />
+            <TemperatureInput
+                scale="f"
+                temperature={fahrenheit}
+                onTemperatureChange={handleFahrenheitChange}
+            />
+            <BoilingVerdict celsius={parseFloat(celsius)} />
+        </div>
+    );
+}
+
+export default Calculator;
+```  
+
+#### index.js 코드 수정
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import LandingPage from './chapter_09/LandingPage';
+import Toolbar from './chapter_09/Toolbar';
+import AttendanceBook from './chapter_10/AttendanceBook';
+import SignUp from './chapter_11/SignUp';
+import TemperatureInput from './chapter_12/TemperatureInput';   // 수정 위치
+import Calculator from './chapter_12/Calculator';               // 수정 위치
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
+      {/* <Toolbar /> */}
+      {/* <LandingPage /> */}
+      {/* <AttendanceBook/> */}
+      {/* <SignUp /> */}
+      {/* <TemperatureInput /> */}
+      <Calculator />                       // 수정 위치
+    </React.StrictMode>,
+    // document.getElementById('root')
+  );
+```
 ## 10주차 2023-05-04  
 #### 수업내용  
 
