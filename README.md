@@ -50,7 +50,7 @@ function Calculator(props) {
 ```
 * 위 코드에서 Calculator라는 컴포넌트는 state로 온도 값을 하나 가지고 있다.  
 * 또 사용자로부터 입력 받기 위해 <input>태그를 사용하고 있다.  
-*  ~  
+* 사용자가 온도 값을 변경할 때마다 handleChange() 함수가 호출되고, setTemperature() 함수를 통해 온도 값을 갖고 있는 temperature라는 이름의 state를 업데이트한다.    
 
 #### 12.2.2 입력 컴포넌트 추출하기  
 * Calculator 컴포넌트 안에 온도를 입력하는 부분을 별도의 컴포넌트로 추출한다.  
@@ -74,16 +74,39 @@ function Calculator(props) {
     )
 }  
 ```  
-위 코드는 온도를 입력받기 위한 TemperatureInput 컴포넌트이다.
+* 위 코드는 온도를 입력받기 위한 TemperatureInput 컴포넌트이다.  
+* 추가적으로 props에 단위를 나타내는 scale을 추가하여 온도의 단위를 섭씨또는 화씨로 입력 가능하도록 만든다.
 
 #### 12.2.3 온도 변환 함수 작성하기  
-* 먼저 섭씨온도와 화씨온도 값을 동기화시키기 위해 각각 변환하는 함수를 작성한다.  
+* 아래 두 코드는 화씨온도를 섭씨온도로 변환하거나 화씨온도를 섭씨온도로 변환시키는 함수이다.  
 ```jsx
-~
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+}
 ```  
 
+#### 함수를 호출하는 함수를 작성
 ```jsx
+function tryConvert(temperature, convert) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+        return '';
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+}
 ```  
+* tryConvert()함수는 온도 값과 변환하는 함수를 파라미터로 받아서 값을 변화시켜 리턴해주는 함수이다.  
+* 숫자가 아닌 empty string을 리턴하도록 예외 처리를 한다면 아래와 같다.
+```jsx
+tryConvert('abc', toCelsius)    // empty string을 리턴
+tryConvert('10.22', toFahrenheit)   //'50.396'을 리턴
+```
   
 #### 12.2.4 Shared State 작성하기  
 * 하위 컴포넌트의 state를 공통된 부모 컴포넌트로 올려서 shared state를 적용해야 한다.  
