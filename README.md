@@ -327,7 +327,16 @@ import Calculator from './chapter_12/Calculator';               // 수정 위치
     </React.StrictMode>,
     // document.getElementById('root')
   );
-```
+```  
+
+### 12.4 마치며(요약)  
+#### * Shared state    
+* 하위 컴포넌트가 공통된 부모 컴포넌트의 state를 공유하며 사용하는 것  
+
+#### * state 끌어올리기  
+* 하위 컴포넌트의 state를 공통된 부모 컴포넌트로 끌어올려서 공유하는 방식  
+
+
 ## 10주차 2023-05-04  
 #### 수업내용  
 
