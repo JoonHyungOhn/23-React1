@@ -15,7 +15,7 @@
 * 하위 컴포넌트가 공통된 부모 컴포넌트의 state를 공유하여 사용하는 것을 shared state라고 한다.
 
 ### 12.2 하위 컴포넌트  
-* 물의 끓음 여부를 알려주는 컴포넌트  
+#### 12.2.1 물의 끓음 여부를 알려주는 컴포넌트  
 
 * 아래 코드는 BoilingVerdict라는 이름을 가진 굉장히 간단한 컴포넌트이다. 
 ```jsx
@@ -28,8 +28,52 @@ function BoilingVerdict(props) {
 ```  
 * 섭씨온도 값을 props로 받아서 100°C 이상이면 물이 끓는다는 문자열을 출력, 그 외는 물이 끓지 않는다는 문자열을 출력한다.  
 
-*  
-### 12.3 
+```jsx
+function Calculator(props) {
+    const [temperature, setTemperature] = useState('');
+
+    const handleChange = (event) => {
+        setTemperature(event.target.value);
+    }
+
+    return (
+        <fieldset>
+            <legend>섭씨 온도를 입력하세요:</legend>
+            <input 
+                value={temperature}
+                onChange={handleChange} />
+            <BoilingVerdict
+                celsius={parseFloat(temperature)} />
+        </fieldset>
+    )
+}
+```
+* 위 코드에서 Calculator라는 컴포넌트는 state로 온도 값을 하나 가지고 있다.  
+* 또 사용자로부터 입력 받기 위해 <input>태그를 사용하고 있다.  
+*  ~  
+
+#### 12.2.2 입력 컴포넌트 추출하기  
+* Calculator 컴포넌트 안에 온도를 입력하는 부분을 별도의 컴포넌트로 추출한다.  
+```jsx
+~
+```  
+
+#### 12.2.3 온도 변환 함수 작성하기  
+* 먼저 섭씨온도와 화씨온도 값을 동기화시키기 위해 각각 변환하는 ㅎㅁ수를 작성한다.  
+```jsx
+~
+```  
+
+```jsx
+```  
+  
+#### 12.2.4 Shared State 작성하기  
+
+
+#### 12.2.5 Calculator 컴포넌트 변경하기  
+
+
+### 12.3 섭씨 온도와 화씨 온도 표시하기
 
 ## 10주차 2023-05-04  
 #### 수업내용  
