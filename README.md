@@ -18,7 +18,7 @@
 #### 12.2.1 물의 끓음 여부를 알려주는 컴포넌트  
 
 * 아래 코드는 BoilingVerdict라는 이름을 가진 굉장히 간단한 컴포넌트이다. 
-```jsx
+```js
 function BoilingVerdict(props) {
     if (props.celsius >= 100) {
         return <p>물이 끓습니다</p>;
@@ -54,12 +54,30 @@ function Calculator(props) {
 
 #### 12.2.2 입력 컴포넌트 추출하기  
 * Calculator 컴포넌트 안에 온도를 입력하는 부분을 별도의 컴포넌트로 추출한다.  
-```jsx
-~
+```js
+const scaleNames = {
+    c: '섭씨',
+    r: '화씨'
+};
+
+function Calculator(props) {
+    const [temperature, setTemperature] = useState('');
+    
+    const handleChange = (event) => {
+        setTemperature(event.target.value);
+    }
+    return (
+        <fieldset>
+            <legend>온도를 입력해주세요(단위:{scaleNames[props.scale]}):</legend>
+            <input value={temperature} onChange={handleChange} />
+        </fieldset>
+    )
+}  
 ```  
+위 코드는 온도를 입력받기 위한 TemperatureInput 컴포넌트이다.
 
 #### 12.2.3 온도 변환 함수 작성하기  
-* 먼저 섭씨온도와 화씨온도 값을 동기화시키기 위해 각각 변환하는 ㅎㅁ수를 작성한다.  
+* 먼저 섭씨온도와 화씨온도 값을 동기화시키기 위해 각각 변환하는 함수를 작성한다.  
 ```jsx
 ~
 ```  
@@ -68,10 +86,15 @@ function Calculator(props) {
 ```  
   
 #### 12.2.4 Shared State 작성하기  
-
+* 하위 컴포넌트의 state를 공통된 부모 컴포넌트로 올려서 shared state를 적용해야 한다.  
+* 여기서 state를 상위 컴포넌트로 올린다는 것을 <b>State 끌어올리기</b>라고 표현한다.
 
 #### 12.2.5 Calculator 컴포넌트 변경하기  
-
+* 변경된 TemperatureInput 컴포넌트에 맞춰 Calculator 컴포넌트를 변경해야 한다.  
+```js
+~
+```  
+* 단위가 'c'로 변경되면 => input 창이 2개라서 값을 넣으면 위는 섭씨고 아래는 화씨온도로 입력된다.   
 
 ### 12.3 섭씨 온도와 화씨 온도 표시하기
 
