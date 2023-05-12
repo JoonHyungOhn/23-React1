@@ -102,7 +102,7 @@ function tryConvert(temperature, convert) {
 }
 ```  
 * tryConvert()함수는 온도 값과 변환하는 함수를 파라미터로 받아서 값을 변화시켜 리턴해주는 함수이다.  
-* 숫자가 아닌 empty string을 리턴하도록 예외 처리를 한다면 아래와 같다.
+* 숫자가 아닌 empty string을 리턴하도록 예외 처리를 한다면 아래와 같다.  
 ```jsx
 tryConvert('abc', toCelsius)    // empty string을 리턴
 tryConvert('10.22', toFahrenheit)   //'50.396'을 리턴
@@ -110,7 +110,40 @@ tryConvert('10.22', toFahrenheit)   //'50.396'을 리턴
   
 #### 12.2.4 Shared State 작성하기  
 * 하위 컴포넌트의 state를 공통된 부모 컴포넌트로 올려서 shared state를 적용해야 한다.  
-* 여기서 state를 상위 컴포넌트로 올린다는 것을 <b>State 끌어올리기</b>라고 표현한다.
+* 여기서 state를 상위 컴포넌트로 올린다는 것을 <b>State 끌어올리기</b>라고 표현한다.  
+```jsx
+return (
+    변경 전: <input value={temperature} onChange={handleChange} />
+    <input value={props.temperature} onChange={handleChange} />
+)
+```  
+* 이렇게 하면 온도 값을 컴포넌트의 state에서 가져오는 것이 아닌 props를 통해 가져오게 된다.  
+* 컴포넌트의 state를 사용하지 않게 되기 때문에 입력값이 변경되었을 때 상위 컴포넌트로 변경된 값을 전달해주여야 한다.  
+* 이것 때문에 handleChange() 함수를 다음과 같은 코드로 사용한다.  
+
+```jsx
+const handleChange = (event => {
+    // 변경 전: setTemperature(event.target.value);
+    props.onTemperatureChange(event.target.value); 
+})
+```  
+* 위 코드를 쓰면 온도 값을 변경할 때마다 props에 있는 onTemperatureChange() 함수를 통해 변경된 온도 값이 상위 컴포넌트로 전달된다.  
+* 최종 코드는 아래와 같다.  
+
+```jsx
+function TemperatureInput(props) {
+    const handleChange = (event) => {
+        props.onTemperatureChange(event.target.value); 
+    }
+
+    return (
+        <fieldset>
+            <legend>온도를 입력해 주세요(단위:{scaleNames[props.scale]})</legend>
+            <input value={props.temperature} onChange={handleChange} />
+        </fieldset>
+    )
+}    
+```
 
 #### 12.2.5 Calculator 컴포넌트 변경하기  
 * 변경된 TemperatureInput 컴포넌트에 맞춰 Calculator 컴포넌트를 변경해야 한다.  
