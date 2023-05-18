@@ -46,12 +46,25 @@ React.createElement(
     [...children]
 ```    
 
-#### React,createElement()에 관하여(추가로)  
+#### React, createElement()에 관하여(추가로)  
 * jsx를 사용하지 않는 경우의 props 전달 방법인데 정확히 말하면 jsx를 사용하지 않고 리액트로 엘리먼트를 생성하는 방법이다.
 * 아래 코드를 참고.  
 ```jsx
+// JSX를 이용한 간단한 방법
+const jsxElement = <h1 className="jsx">JSX Element</h1>
+```  
 
+```js
+// 리액트 기능을 사용한 방법
+const reactElement = React.createElement(
+    'h1', // tag
+    {className: 'obj'}, // props
+    'OBJ Element' // child element
+)
 ```
+
+* FancyBorder 컴포넌트를 사용하는 예제이다.  
+* WelcomeDialog 컴포넌트는 FancyBorder 컴포넌트를 사용하고, FancyBorder 컴포넌트는 <h1>과 <p> 2개의 태그를 children이 props로 전달된다.  
     
 * WelcomeDialog의 컴포넌트 코드 예제  
 ```jsx
@@ -70,7 +83,7 @@ function WelcomeDialog(props) {
 ```  
     
 * 리액트에서는 props.children을 통해 하위 컴포넌트를 하나로 모아서 제공해준다.  
-* 만일 여러 개의 children 집합이 필요한 경우    
+* 만일 여러 개의 children 집합이 필요한 경우 별도로 props를 정의해서 각각 원하는 컴포넌트를 넣어준다.  
     
 #### 13.1.2 Specialization  
 * WelcomeDialog는 다이얼로그의 특별한 케이스이다.  
@@ -221,8 +234,8 @@ import AttendanceBook from './chapter_10/AttendanceBook';
 import SignUp from './chapter_11/SignUp';
 import TemperatureInput from './chapter_12/TemperatureInput';
 import Calculator from './chapter_12/Calculator';
-import Card from './chapter_13/Card';
-import ProfileCard from './chapter_13/ProfileCard';
+import Card from './chapter_13/Card';                       // 수정 위치
+import ProfileCard from './chapter_13/ProfileCard';         // 수정 위치
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
