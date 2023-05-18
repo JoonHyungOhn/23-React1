@@ -272,8 +272,13 @@ import ProfileCard from './chapter_13/ProfileCard';         // 수정 위치
 * Specialization  
     ■ 범용적인 개념을 구별되게 구체화하는 것  
     ■ 범용적으로 쓸 수 있는 컴포넌트를 만들어 놓고 이를 구체화시켜서 컴포넌트를 사용하는 것
-* Containment와 Specialization을 같이 사용하기    
+* Containment와 Specialization을 함께 사용하기  
+    ■ props.children을 통해 하위 컴포넌트를 포함시키기(Containment)
+    ■ 별도의 props를 선언하여 구체화시키기(Specialization)
 #### * 상속  
+* 다른 컴포넌트로부터 상속받아서 새로운 컴포넌트를 만드는 것  
+* 상속을 사용하여 컴포넌트를 만드는 것을 추천할 만한 사용 사례를 찾지 못함  
+* 리액트에서는 상속이라는 방법을 사용하는 것보다는 합성을 사용하는 것이 더 좋음  
 
 ## chapter 14. 컨택스트  
 
