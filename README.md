@@ -109,7 +109,7 @@ function WelcomeDialog(props) {
 ```  
     
 * Dialog컴포넌트는 이전의 것과 비슷한데 Containment를 위해 끝부분에 props.children을 추가했다.  
-* Dialog를 사용하는 SignUpDialog는 Specialization을 위해 props인 title, message에 값을 넣어주고 있고, 입력을 받기 위해 <input>, <button>을 사용한다.  
+* Dialog를 사용하는 SignUpDialog는 Specialization을 위해 props인 title, message에 값을 넣어주고 있고, 입력을 받기 위해 '<input>, <button>'을 사용한다.  
 * <input>, <button>는 모두 props.children으로 전달되어서 다이얼로그에 표시된다.  
 * 이런 형태로 Containment와 Specialization을 동시에 사용할 수 있다.  
     
