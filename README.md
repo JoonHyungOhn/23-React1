@@ -105,7 +105,43 @@ function WelcomeDialog(props) {
 * Containment를 위해서 props.children을 사용하고, Specialization을 위해 직접 정의한 props를 사용하면 된다.  
 * 아래 코드를 참고.    
 ```jsx
+function Dialog(props) {
+    return (
+        <FancyBorder color="blue">
+            <h1 className="Dialog-title">
+                {props.title}
+            </h1>
+            <p className="Dialog-message">
+                {props.message}
+            </p>
+        </FancyBorder>
+    );
+}
 
+function SignUpDialog(props) {
+    const [nickname, setNickname] = useState('');
+
+    const handleChange = (event) => {
+        setNickname(event.target.value);
+    }
+
+    const handleSignUp = () => {
+        alert(`어서오세요, ${nickname}님!`);
+    }
+
+    return (
+        <Dialog 
+            title="화성 탐사 프로그램"
+            message="닉네임을 입력해 주세요">
+            <input
+                value={nickname}
+                onChange={handleChange} />
+            <button onClick={handleSignUp}>
+                가입하기
+            </button>        
+        </Dialog>
+    );
+}
 ```  
     
 * Dialog컴포넌트는 이전의 것과 비슷한데 Containment를 위해 끝부분에 props.children을 추가했다.  
