@@ -265,7 +265,10 @@ import ProfileCard from './chapter_13/ProfileCard';         // 수정 위치
 * 다양하고 복잡한 컴포넌트를 효율적으로 개발할 수 있다.
 
 #### * 합성기법  
-
+* Containment    
+    ■ 하위 컴포넌트를 포함하는 형태의 합성 방법  
+    ■ 리액트 컴포넌트의 props에 기본적으로 들어있는 children 속성을 사용   
+    ■ 여러 개의 children 집합이 필요한 경우 별도로 props를 각각 정의해서 사용   
 #### * 상속  
 
 ## chapter 14. 컨택스트  
