@@ -64,7 +64,7 @@ const reactElement = React.createElement(
 ```
 
 * FancyBorder 컴포넌트를 사용하는 예제이다.  
-* WelcomeDialog 컴포넌트는 FancyBorder 컴포넌트를 사용하고, FancyBorder 컴포넌트는 <h1>과 <p> 2개의 태그를 children이 props로 전달된다.  
+* WelcomeDialog 컴포넌트는 FancyBorder 컴포넌트를 사용하고, FancyBorder 컴포넌트는 h1과 p2개의 태그를 children이 props로 전달된다.  
     
 * WelcomeDialog의 컴포넌트 코드 예제  
 ```jsx
@@ -80,7 +80,7 @@ function WelcomeDialog(props) {
         </FancyBorder>
     );
 }    
-```  
+```    
     
 * 리액트에서는 props.children을 통해 하위 컴포넌트를 하나로 모아서 제공해준다.  
 * 만일 여러 개의 children 집합이 필요한 경우 별도로 props를 정의해서 각각 원하는 컴포넌트를 넣어준다.  
