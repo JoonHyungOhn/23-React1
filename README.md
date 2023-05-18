@@ -188,12 +188,61 @@ export default Card;
 
 * ProfileCard.jsx 코드 입력
 ```jsx
+import Card from "./card";
 
+function ProfileCard(props) {
+    return (
+        <Card title="JoonHyung Ohn" backgroundColor="#4ea04e">
+            <p>안녕하세요, 온준형입니다.</p>
+            <p>저는 리액트를 사용해서 개발하고 있습니다.</p>
+        </Card>
+    );
+}
+
+export default ProfileCard;
 ```  
 
 * Card값과 ProfileCard값을 넣은 index.js 코드
 ```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import LandingPage from './chapter_09/LandingPage';
+import Toolbar from './chapter_09/Toolbar';
+import AttendanceBook from './chapter_10/AttendanceBook';
+import SignUp from './chapter_11/SignUp';
+import TemperatureInput from './chapter_12/TemperatureInput';
+import Calculator from './chapter_12/Calculator';
+import Card from './chapter_13/card';
+import ProfileCard from './chapter_13/ProfileCard';
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
+      {/* <Toolbar /> */}
+      {/* <LandingPage /> */}
+      {/* <AttendanceBook/> */}
+      {/* <SignUp /> */}
+      {/* <TemperatureInput /> */}
+      {/* <Calculator /> */}
+      {/* <Card /> */}              // 
+      <ProfileCard />               // 수정위치
+    </React.StrictMode>,
+    // document.getElementById('root')
+  );
 ```  
 ### 13.4 마치며(요약)  
 
@@ -209,9 +258,13 @@ export default Card;
 
 ### * 목차
 * 14.1 컨택스트란 무엇인가?    
-* 14.2 상속에 대해 알아보자  
-* 14.3 card 컴포넌트 만들기(실습)  
-* 14.4 마치며(요약)  
+* 14.2 언제 컨텍스트를 사용해야 할까?  
+* 14.3 컨텍스트를 사용하기 전에 고려할 점  
+* 14.4 컨텍스트 API  
+* 14.5 여러 개의 컨텍스트 사용하기  
+* 14.6 useContext  
+* 14.7 컨텍스트를 사용하여 테마 변경 기능 만들기(실습)
+* 14.8 마치며() 
 
 ### 14.1 컨택스트란 무엇인가?  
 * 기존의 일반적인 리액트에서는 데이터가 컴포넌트의 props를 통해 부모에서 자식으로 단방향으로 전달된다.  
@@ -229,12 +282,24 @@ export default Card;
 * React.createContext()함수를 사용해서 ThemeContext라는 이름의 컨텍스트를 생성한다.  
 * 컨텍스트를 사용하려면 컴포넌트의 상위 컴포넌트에서 Provider로 감싸주어야 한다.
 
+* 아래 예제는 현재 선택된 테마를 기존 방식대로 컴포넌트의 props로 전달하는 코드이다.    
+ ```jsx
+ function App(props) {
+    return <Toolbar theme="dark" />;
+ }
     
-    
-    
-    
-    
-    
+function Toolbar(props) {
+    return(
+        <div>
+            <ThemeButton theme={props.theme} />
+        </div>
+    );
+}
+
+function ThemeButton(props) {
+    return <Button theme={props.theme} />
+}    
+ ```   
     
     
     
@@ -243,7 +308,7 @@ export default Card;
 ## 11주차 2023-05-11  
 #### 수업내용  
 
-## chapter 12 
+## chapter 12. State 끌어올리기 
 
 ### * 목차
 * 12.1 Shared State    
