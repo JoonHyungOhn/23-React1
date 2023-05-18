@@ -188,7 +188,7 @@ export default Card;
 
 * ProfileCard.jsx 코드 입력
 ```jsx
-import Card from "./card";
+import Card from "./Card";
 
 function ProfileCard(props) {
     return (
@@ -221,7 +221,7 @@ import AttendanceBook from './chapter_10/AttendanceBook';
 import SignUp from './chapter_11/SignUp';
 import TemperatureInput from './chapter_12/TemperatureInput';
 import Calculator from './chapter_12/Calculator';
-import Card from './chapter_13/card';
+import Card from './chapter_13/Card';
 import ProfileCard from './chapter_13/ProfileCard';
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -238,11 +238,12 @@ import ProfileCard from './chapter_13/ProfileCard';
       {/* <SignUp /> */}
       {/* <TemperatureInput /> */}
       {/* <Calculator /> */}
-      {/* <Card /> */}              // 
-      <ProfileCard />               // 수정위치
+      {/* <Card /> */}          // 수정 위치
+      <ProfileCard />           // 수정 위치
     </React.StrictMode>,
     // document.getElementById('root')
   );
+
 ```  
 ### 13.4 마치며(요약)  
 
