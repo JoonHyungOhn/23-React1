@@ -36,6 +36,37 @@ function FancyBorder(props) {
 * 위 코드에선 FancyBorder라는 간단한 컴포넌트를 사용했다.  
 * props.children을 사용하면 해당 컴포넌트에 하위 컴포넌트가 모두 children으로 들어오게 된다.  
 
+* children은 다음 구조의 세번째에 들어가는 파라미터이다.  
+* 파라미터가 배열로 되어있는 이유는 여러개의 하위 컴포넌트를 가질 수 있기 때문이다.  
+* children이 배열로 되어있는 것은 여러 개의 하위 커포넌트를 위한 것이다.    
+```jsx
+React.createElement(
+    type,
+    [props],
+    [...children]
+```    
+
+#### React,createElement()에 관하여(추가로)  
+* jsx를 사용하지 않는 경우의 props 전달 방법인데 정확히 말하면 jsx를 사용하지 않고 리액트로 엘리먼트를 생성하는 방법이다.
+* 아래 코드를 참고.  
+    
+* WelcomeDialog의 컴포넌트 코드 예제  
+```jsx
+function WelcomeDialog(props) {
+    return (
+        <FancyBorder color="blue">
+            <h1 className="Dialog-title">
+                어서오세요
+            </h1>
+            <p className="Dialog-message">
+                우리 사이트에 방문하신 것을 환영합니다!
+            </p>
+        </FancyBorder>
+    );
+}    
+```  
+    
+    
 ## 11주차 2023-05-11  
 #### 수업내용  
 
