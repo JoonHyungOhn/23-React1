@@ -299,9 +299,9 @@ function Toolbar(props) {
 function ThemeButton(props) {
     return <Button theme={props.theme} />
 }    
- ```   
+ ```     
     
-    
+### 14.3 컨텍스트를 사용하기 전에 고려할 점  
     
     
 
