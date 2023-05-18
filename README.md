@@ -66,6 +66,54 @@ function WelcomeDialog(props) {
 }    
 ```  
     
+* 리액트에서는 props.children을 통해 하위 컴포넌트를 하나로 모아서 제공해준다.  
+* 만일 여러 개의 children 집합이 필요한 경우    
+    
+#### 13.1.2 Specialization  
+* WelcomeDialog는 다이얼로그의 특별한 케이스이다.  
+* 범용적인 개념을 구별이 되게 구체화하는 것을 특수화라고 한다.  
+* 객체지향 언어에서는 상속을 사용하여 특수화를 구현한다.  
+* 리액트에서는 합성을 사용하여 특수화를 구현한다.  
+* 다음 코드와 같이 특수화는 범용적으로 쓸 수 있는 컴포넌트를 만들어놓고 이를 특수한 목적으로 사용하는 합성 방식이다.  
+
+ ```jsx
+function Dialog(props) {
+    return (
+        <FancyBorder color="blue">
+            <h1 className="Dialog-title">
+                {props.title}
+            </h1>
+            <p className="Dialog-message">
+                {props.message}
+            </p>
+        </FancyBorder>
+    );
+}
+
+function WelcomeDialog(props) {
+    return (
+        <Dialog
+            title="어서 오세요"
+            message="우리 사이트에 방문하신 것을 환영합니다!"
+        />    
+    )
+}    
+```  
+    
+#### 13.1.3 Containment와 Specialization을 같이 사용하기  
+
+* Containment를 위해서 props.children을 사용하고, Specialization을 위해 직접 정의한 props를 사용하면 된다.  
+* 아래 코드를 참고.    
+```jsx
+
+```  
+    
+* Dialog컴포넌트는 이전의 것과 비슷한데 Containment를 위해 끝부분에 props.children을 추가했다.  
+* Dialog를 사용하는 SignUpDialog는 Specialization을 위해 props인 title, message에 값을 넣어주고 있고, 입력을 받기 위해 <input>, <button>을 사용한다.  
+* <input>, <button>는 모두 props.children으로 전달되어서 다이얼로그에 표시된다.  
+* 이런 형태로 Containment와 Specialization을 동시에 사용할 수 있다.  
+    
+#### 13.2 상속에 대해 알아보자  
     
 ## 11주차 2023-05-11  
 #### 수업내용  
