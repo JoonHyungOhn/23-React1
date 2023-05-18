@@ -49,6 +49,9 @@ React.createElement(
 #### React,createElement()에 관하여(추가로)  
 * jsx를 사용하지 않는 경우의 props 전달 방법인데 정확히 말하면 jsx를 사용하지 않고 리액트로 엘리먼트를 생성하는 방법이다.
 * 아래 코드를 참고.  
+```jsx
+
+```
     
 * WelcomeDialog의 컴포넌트 코드 예제  
 ```jsx
@@ -156,7 +159,68 @@ function SignUpDialog(props) {
 * 하지만 리액트에서는 상속보다 합성을 통해 새로운 컴포넌트를 생성한다.  
     
 <b>* 복잡한 컴포넌트를 쪼개서 여러 개의 컴포넌트를 만들고, 만든 컴포넌트를 조합하서 새로운 컴포넌트를 만들 수 있다.</b>      
-    
+
+### 13.3 card 컴포넌트 만들기(실습)  
+
+* Card.jsx 코드 입력
+```jsx
+function Card(props) {
+    const { title, backgroundColor, children } = props;
+
+    return (
+        <div
+            style={{
+                margin: 8,
+                padding: 8,
+                borderRadius: 8,
+                boxShadow: "0px 0px 4px grey",
+                backgroundColor: backgroundColor || "white",
+            }}
+        >
+            {title && <h1>{title}</h1>}
+            {children}
+        </div>
+    );
+}
+
+export default Card;
+```  
+
+* ProfileCard.jsx 코드 입력
+```jsx
+
+```  
+
+* Card값과 ProfileCard값을 넣은 index.js 코드
+```js
+
+```  
+### 13.4 마치며(요약)  
+
+#### * 합성이란?  
+* 여러 개의 컴포넌트를 합쳐서 새로운 컴포넌트를 만드는 것  
+* 다양하고 복잡한 컴포넌트를 효율적으로 개발할 수 있다.
+
+#### * 합성기법  
+
+#### * 상속  
+
+## chapter 14. 컨택스트  
+
+### * 목차
+* 14.1 컨택스트란 무엇인가?    
+* 14.2 상속에 대해 알아보자  
+* 14.3 card 컴포넌트 만들기(실습)  
+* 14.4 마치며(요약)  
+
+### 14.1 컨택스트란 무엇인가?  
+* 기존의 일반적인 리액트에서는 데이터가 컴포넌트의 props를 통해 부모에서 자식으로 단방향으로 전달된다.  
+* 컨텍스트는 리액트 컴포넌트들 사이에서 데이터를 기존의 props를 통해 전달하는 방식 대신 <b>'컴포넌트 트리를 통해 곧바로 컴포넌트에 전달하는 새로운 방식'<b>을 제공한다.
+* 이것을 통해 어떤 컴포넌트라도 쉽게 데이터에 접근할 수 있다.
+* 컨텍스트를 사용하면 일일이 props로 전달할 필요없이 데이터를 필요로 하는 컴포넌트에 곧바로 데이터를 전달할 수 있다.
+
+
+
 ## 11주차 2023-05-11  
 #### 수업내용  
 
