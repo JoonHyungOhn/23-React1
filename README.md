@@ -367,7 +367,27 @@ function Page(props) {
 * 이런 경우 하위 컴포넌트를 여러개의 변수로 나눠줘서 전달하면 된다.
 * 아래 예제를 참고.
 ```jsx
+function Page(props) {
 
+    const user = props.user;
+
+    const toBar = (
+        <NavigationBar>
+            <Link href={user.permaLink}>
+                <Avatar user={user} size={props.avatarSize}
+            </Link>
+        </NavigationBar>
+    );
+
+    const content = <Feed user={user} />;
+
+    return (
+        <PageLayout
+            toBar={toBar}
+            content={content}
+        />    
+    )
+}
 ```  
 * 하지만 어떤 경우에는 하나의 데이터에 다향한 레벨에 있는 중첩된 컴포넌트드르이 점근이 필요할 수도 있다.  
 * 이런 경우라면 컨텍스트가 유리하다.  
