@@ -265,7 +265,7 @@ import ProfileCard from './chapter_13/ProfileCard';
 * 14.5 여러 개의 컨텍스트 사용하기  
 * 14.6 useContext  
 * 14.7 컨텍스트를 사용하여 테마 변경 기능 만들기(실습)
-* 14.8 마치며() 
+* 14.8 마치며(요약) 
 
 ### 14.1 컨택스트란 무엇인가?  
 * 기존의 일반적인 리액트에서는 데이터가 컴포넌트의 props를 통해 부모에서 자식으로 단방향으로 전달된다.  
@@ -303,8 +303,108 @@ function ThemeButton(props) {
  ```     
     
 ### 14.3 컨텍스트를 사용하기 전에 고려할 점  
+
+* 컨텍스트는 다른 레벨의 많은 컴포넌트가 특정 데이터를 필요로 하는 경우에 주로 사용한다.  
+* 하지만 무조건 컨텍스트를 사용하는 것이 좋은 것은 아니다.  
+* 이유: 컴포넌트와 컴텍스트가 연동되면서 재사용성이 떨어지기 때문이다.  
+* 따라서 다른 레벨의 많은 컴포넌트가 데이터를 필요로 하는 경우가 아니면 props를 통해 데이터를 전달하는 컴포넌트 합성 방법이 더 적합하다.  
+
+* 아래 예제처럼 실제 user와 avatarSize를 사용하는 것은 Avatar 컴포넌트 뿐인데 여러 단계에 걸쳐 props를 전달하고 있다.  
+```jsx
+// Page 컴포넌트는 PageLayout 컴포넌트를 렌더링
+<Page user={user} avatarSize={avatarSize} />
+
+PageLayout 컴포넌트는 NavigationBar 컴포넌트를 렌더링
+<PageLayout user={user} avatarSize={avatarSize} />
+
+// NavigationBar 컴포넌트는 Link 컴포넌트를 렌더링
+<NavigationBar user={user} avatarSize={avatarSize} />
+
+Link 컴포넌트는 Avatar 컴포넌트를 렌더링
+<Link href={user.permalink}>
+    <Avatar user={user} size={avatarSize} />
+</Link>  
+```  
+* 이런 경우 컨텍스트를 사용하지 않고 문제를 해결할 수 있는 방법은 Avatar 컴포넌트를 변수에 저장하여 직접 넘겨주는 것이다. (9장 참고)  
+* 이렇게 하면 중간 단계의 컴포넌트들은 user와 avatarSize에 대해 몰라도 된다.  
+* 아래 예제 참고.
+```jsx
+function Page(props) {
+    const user = props.user;
+
+    const userLink = (
+        <Link href={user.permalink}>
+            <Avatar user={user} size={props.avatarSize} />
+        </Link>
+    );
     
-    
+    // Page 컴포넌트는 PageLayout 컴포넌트를 렌더링
+    // 이때 props로 userLink를 함께 전달함
+    return <PageLayout userLink={userLink} />;
+}
+// PageLayout 컴포넌트는 NavigationBar 컴포넌트를 렌더링
+<PageLayout userLink={...} />
+
+// NavigationBar 컴포넌트는 props로 전달받은 userLink element를 리턴
+<NavigationBar userLink={...} />
+```
+
+* 하지만 위의 예제가 모든 상황에서 좋은 것은 아니다.  
+* 데이터가 많아질수록 상위 컴포넌트가 점점 더 복잡해지기 때문이다.  
+* 이런 경우 하위 컴포넌트를 여러개의 변수로 나눠줘서 전달하면 된다.
+* 아래 예제를 참고.
+```jsx
+
+```  
+* 하지만 어떤 경우에는 하나의 데이터에 다향한 레벨에 있는 중첩된 컴포넌트드르이 점근이 필요할 수도 있다.  
+* 이런 경우라면 컨텍스트가 유리하다.  
+* 컨텍스트는 해당 데이터와 데이터의 변경사항을 모두 하위 컴포넌트들에게 broadcast(브로드케스트)해주기 때문이다.  
+* 컨텍스트를 사용하기에 적합한 데이터의 대표적인 예시로는 '지역 정보', 'UI 테마', 그리고 '케싱된 데이터'등이 있다.  
+
+### 14.4 컨텍스트 API  
+
+#### 14.4.1 React.createContext  
+* 컨텍스트를 생성하기 위한 함수이다.  
+* 파라미터에는 기본값을 넣어주면 된다.  
+* 하위 컴포넌트는 가장 가까운 상위 레벨의 Provider로부터 컨텍스트를 받게 되지만, 만약 Provider를 찾을 수 없다면 위에서 설정한 기본값을 사용하게 된다.  
+```jsx
+const MyContext = React.createContext(기본값);
+```    
+#### 14.4.2 Context.Provider  
+* Context.Provider 컴포넌트로 하위 컴포넌트들을 감싸주면 모든 하위 컴포넌트들이 해당 컨텍스트의 데이터에 접근할 수 있게 된다.  
+```jsx
+<MyContext.Provider value={/* some value */}>
+```
+* Provider 컴포넌트에는 value라는 prop가 있고 이것은 Provider 컴포넌트 하위에 있는 컴포넌트에게 전달된다.  
+* 하위 컴포넌트를 consumer 컴포넌트라 부른다.
+* 주의할 사항
+```
+~
+```  
+
+#### 14.4.3 Class.contextType  
+* Provider 하위에 있는 클래스 컴포넌트에서 컨텍스트의 데이터에 접근하기 위해 사용한다.  
+* Class 컴포넌트는 더 이상 사용하지 않으므로 참고만.  
+
+#### 14.4.4 Context.Consumer  
+* 함수형 컴포넌트에서 Context.Consumer를 사용하여 컨텍스트를 구독할 수 있다.  
+```jsx
+<MyContext.Consumer>
+    {value => /*컨텍스트의 값에 따라서 컴포넌트들을 렌더링*/
+</MyContext.Consumer>    
+```
+* 컴포넌트의 자식으로 함수가 올 수 있는데 이것을 function as a child라고 부른다.  
+* Context.Consumer로 감싸주면 자식으로 들어간 함수가 현재 컨텍스트의 value를 받아서 리액트 노드로 리턴한다.  
+* 함수로 전달되는 value는 Provider는 value prop과 동일하다.
+
+#### 14.4.5 Context.displayName  
+* 컨텍스트 객체는 displayName이라는 문자열 속성을 갖는다.
+* 크롬의 리액트 개발자 도구에서는 컨텍스트의 provider나 Consumer를 표시할 때 displayName을 함께 표시해준다.
+
+### 14.5 여러 개의 컨텍스트 사용하기    
+### 14.6 useContext  
+### 14.7 컨텍스트를 사용하여 테마 변경 기능 만들기(실습)  
+### 14.8 마치며(요약)
 
 ## 11주차 2023-05-11  
 #### 수업내용  
