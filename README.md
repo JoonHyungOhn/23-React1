@@ -449,6 +449,121 @@ const MyContext = React.createContext(기본값);
 ### 14.5 여러 개의 컨텍스트 사용하기    
 ### 14.6 useContext  
 ### 14.7 컨텍스트를 사용하여 테마 변경 기능 만들기(실습)  
+
+* ThemeContext.jsx 입력 코드
+```jsx
+import React from "react";
+
+const ThemeContext = React.createContext();
+ThemeContext.displayName = "ThemeContext";
+
+export default ThemeContext;
+```  
+
+* MainContent.jsx 입력 코드  
+```jsx
+import { useContext } from "react";
+import ThemeContext from "./ThemeContext";
+
+function MainContent(props) {
+    const { theme, toggleTheme } = useContext(ThemeContext);
+
+    return (
+        <div
+            style={{
+                width: "100vw",
+                height: "100vh",
+                padding: "1.5rem",
+                backgroundColor: theme == "light" ? "white" : "black",
+                color: theme == "light" ? "black" : "white",
+            }}
+        >
+            <p>안녕하세요, 테마 변경이 가능한 웹사이트 입니다.</p>
+            <button onClick={toggleTheme}>테마 변경</button>
+        </div>
+    );
+}
+
+export default MainContent;
+```  
+
+* DarkOrLight.jsx 입력 코드
+```jsx
+import { useState, useCallback } from "react";
+import ThemeContext from "./ThemeContext";
+import MainContent from "./MainContent";
+
+function DarkOrLight(props) {
+    const [theme, setTheme] = useState("light");
+
+    const toggleTheme = useCallback(() => {
+        if (theme == "light") {
+            setTheme("dark");
+        } else if (theme == "dark") {
+            setTheme("light");
+        }
+    }, [theme]);
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <MainContent />
+        </ThemeContext.Provider>
+    );
+}
+
+export default DarkOrLight;
+```  
+
+* ThemeContext값과 MainContent값, DarkOrLight값을 넣은 index.js 코드
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import LandingPage from './chapter_09/LandingPage';
+import Toolbar from './chapter_09/Toolbar';
+import AttendanceBook from './chapter_10/AttendanceBook';
+import SignUp from './chapter_11/SignUp';
+import TemperatureInput from './chapter_12/TemperatureInput';
+import Calculator from './chapter_12/Calculator';
+import Card from './chapter_13/Card';                      
+import ProfileCard from './chapter_13/ProfileCard'; 
+import ThemeContext from './chapter_14/ThemeContext';   // 수정 위치  
+import MainContent from './chapter_14/MainContent';   // 수정 위치  
+import DarkOrLight from './chapter_14/DarkOrLight';   // 수정 위치  
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
+      {/* <Toolbar /> */}
+      {/* <LandingPage /> */}
+      {/* <AttendanceBook/> */}
+      {/* <SignUp /> */}
+      {/* <TemperatureInput /> */}
+      {/* <Calculator /> */}
+      {/* <Card /> */}        
+      {/* <ProfileCard /> */}   
+      {/* {<ThemeContext /> */}      // 수정 위치
+      {/* <MainContent /> */}        // 수정 위치
+      <DarkOrLight />                // 수정 위치
+    </React.StrictMode>,
+    // document.getElementById('root')
+  );
+
+```  
+
 ### 14.8 마치며(요약)
 
 ## 11주차 2023-05-11  
