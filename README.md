@@ -446,8 +446,81 @@ const MyContext = React.createContext(기본값);
 * 컨텍스트 객체는 displayName이라는 문자열 속성을 갖는다.
 * 크롬의 리액트 개발자 도구에서는 컨텍스트의 provider나 Consumer를 표시할 때 displayName을 함께 표시해준다.
 
-### 14.5 여러 개의 컨텍스트 사용하기    
+### 14.5 여러 개의 컨텍스트 사용하기  
+
+* 여러 개의 컨텍스트를 동시에 사용하려면 Context.Provider를 중첩해서 사용하는 방식으로 구현할 수 있다.  
+
+```jsx
+// 테마를 위한 컨텍스트
+const ThemeContext = React.createContext('light');
+
+// 로그인 한 사용자를 위한 컨텍스트
+const UserContext = React.createContext({
+    name: 'Guest'
+});
+
+class App extends React.Component {
+    render() {
+        const { signedInUser, theme } = this.props;
+
+        return (
+            <ThemeContext.Provider value={theme}>
+                <UserContext.Provider value={signedInUser}>
+                    <Layout />
+                </UserContext.Provider>
+            </ThemeContext.Provider>
+        );
+    }
+}
+
+function Layout() {
+    return (
+        <div>
+            <Sidebar />
+            <Content />
+        </div>
+    );
+}
+
+// 컨텍스트 컴포넌트는 두 개의 컨텍스트로부터 값을 가져와서 렌더링함
+function Content() {
+    return (
+        <ThemeContext.Consumer>
+            {theme => (
+                <UserContext.Consumer>
+                    {user => (
+                        <ProfilePage user={user} theme={theme} />
+                    )}
+                </UserContext.Consumer>
+            )}
+        </ThemeContext.Consumer>
+    );
+}
+```  
+
+* 위 코드에서는 ThemeContext와 UserContext인 두 개의 컨텍스트가 나온다.  
+* App 컴포넌트에서는 각 컨텍스트에 대해 두 개의 Provider를 사용해서 자식 컴포넌트인 Layout을 감싸줬다.  
+* 이렇게 하면 여러 개의 컨텍스트를 동시에 사용할 수 있다.  
+* 하지만 두 개 또는 그 이상의 컨텍스트의 값이 자주 함께 사용될 경우 별도의 render prop 컴포넌트를 직접 만드는 것이 좋다.  
+
 ### 14.6 useContext  
+
+* 함수 컴포넌트에서 컨텍스트를 사용하기 위해 Consumer 컴포넌트를 사용한다.  
+* 매번 Consumer 컴포넌트를 사용하기 보다 useContext() 훅을 사용한다. 
+* 아래 코드는 useContext() 훅을 사용하는 방법이다.  
+```jsx
+function MyComponent(props) {
+    const value = useContext(MyContext);
+    
+    return (
+        ···
+    )
+}    
+```
+* useContext() 훅을 사용하면 다른 방식과 동일하게 컴포넌트 트리상에서 가장 가까운 상위 Provider로부터 컨텍스트의 값을 받아오게 된다.  
+* 만약 useContext() 훅을 사용하는 컴포넌트의 렌더링이 꽤 무거울 경우 별도로 최적화 작업을 해줄 필요가 있다.  
+* 또한 useContext() 훅을 사용할 때는 <b>파라미터로 컨텍스트 객체를 넣어줘야 한다는 것</b>을 꼭 기억하자.  
+
 ### 14.7 컨텍스트를 사용하여 테마 변경 기능 만들기(실습)  
 
 * ThemeContext.jsx 입력 코드
@@ -564,7 +637,49 @@ import DarkOrLight from './chapter_14/DarkOrLight';   // 수정 위치
 
 ```  
 
-### 14.8 마치며(요약)
+### 14.8 마치며(요약)  
+
+#### * 컨텍스트란?  
+* 컴포넌트들 사이에서 데이터를 props를 통해 전달하는 것이 아닌 컴포넌트 트리를 통해 곧바로 데이터를 전달하는 방식    
+* 어떤 컴포넌트든지 컴포넌트에 있는 데이터에 쉽게 접근할 수 있음   
+
+#### * 언제 컨텍스트를 사용해야 할까?  
+* 여러 컴포넌트에서 계속해서 접근이 일어날 수 있는 데이터들이 있는 경우  
+* Provideer의 모든 하위 컴포넌트가 얼마나 깊이 위치해 있는지 관계없이 컨텍스트의 데이터를 읽을 수 있음  
+
+#### * 컨텍스트 사용 전 고려할 점  
+* 컴포넌트와 컴포넌트가 연동되면 재사용성이 떨어짐  
+* 다른 레벨의 많은 컴포넌트가 데이터를 필요로 하는 경우가 아니라면, 기존 방식대로 props를 통해 데이터를 전달하는 것이 더 적함  
+
+#### * 컨텍스 API  
+* React.createContext()    
+    ■ 컨텍스트를 생성하기 위한 함수  
+    ■ 컨텍스트 객체를 리턴함   
+    ■ 기본값으로 undefined를 넣으면 기본값이 사용되지 않음  
+* Context.Provider  
+    ■ 모든 컨텍스트 객체는 Provider라는 컴포넌트를 갖고 있음    
+    ■ Provider 컴포넌트로 하위 컴포넌트들을 감싸면 모든 하위 컴포넌트들이 해당 컨텍스트의 데이터에 접근할 수 있게 됨     
+    ■ Provider에는 value라는 prop이 있으며, 이것이 데이터로써 하위에 있는 컴포넌트들에게 전달됨  
+    ■ 여러 개의 Provider 컴포넌트를 중첩시켜 사용할 수 있음  
+* class.contextType    
+    ■ Provider 하위에 있는 클래스 컴포넌트에서 컨텍스트의 데이터에 접근하기 위해 사용    
+    ■ 단 하나의 컨텍스트만을 구독할 수 있음   
+* Context.Consumer    
+    ■ 컨텍스트의 데이터를 구독하는 컴포넌트  
+    ■ 데이터를 소비한다는 뜻에서 consumer 컴포넌트라고도 부름  
+    ■ consumer 컴포넌트는 컨텍스트 값의 변화를 지켜보다가 값이 변경되면 재렌더링됨  
+    ■ 하나의 Provider 컴포넌트는 여러 개의 consumer 컴포넌트와 연결될 수 있음  
+    ■ 상위 레벨에 매칭되는 Provider가 없을 경우 기본값이 사용됨  
+* Context.displayName  
+    ■ 크롬의 리액트 개발자 도구에서 표시되는 컨텍스트 객체의 이름  
+    
+#### 여러 개의 컨텍스트 사용하기  
+* Provider 컴포넌트와 Consumer 컴포넌트를 여러 개 중첩해서 사용하면 됨  
+
+#### 여러 개의 컨텍스트 사용하기  
+* 함수 컴포넌트에서 컨텍스트를 쉽게 사용할 수 있게 해주는 훅  
+* React.createContext() 함수 호출로 생성된 컨텍스트 객체를 인자로 받아서 현재 컨텍스트의 값을 리턴  
+* 컨텍스트의 값이 변경되면 변경된 값과 함께 useContext() 훅을 사용하는 컴포넌트가 재렌더링됨  
 
 ## 11주차 2023-05-11  
 #### 수업내용  
