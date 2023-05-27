@@ -444,8 +444,10 @@ const MyContext = React.createContext(기본값);
 
 #### 14.4.5 Context.displayName  
 * 컨텍스트 객체는 displayName이라는 문자열 속성을 갖는다.
-* 크롬의 리액트 개발자 도구에서는 컨텍스트의 provider나 Consumer를 표시할 때 displayName을 함께 표시해준다.
+* 크롬의 리액트 개발자 도구에서는 컨텍스트의 provider나 Consumer를 표시할 때 displayName을 함께 표시해준다.  
 
+## 13주차 2023-05-25  
+#### 수업내용    
 ### 14.5 여러 개의 컨텍스트 사용하기  
 
 * 여러 개의 컨텍스트를 동시에 사용하려면 Context.Provider를 중첩해서 사용하는 방식으로 구현할 수 있다.  
@@ -680,6 +682,7 @@ import DarkOrLight from './chapter_14/DarkOrLight';   // 수정 위치
 * 함수 컴포넌트에서 컨텍스트를 쉽게 사용할 수 있게 해주는 훅  
 * React.createContext() 함수 호출로 생성된 컨텍스트 객체를 인자로 받아서 현재 컨텍스트의 값을 리턴  
 * 컨텍스트의 값이 변경되면 변경된 값과 함께 useContext() 훅을 사용하는 컴포넌트가 재렌더링됨  
+
 
 ## 11주차 2023-05-11  
 #### 수업내용  
