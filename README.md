@@ -38,6 +38,7 @@ h1 {color: green; font-size: 16px;}
 
 ### 15.3 styled-components를 사용하여 스타일링해 보기(실습)  
 *  
+* ㅇ
 *  
 ### 15.4 마치며(요약)
 * 
