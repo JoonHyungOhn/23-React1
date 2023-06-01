@@ -211,7 +211,7 @@ export default Sample;
 
 ### 15.3 styled-components를 사용하여 스타일링해 보기(실습)  
 #### * Block.jsx 코드 입력  
-```
+```jsx
 import styled from "styled-components";
 
 const Wrapper = styled.div`
