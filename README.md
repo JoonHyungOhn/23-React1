@@ -44,15 +44,14 @@ h1 {color: green; font-size: 16px;}
 * ~ 
 
 ### 15.2 styled-components  
-* ㅇㄹ  
-* ㄴㄹㅇㄴ  
+*  
 #### 15.2.1 styled-components 설치하기  
 * styled-components를 사용하기 위해서 프로젝트에 설치해줘야 한다.  
 ```
 # rgb를 사용하는 경우
 npm install --save styled-components  
 
-# yarn을 사용하는 경우
+# yarn을 사용하는 경우(맥북)
 yarn add styled-components
 ```  
 
@@ -87,6 +86,94 @@ export default MainPage;
 
 #### 15.2.2 styled-components 기본 사용법
 * styled-components는 태그드 탬플릿 리터럴을 사용하여 구성 요소의 스타일을 지정한다.  
+* 프로그래밍에서 리터럴은 <b>소스코드의 고정된 값을 의미</b>한다.  
+
+```jsx
+// 정수 리터럴 (Integer literal)
+const myNumber = 10;
+
+// 문자열 리터럴 (Integer literal)
+const myStr = 'Hello';
+
+// 정수 리터럴 (Integer literal)
+const myArray = [];
+
+// 정수 리터럴 (Integer literal)
+const myObject = {};
+```  
+* 템플릿 리터럴이란 말 그래도 <b>리터럴을 템플릿 형태로 사용하는 자바스크립트의 문법인다, backticks(`)을 사용하여 문자열을 작성</b>하고 그 안에 대체 가능한 expression을 넣을 수 있다.  
+* 여기서 expression을 <b>대체</b>라는 뜻을 가진다.
+
+```jsx
+// Untagged template literal
+// 단순한 문자열
+`string text`
+
+// 여러 줄(Multi-line)에 결친 문자열
+`string text line 1
+string text line 2`
+
+// 대체 가능한 expression이 들어있는 문자열
+`string text ${expression} string text`
+
+// Tagged template literal
+// myFunction의 파라미터로 expression으로 구분된 문자열 배열과 expression이 순서대로 들어간 형태로 호출됨
+myFunction `string text ${expression} string text`;
+```  
+
+* 여기에서 태그 함수의 파라미터는 expression으로 구분된 문자열 배열과 expression이 순서대로 들어가게 된다.  
+* 더 쉬운 이해를 위해 아래 예제를 참고  
+
+```jsx
+const name1 = '인제';
+const region = 'tjdnf'; 
+
+function myTagFunction(strings, nameExp, regionExp) {
+    let str0 = strings[0]; // "제 이름은 "
+    let str1 = strings[1]; // "이고, 사는 곳은 "
+    let str2 = strings[2]; // "입니다."
+
+    // 여기에서도 template literal을 사용하여 리턴할 수 있음
+    return `${str0}${nameExp}${str1}${regionExp}${str2}`;
+}
+
+const output = myTagFunction`제 이름은 ${name1}이고, 사는 곳은 ${region}입니다.`;
+
+// 출력 결과
+// 제 이름은 인제이고, 사는 곳은 서울입니다.
+console.log(output);
+```
+
+#### 15.2.3 styled-components의 props 사용하기  
+* styled-components는 조건이나 동적으로 변하는 값을 사용해서 스타일링할 수 있는데 이것을 제공하는 기능이 <b>props</b>이다.  
+* 아래 코드를 참고  
+```jsx
+import React from "react";
+import styled from "styled-components";
+
+const Button = styled.button`
+    color: ${props => props.dark ? "white" : "dark"};
+    background: ${props => props.dark ? "black" : "dark"};
+    border: 1px soild black;
+`;
+
+function Sample(props) {
+    return (
+        <div>
+            <Button>Normal</Button>
+            <Button dark>Dark</Button>
+        </div>
+    )
+}
+
+export default Sample;
+```  
+* Button이라는 컴포넌트가 등장하고 styled-components을 사용해서 만들어진 것이다.  
+* <Button dark>Dark</Button>처럼 props로 dark를 넣어주는 것을 볼 수 있다.  
+* 이렇게 들어간 props는 그대로 styled-components로 전달된다.  
+
+#### 15.2.4 styled-components의 스타일 확장하기  
+* 
 
 ### 15.3 styled-components를 사용하여 스타일링해 보기(실습)  
 *  
