@@ -30,12 +30,18 @@ h1 {color: green; font-size: 16px;}
 ~
 
 #### 15.1.5 폰트와 관련된 속성  
-*  
-* ~  
-
+* em은 상대 글꼴, px은 절대 글꼴  
+* font-size의 값으로는 px, em, rem, vw 등  
+ 
+#### 15.1.6 많이 사용하는 기타 속성  
+* background-color 속성이 있다.  
+* CSS의 색상 값  
+- 
 
 ### 15.2 styled-components  
-
+* ㅇㄹ  
+* ㄴㄹㅇㄴ  
+* 
 ### 15.3 styled-components를 사용하여 스타일링해 보기(실습)  
 *  
 * ㅇ
