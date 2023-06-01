@@ -2,7 +2,7 @@
 # 온준형  
 ## 14주차 2023-06-01  
 #### 수업내용
-## chapter 15 스타일링  
+## chapter 15. 스타일링  
 ### * 목차
 * 15.1 CSS     
 * 15.2 styled-components   
@@ -126,7 +126,7 @@ myFunction `string text ${expression} string text`;
 
 ```jsx
 const name1 = '인제';
-const region = 'tjdnf'; 
+const region = '서울'; 
 
 function myTagFunction(strings, nameExp, regionExp) {
     let str0 = strings[0]; // "제 이름은 "
@@ -144,6 +144,8 @@ const output = myTagFunction`제 이름은 ${name1}이고, 사는 곳은 ${regio
 console.log(output);
 ```
 
+* 이처럼 테그드 템플릿 리터럴을 사용하면 문자열과 expression을 태그함수와 파라미터로 넣어 호출한 결과를 받게 된다.  
+ 
 #### 15.2.3 styled-components의 props 사용하기  
 * styled-components는 조건이나 동적으로 변하는 값을 사용해서 스타일링할 수 있는데 이것을 제공하는 기능이 <b>props</b>이다.  
 * 아래 코드를 참고  
@@ -173,15 +175,211 @@ export default Sample;
 * 이렇게 들어간 props는 그대로 styled-components로 전달된다.  
 
 #### 15.2.4 styled-components의 스타일 확장하기  
-* 
+* 앞에서 styled-components를 사용하면 리액트 컴포넌트가 생성되었는데 생성된 컴포넌트를 기반으로 추가적인 스타일을 적용하고 싶은 경우에는 스타일을 확장한다.  
+* 아래 코드를 참고
+
+```jsx
+import React from "react";
+import styled from "styled-components";
+
+// Button 컴포넌트
+const Button = styled.button`
+    color: grey
+    border: 2px solid palevioletred;
+`;
+
+// Button에 style이 추가된 RoundedButton 컴포넌트
+const RoundedButton = styled(Button)`
+    border-radius: 16px;
+`;
+
+function Sample(props) {
+    return (
+        <div>
+            <Button>Normal</Button>
+            <RoundedButton>Rounded</RoundedButton>
+        </div>
+    )
+}
+
+export default Sample;
+```  
+* 위 코드에선 Button 컴포넌트와 RoundedButton 컴포넌트가 나온다.  
+* Button 컴포넌트는 HTML의 button 태그를 기반으로 만들어진 단순한 버튼이다.  
+* RoundedButton 컴포넌트를 만드는 부분은 자세히 보면 HTML 태그가 빠져있고, Button 컴포넌트가 괄호로 둘러싸인 채로 들어가있는 것을 알 수 있다.  
+* RoundedButton 컴포넌트는 Button 컴포넌트에서 모서리를 둥글게 만든 컴포넌트이다.  
 
 ### 15.3 styled-components를 사용하여 스타일링해 보기(실습)  
-*  
-* ㅇ
-*  
-### 15.4 마치며(요약)
-* 
+#### * Block.jsx 코드 입력  
+```
+import styled from "styled-components";
 
+const Wrapper = styled.div`
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: lightgrey;
+`;
+
+const Block = styled.div`
+    padding: ${(props) => props.padding};
+    border: 1px solid black;
+    border-radius: 1rem;
+    background-color: ${(props) => props.backgroundColor};
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+`;
+
+const blockItems = [
+    {
+        label: "1",
+        padding: "1rem",
+        backgroundColor: "red",
+    },
+    {
+        label: "2",
+        padding: "3rem",
+        backgroundColor: "green",
+    },
+    {
+        label: "3",
+        padding: "2rem",
+        backgroundColor: "blue",
+    },
+];
+
+function Blocks(props) {
+    return (
+        <Wrapper>
+            {blockItems.map((blockItem) => {
+                return (
+                    <Block
+                        padding={blockItem.padding}
+                        backgroundColor={blockItem.backgroundColor}
+                    >
+                        {blockItem.label}
+                    </Block>
+                );
+            })}
+        </Wrapper>
+    );
+}
+
+export default Blocks;
+```  
+
+#### * Block으로 실행되는 index.js 코드 입력
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import Library from './chapter_03/Library';
+import Clock from './chapter04/clock';
+import CommentList from './chapter_05/CommentList';
+import Accommodate from './chapter_07/Accommodate';
+import ConfirmButton from './chapter_08/ConfirmButton';
+import LandingPage from './chapter_09/LandingPage';
+import Toolbar from './chapter_09/Toolbar';
+import AttendanceBook from './chapter_10/AttendanceBook';
+import SignUp from './chapter_11/SignUp';
+import TemperatureInput from './chapter_12/TemperatureInput';
+import Calculator from './chapter_12/Calculator';
+import Card from './chapter_13/Card';
+import ProfileCard from './chapter_13/ProfileCard';
+import Blocks from './chapter_15/Block';
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      {/* <Clock /> */}
+      {/*<CommentList> */}
+      {/* <Notification /> */}
+      {/* <Accommodate /> */}
+      {/* <ConfirmButton /> */}
+      {/* <Toolbar /> */}
+      {/* <LandingPage /> */}
+      {/* <AttendanceBook/> */}
+      {/* <SignUp /> */}
+      {/* <TemperatureInput /> */}
+      {/* <Calculator /> */}
+      {/* <Card /> */}
+      {/* <ProfileCard /> */}
+      <Blocks />               // 수정 위치
+    </React.StrictMode>,
+    // document.getElementById('root')
+  );
+```
+### 15.4 마치며(요약)
+#### CSS
+#### * CSS란?  
+    ■ Cascading Style Sheets의 약자로 스타일링을 위한 언어  
+    ■ 하나의 스타일이 여러 개의 엘리먼트에 적용될 수 있고, 하나의 엘리먼트에도 여러 개의 스타일이 적용될 수 있음
+#### * 선택자(selector)  
+    ■ 스타일을 어떤 엘리먼트에 적용할지 선택하게 해주는 것  
+    ■ 엘리먼트 선택자  
+     * HTML 태그의 이름으로 엘리먼트를 선택  
+    ■ id 선택자  
+     * 엘리먼트의 id속성으로 엘리먼트를 선택  
+     * 해시태그(#) 뒤에 아이디를 넣어 사용  
+    ■ 클래스 선택자  
+     * 엘리먼트의 클래스 속성으로 엘리먼트를 선택  
+     * 점(.) 뒤에 클래스명을 넣어서 사용  
+    ■ 전체 선택자  
+     * 전체 엘리먼트에 적용하기 위한 선택자    
+     * 한국에서는 흔히 별표라고 부르는 Asterisk(*)를 사용
+    ■ 전체 선택자  
+     * 여러 가지 선택자를 그룹으로 묶어 하나의 스타일을 적용하기 위해 사용하는 선택자
+     * 각 선택자를 콤마(,)로 구분하여 적용  
+    ■ 엘리먼트의 상태와 관련된 선택자  
+     * 엘리먼트의 다양한 상태에 따라 스타일을 적용하기 위한 선택자  
+     * :hover, :active, :focus, :checked, :first-child, "last-child  
+     
+#### * CSS 문법과 선택자   
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자를 먼저 쓰고 이후에 적용할 스타일을 중괄호 안에 세미콜론(;)으로 구분하여 하나씩 기술  
+    ■ 각 스타일은 CSS 속성과 값으로 이뤄진 키-값 쌍이며, CSS 속성의 이름과 값을 콜론(:)으로 구분  
+
+#### * 레이아웃과 관련된 속성  
+    ■ 레이아웃은 화면에 엘리먼트들을 어떻게 배치할 것인지를 의미  
+    ■ 엘리먼트를 어떻게 표시할지 그 방법에 관한 속성  
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자와 스타일로 구성됨  
+    ■ 선택자와 스타일로 구성됨  
+    
+
+## chapter 16. 미니 프로젝트_미니 블로그 만들기  
+
+### 16.2 프로젝트 생성하기  
+### 16.3 필요한 패키지 설치하기
+```
+* react-router-dom (v6)
+* styled-components (v5)
+(버전 차이가 있을 수 있음)
+```  
+### 16.4 주요 컴포넌트 구성하기  
+### 16.5 주요 폴더 구조  
+### 16.6 UI 컴포넌트 구성하기  
+### 16.7 UI 컴포넌트 구현하기  
+### 16.8 가짜 데이터 만들기  
+* 가짜(dummy) 데이터
+* 가짜 데이터는 JSON 형태로 되어있는데 현재 서버와의 통신에서 가장 많이 사용하는 데이터 유형이다.  
+### 16.9 페이지 컴포넌트 구현하기  
+### 16.10 각 페이지 별로 구현하기  
+### 16.11 index.js 수정   
+### 16.12 애플리케이션 실행하기  
+### 16.13 Production 빌드하기  
+### 16.14 애플리케이션 실행하기  
 
 ## 13주차 2023-05-25  
 #### 수업내용    
@@ -689,7 +887,7 @@ import ProfileCard from './chapter_13/ProfileCard';         // 수정 위치
 * Containment    
     ■ 하위 컴포넌트를 포함하는 형태의 합성 방법  
     ■ 리액트 컴포넌트의 props에 기본적으로 들어있는 children 속성을 사용   
-    ■ 여러 개의 children 집합이 필요한 경우 별도로 props를 각각 정의해서 사용 
+    ■ 여러 개의 children 집합이 필요한 경우 별도로 props를 각각 정의해서 사용  
 * Specialization  
     ■ 범용적인 개념을 구별되게 구체화하는 것  
     ■ 범용적으로 쓸 수 있는 컴포넌트를 만들어 놓고 이를 구체화시켜서 컴포넌트를 사용하는 것
