@@ -60,9 +60,88 @@ p:last-child {
 #### 15.1.3 레이아웃과 관련된 속성  
 * 일반적으로 레이아웃은 정해진 공간에 가구나 물건을 배치하는 일을 말하는데 여기선 비슷한 맥락으로 <b>화면에 엘리먼트들을 어떻게 배치할 것인지를</b> 의미한다.  
 
+* 레이아웃과 관련해서 가장 중요한 속성은 <b>display</b>이다.  
+* display 속성은 엘리먼트를 어떻게 표시할지에 관한 속성이다.  
+```
+* display: none;은 엘리먼트를 화면에서 숨기기 위해 사용한다. 엘리먼트가 삭제되는 것이 아니라 존재하긴 하지만 화면에 보이지 않는 것이기 때문에 자바스크립트 코드를 넣을 때 주로 사용된다. 그래서 <script> 태그의 display 속성 기본값은 display: none;이 된다.
+
+* display: block;은 블록 단위로 엘리먼트를 배치하는 것인데 블록 단위라는 것은 엘리먼트가 새로운 줄에서 시작하여 위치한 곳 전체의 width를 차지한다는 것을 의미한다. 대표적으로 <p>, <div>, <h1> ~ <h6> 태그의 display 속성 기본값이 display: block;이다.
+
+* display: inline;은 말 그대로 엘리먼트를 라인 안에 넣는 것이다. 대표적으로는 <span> 태그의 display 속성 기본값이 display: inline;이다. 이 속성을 사용하면 모든 width, height와 관련된 속성들은 효과가 없어진다.
+
+* display: flex;는 엘리먼트를 블록 레벨의 플렉스 컨테이너로 표시하는 것이다. 컨테이너이기 때문에 내부에 다른 엘리먼트들을 포함한다고 생각하면 되는데 플렉스에 대해서는 나중에 설명함...
+```  
+
+* visibility는 우리말로 <b>눈에 잘 보이는 성질(가시성)</b>이라는 뜻이다.  
+* CSS에선 visible와 hidden을 가장 많이 쓰며 아래 코드처럼 사용한다.
+```css
+div {
+    visibility: visible | hidden;
+}
+
+* visibility: visible;는 엘리먼트를 visible하게 하는 즉, 화면에 보이게 하는 것이다.
+* visibility: hidden;은 화면에 안 보이게 감추는 것이다.
+<b>여기서 주의할 점은 visibility: hidden;은 엘리먼트를 안 보이게만 하는 것이고 화면에서의 영역은 그대로 차지하고 있다.</b>
+```  
+
+* position 속성은 엘리먼트를 어떻게 위치시킬 것인지를 정의하기 위해 사용한다.  
+```
+div {
+    position: static | fixed | relative | absolute;
+}
+
+* static은 기본값으로 엘리먼트를 원래의 순서대로 위치시킵니다.
+* fixed는 엘리먼트를 브라우저 window에 상대적으로 위치시킵니다.
+* relative는 엘리먼트를 보통의 위치에 상대적으로 위치시킵니다. left: 16px; 같은 속성을 추가하면 엘리먼트의 왼쪽 16픽셀의 여백이 추가된다.
+* absolute는 엘리먼트를 절대 위치에 위치시키는데 이때 기준은 첫 번째 상위 엘리먼트가 된다.
+```  
+
+* <b>CSS 속성 중 엘리먼트의 가로, 세로 길이와 관련된 속성들</b>  
+* 대표적으로 width, height, min-width, min-height, max-width, max-height가 있다.  
+* px(픽셀)단위가 아닌 em, rem 등의 당위도 사용할 수 있다.  
+
+```css
+div {
+    width: auto | value;
+    height: auto | value;
+    min-width: auto | value
+    min-height: auto | value;
+    max-width: auto | value;
+    max-height: auto | value;
+}
+```  
+
 #### 15.1.4 플렉스박스  
 * 플렉스박스는 기존 CSS의 레이아웃 사용의 불편한 부분을 개선하기 위해 등장했다.  
-* ~
+* 플렉스박스는 크게 컨테이너(container)와 아이템(item)으로 구성된다.  
+* 플렉스박스의 컨테이너(flex display)가 display: flex;이다.  
+* 그리고 플렉스 컨테이너는 내부에 여러 개의 엘리먼트를 포함한다.  
+* 이때 컨테이너에 포함되는 에리먼트들이 바로 플렉스박스의 아이템(flex item)이 된다.
+
+* 아래 코드는 가장 많이 사용되는 플렉스와 관련된 CSS 속성들을 나타낸 것이다.  
+```css
+div {
+    display: flex;
+    flex-direction: row | column | row-reverse | column-reverse;
+    align-items: stretch | flex-start | center | flex-end | backline;
+    justify-content: flex-start | center | flex-end | space-between | space-around;
+}
+```  
+
+* 먼저 엘리먼트를 플렉스 컨테이너로 사용하기 위해서 display: flex;를 써야 한다.  
+* 아닐 경우 display 속성의 값이 플렉스가 아닌 엘리먼트의 기본값으로 저장되기 때문이다.  
+* 그리고 flex-direction 속성을 사용해서 아이템들이 어떤 방향으로 배치될 것인지 지정한다.  
+```
+<flex-direction>
+
+* row: 기본값이며 아이템을 행을 따라 가로 순서대로 왼쪽부터 배치한다.
+* column: 아이템을 열을 따라 세로 순서대로 위쪽부터 배치한다.
+* row-reverse: 아이템을 행의 역방향으로 오른쪽부터 배치한다.
+* column-reverse: 아이템을 열의 역방향으로 아래쪽부터 배치한다.
+```
+
+* <b>flex-direction</b> 속성의 값에 따른 아이템들의 배치 순서  
+
 
 #### 15.1.5 폰트와 관련된 속성  
 * em은 상대 글꼴, px은 절대 글꼴  
