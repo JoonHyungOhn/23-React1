@@ -27,21 +27,67 @@ h1 {color: green; font-size: 16px;}
 
 #### 15.1.4 플렉스박스  
 * 플렉스박스는 기존 CSS의 레이아웃 사용의 불편한 부분을 개선하기 위해 등장했다.  
-~
+* ~
 
 #### 15.1.5 폰트와 관련된 속성  
 * em은 상대 글꼴, px은 절대 글꼴  
 * font-size의 값으로는 px, em, rem, vw 등  
+* ~
  
 #### 15.1.6 많이 사용하는 기타 속성  
 * background-color 속성이 있다.  
-* CSS의 색상 값  
-- 
+
+##### CSS의 색상 값  
+* 16진수 컬러값: #ff0000  
+* 투명도를 가진 16진수 컬러 값: #ff000055 (뒤의 55는 알파값이다)  
+* RGB 컬러값: rgb(255, 0, 0)  
+* ~ 
 
 ### 15.2 styled-components  
 * ㅇㄹ  
 * ㄴㄹㅇㄴ  
-* 
+#### 15.2.1 styled-components 설치하기  
+* styled-components를 사용하기 위해서 프로젝트에 설치해줘야 한다.  
+```
+# rgb를 사용하는 경우
+npm install --save styled-components  
+
+# yarn을 사용하는 경우
+yarn add styled-components
+```  
+
+* MainPage.jsx 코드
+```jsx  
+import React from "react";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+padding: 1em;
+background: gray;
+`
+
+const Title = styled.h1`
+font-size: 1.5em;
+color: white
+text-align: center;
+`
+
+function MainPage(props) {
+    return (
+        <Wrapper>
+            <Title>
+                안녕, 리액트!
+            </Title>
+        </Wrapper>
+    )
+}
+
+export default MainPage;
+```
+
+#### 15.2.2 styled-components 기본 사용법
+* styled-components는 태그드 탬플릿 리터럴을 사용하여 구성 요소의 스타일을 지정한다.  
+
 ### 15.3 styled-components를 사용하여 스타일링해 보기(실습)  
 *  
 * ㅇ
