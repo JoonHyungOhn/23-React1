@@ -21,6 +21,41 @@
 h1 {color: green; font-size: 16px;}
 ```  
 * color와 font-size는 property(속성)이고 green과 16px은 value(값)으로 표현된다.  
+* 상태와 관련된 대표적인 선택자로는 :hover, :active, :focus, :checked, :first-child, :last-child 등이 있다.  
+```
+:hover는 마우스 커서가 엘리먼트 위에 올라왔을 때를 의미한다.
+:active는 주로 <a> 태그(link)에 사용되는데 엘리먼트가 클릭됐을 때를 의미한다. 
+:focus는 주로 <input> 태그에서 사용되는 말 그대로 엘리먼트가 초점을 갖고 있을 경우를 의미한다
+:checked는 radio button이나 checkbox 같은 유형의 <input> 태그가 체크되어 있는 경우를 의미한다.
+:first-child, :last-child는 상위 엘리먼트를 기준으로 각각 첫 번째 child, 마지막 child일 경우를 의미한다.
+```  
+  
+* 아래 코드는 상태와 관련된 선택자들을 사용하는 예제(참고)  
+```css
+button:hover {
+    font-weight: bold;
+}
+
+a:active {
+    color: red;
+}
+
+input:focus {
+    color: #000000;
+}
+
+option:checked {
+    background: #00ff00;
+}
+
+p:first-child {
+    background: #ff0000;
+}
+
+p:last-child {
+    background: #0000ff;
+}
+```
 
 #### 15.1.3 레이아웃과 관련된 속성  
 * 일반적으로 레이아웃은 정해진 공간에 가구나 물건을 배치하는 일을 말하는데 여기선 비슷한 맥락으로 <b>화면에 엘리먼트들을 어떻게 배치할 것인지를</b> 의미한다.  
@@ -339,7 +374,7 @@ import Blocks from './chapter_15/Block';
      * 각 선택자를 콤마(,)로 구분하여 적용  
     ■ 엘리먼트의 상태와 관련된 선택자  
      * 엘리먼트의 다양한 상태에 따라 스타일을 적용하기 위한 선택자  
-     * :hover, :active, :focus, :checked, :first-child, "last-child  
+     * :hover, :active, :focus, :checked, :first-child, :last-child  
      
 #### * CSS 문법과 선택자   
     ■ 선택자와 스타일로 구성됨  
