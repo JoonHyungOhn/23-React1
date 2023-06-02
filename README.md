@@ -150,6 +150,19 @@ div {
 
 * <b>flex-direction</b> 속성의 값에 따른 아이템들의 배치 순서  
 
+* flex-direction으로 지정된 방향을 향하는 축(axis)을 main axis라 부른다.  
+* main axis를 가로지르는 방향으로 향하는 축을 cross axis라 부른다.  
+
+* align-items는 말 그대로 컨테이너 내의 아이템을 어떻게 정렬할 것인지를 결정한다.  
+* 이때 정렬은 cross axis를 기준으로 한다.  
+
+```text
+<b>align-items</b>
+
+* 
+*
+```
+
 
 #### 15.1.5 폰트와 관련된 속성  
 * em은 상대 글꼴, px은 절대 글꼴  
