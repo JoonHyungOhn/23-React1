@@ -173,8 +173,10 @@ div {
 * flex-start: main axis의 시작 지점으로 아이템을 맞춘다.
 * center: main axis의 중앙으로 아이템을 맞춘다.
 * flex-end: main axis의 끝 지점으로 아이템을 맞춘다.
-* space-between: 
-* space-around
+* space-between: main axis를 기준으로 첫 아이템은 시작 지점에 맞추고 마지막 아이템은 끝 지점에 맞추며,
+중간에 있는 아이템들 사이의 간격이 일정하게 되도록 맞춘다.  
+* space-around: main axis를 기준으로 각 아이템의 주변 간격을 동일하게 맞춘다.
+여기에서 주변의 의미는 아이템의 시작과 끝을 의미한다.
 ```
 
 
