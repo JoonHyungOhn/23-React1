@@ -23,11 +23,11 @@ h1 {color: green; font-size: 16px;}
 * color와 font-size는 property(속성)이고 green과 16px은 value(값)으로 표현된다.  
 * 상태와 관련된 대표적인 선택자로는 :hover, :active, :focus, :checked, :first-child, :last-child 등이 있다.  
 ```
-:hover는 마우스 커서가 엘리먼트 위에 올라왔을 때를 의미한다.
-:active는 주로 <a> 태그(link)에 사용되는데 엘리먼트가 클릭됐을 때를 의미한다. 
-:focus는 주로 <input> 태그에서 사용되는 말 그대로 엘리먼트가 초점을 갖고 있을 경우를 의미한다
-:checked는 radio button이나 checkbox 같은 유형의 <input> 태그가 체크되어 있는 경우를 의미한다.
-:first-child, :last-child는 상위 엘리먼트를 기준으로 각각 첫 번째 child, 마지막 child일 경우를 의미한다.
+:hover는 마우스 커서가 엘리먼트 위에 올라왔을 때를 의미한다.  
+:active는 주로 <a> 태그(link)에 사용되는데 엘리먼트가 클릭됐을 때를 의미한다.   
+:focus는 주로 <input> 태그에서 사용되는 말 그대로 엘리먼트가 초점을 갖고 있을 경우를 의미한다.  
+:checked는 radio button이나 checkbox 같은 유형의 <input> 태그가 체크되어 있는 경우를 의미한다.  
+:first-child, :last-child는 상위 엘리먼트를 기준으로 각각 첫 번째 child, 마지막 child일 경우를 의미한다.  
 ```  
   
 * 아래 코드는 상태와 관련된 선택자들을 사용하는 예제(참고)  
@@ -63,13 +63,21 @@ p:last-child {
 * 레이아웃과 관련해서 가장 중요한 속성은 <b>display</b>이다.  
 * display 속성은 엘리먼트를 어떻게 표시할지에 관한 속성이다.  
 ```
-* display: none;은 엘리먼트를 화면에서 숨기기 위해 사용한다. 엘리먼트가 삭제되는 것이 아니라 존재하긴 하지만 화면에 보이지 않는 것이기 때문에 자바스크립트 코드를 넣을 때 주로 사용된다. 그래서 <script> 태그의 display 속성 기본값은 display: none;이 된다.
+* display: none;은 엘리먼트를 화면에서 숨기기 위해 사용한다.  
+엘리먼트가 삭제되는 것이 아니라 존재하긴 하지만 화면에 보이지 않는 것이기 때문에 자바스크립트 코드를 넣을 때 주로 사용된다.   
+그래서 <script> 태그의 display 속성 기본값은 display: none;이 된다.  
 
-* display: block;은 블록 단위로 엘리먼트를 배치하는 것인데 블록 단위라는 것은 엘리먼트가 새로운 줄에서 시작하여 위치한 곳 전체의 width를 차지한다는 것을 의미한다. 대표적으로 <p>, <div>, <h1> ~ <h6> 태그의 display 속성 기본값이 display: block;이다.
 
-* display: inline;은 말 그대로 엘리먼트를 라인 안에 넣는 것이다. 대표적으로는 <span> 태그의 display 속성 기본값이 display: inline;이다. 이 속성을 사용하면 모든 width, height와 관련된 속성들은 효과가 없어진다.
+* display: block;은 블록 단위로 엘리먼트를 배치하는 것인데 블록 단위라는 것은 엘리먼트가 새로운 줄에서 시작하여 위치한 곳 전체의 width를 차지한다는 것을 의미한다.   
+대표적으로 <p>, <div>, <h1> ~ <h6> 태그의 display 속성 기본값이 display: block;이다.  
 
-* display: flex;는 엘리먼트를 블록 레벨의 플렉스 컨테이너로 표시하는 것이다. 컨테이너이기 때문에 내부에 다른 엘리먼트들을 포함한다고 생각하면 되는데 플렉스에 대해서는 나중에 설명함...
+
+* display: inline;은 말 그대로 엘리먼트를 라인 안에 넣는 것이다. 대표적으로는 <span> 태그의 display 속성 기본값이 display: inline;이다.  
+이 속성을 사용하면 모든 width, height와 관련된 속성들은 효과가 없어진다.  
+
+
+* display: flex;는 엘리먼트를 블록 레벨의 플렉스 컨테이너로 표시하는 것이다.   
+컨테이너이기 때문에 내부에 다른 엘리먼트들을 포함한다고 생각하면 되는데 플렉스에 대해서는 나중에 설명함...  
 ```  
 
 * visibility는 우리말로 <b>눈에 잘 보이는 성질(가시성)</b>이라는 뜻이다.  
@@ -90,10 +98,10 @@ div {
     position: static | fixed | relative | absolute;
 }
 
-* static은 기본값으로 엘리먼트를 원래의 순서대로 위치시킵니다.
-* fixed는 엘리먼트를 브라우저 window에 상대적으로 위치시킵니다.
-* relative는 엘리먼트를 보통의 위치에 상대적으로 위치시킵니다. left: 16px; 같은 속성을 추가하면 엘리먼트의 왼쪽 16픽셀의 여백이 추가된다.
-* absolute는 엘리먼트를 절대 위치에 위치시키는데 이때 기준은 첫 번째 상위 엘리먼트가 된다.
+* static은 기본값으로 엘리먼트를 원래의 순서대로 위치시킵니다.  
+* fixed는 엘리먼트를 브라우저 window에 상대적으로 위치시킵니다.  
+* relative는 엘리먼트를 보통의 위치에 상대적으로 위치시킵니다. left: 16px; 같은 속성을 추가하면 엘리먼트의 왼쪽 16픽셀의 여백이 추가된다.  
+* absolute는 엘리먼트를 절대 위치에 위치시키는데 이때 기준은 첫 번째 상위 엘리먼트가 된다.  
 ```  
 
 * <b>CSS 속성 중 엘리먼트의 가로, 세로 길이와 관련된 속성들</b>  
