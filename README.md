@@ -156,11 +156,25 @@ div {
 * align-items는 말 그대로 컨테이너 내의 아이템을 어떻게 정렬할 것인지를 결정한다.  
 * 이때 정렬은 cross axis를 기준으로 한다.  
 
-```text
-<b>align-items</b>
+* <b>align-items</b>
+```
+* stretch : 기본값으로써 아이템을 늘려서 컨테이너를 가득 채운다.
+* flex-start: cross axis의 시작 지점으로 아이템을 정렬한다.
+* center: cross axis의 중앙으로 아이템을 정렬한다.
+* flex-end: cross axis의 끝 지점으로 아이템을 정렬한다.
+* baseline: 아이템을 baseline 기준으로 정렬한다.
+```  
 
-* 
-*
+* <b>justify-content</b>  
+* justify-content는 컨테이너 내에서 아이템들을 어떻게 나란히 맞출 것인지를 결정한다.  
+* align-items와 반대로 main axis을 기준으로 한다.  
+
+```
+* flex-start: main axis의 시작 지점으로 아이템을 맞춘다.
+* center: main axis의 중앙으로 아이템을 맞춘다.
+* flex-end: main axis의 끝 지점으로 아이템을 맞춘다.
+* space-between: 
+* space-around
 ```
 
 
