@@ -179,8 +179,49 @@ div {
 여기에서 주변의 의미는 아이템의 시작과 끝을 의미한다.
 ```
 
-
 #### 15.1.5 폰트와 관련된 속성  
+```
+#title {
+    font-family: "사용할 글꼴 이름", <일반적인 글꼴 분류>;
+    font-size: value;
+    font-weight: normal | bold;
+    font-style: normal | italic | onlique;
+}
+```
+* font-famliy는 어떤 글꼴을 사용하는지를 결정하는 속성이다.  
+* <b>font-famliy 속성값으로는 사용한 글꼴의 이름을 적어주면 글꼴의 이름에 띄어쓰기가 들어갈 경우 큰따옴표로 묶어주어야 한다.</b>  
+  
+```  
+#title {
+    font-family: "Times New Roman", Times, serif;
+}
+
+#title2 {
+    font-family: Arial, Verdana, sans-serif;
+}
+
+#title3 {
+    font-family: 'Courier New', Monaco, monospace;
+}
+```  
+* 콤마(,)로 여러 개의 글꼴이 있는데 이것은 font-family의 fallback 시스템 때문이다.  
+* fallback은 <b>대비책</b>이라는 뜻을 갖고 있다.  
+* 따라서 font-family 속성에서 fallback 시스템은 <b>지정한 글꼴을 찾지 못했을 경우를 대비해서 사용한 글꼴을 순서대로 지정해주는 것</b>이다.  
+
+```
+일반적인 글꼴 분류
+
+* serif: 각 글자의 모서리에 작은 테두리를 갖고 있는 형태의 글꼴  
+* sans-serif: 모서리에 테두리가 없이 깔끔한 선을 가진 글꼴이며 컴퓨터 모니터에서는 serif보다 가독성이 좋음  
+* monospace: 모든 글자가 같은 가로 길이를 가지는 글꼴, 코딩을 할 때 주로 사용
+* cursive: 사람이 쓴 손글씨 모양의 글꼴
+* fantasy: 장식이 들어간 형태의 글꼴
+```  
+
+* font-family 속성을 사용할 때 사용하고 싶은 글꼴의 이름을 콤마(,)로 구분하여 순서대로 적고 가장 마지막에 일반적인 글꼴 분류를 적는다.  
+
+
+
 * em은 상대 글꼴, px은 절대 글꼴  
 * font-size의 값으로는 px, em, rem, vw 등  
 * ~
