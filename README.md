@@ -1999,7 +1999,7 @@ ReactDOM.render(
 );
 ```  
 
-10.3 기본적인 리스트 컴포넌트
+### 10.3 기본적인 리스트 컴포넌트
 
 ```jsx
 import React from "react";
